@@ -1,11 +1,127 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import Header from '../../Layouts/Header/Header';
+import styles from './SignInStyles';
+import {Input} from '@rneui/themed';
+import SignInRegisterHeading from '../../Layouts/SignInRegisterHeading/SignInRegisterHeading';
+import MyButton from '../../Layouts/Button/Button';
+import {useDispatch, useSelector} from 'react-redux';
+
+// Icons
+import EmailIcon from 'react-native-vector-icons/Fontisto';
+import PasswordIcon from 'react-native-vector-icons/Feather';
+import {
+  showLineLogin,
+  showLineSignUp,
+} from '../../../redux/actions/productAction';
+import {showMessage} from 'react-native-flash-message';
+import {
+  clearErrors,
+  userLogin,
+  successClear,
+} from '../../../redux/actions/userAction';
+import {SUCCESS_RESET} from '../../../redux/constants/userConstants';
 
 const SignIn = props => {
+  const dispatch = useDispatch();
+  const {show} = useSelector(state => state.showLine);
+  const {error, loading, success} = useSelector(state => state.userRegister);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = () => {
+    dispatch(showLineLogin(!show));
+    props.navigation.navigate('SignIn');
+  };
+
+  const register = () => {
+    props.navigation.navigate('SignUp');
+    dispatch(showLineSignUp(!show));
+  };
+
+  const signInPressHandler = () => {
+    dispatch(userLogin(email, password));
+  };
+
+  useEffect(() => {
+    if (error) {
+      showMessage({
+        message: 'Error',
+        description: error,
+        type: 'danger',
+      });
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      setEmail('');
+      setPassword('');
+      showMessage({
+        message: 'Success',
+        description: 'Login Successfully',
+        type: 'success',
+      });
+      dispatch(successClear());
+    }
+  }, [error, dispatch, success]);
+
   return (
-    <View>
-      <Text>SignIn</Text>
-    </View>
+    <>
+      {show === false && (
+        <View style={styles.scrollView}>
+          <Header {...props} />
+          <ScrollView style={styles.container}>
+            <View style={styles.inputsContainer}>
+              <SignInRegisterHeading
+                {...props}
+                login="login"
+                register="register"
+                loginFunc={login}
+                registerFunc={register}
+                show={show}
+              />
+
+              <Input
+                style={styles.paddingLeft}
+                keyboardType="email-address"
+                placeholder="Email"
+                leftIcon={
+                  <EmailIcon name="email" size={25} color="rgba(0,0,0,0.623)" />
+                }
+                value={email}
+                onChangeText={email => setEmail(email)}
+              />
+
+              <Input
+                style={styles.paddingLeft}
+                secureTextEntry
+                placeholder="Password"
+                leftIcon={
+                  <PasswordIcon
+                    name="lock"
+                    size={25}
+                    color="rgba(0,0,0,0.623)"
+                  />
+                }
+                value={password}
+                onChangeText={password => setPassword(password)}
+              />
+
+              <MyButton
+                {...props}
+                onPress={() => signInPressHandler()}
+                title="Log In"
+                loading={loading}
+                disabled={!email || !password}
+                color={{color: '#b3b3b3'}}
+                buttonStyle={{backgroundColor: 'tomato', borderRadius: 10}}
+                size="lg"
+              />
+            </View>
+          </ScrollView>
+        </View>
+      )}
+    </>
   );
 };
 

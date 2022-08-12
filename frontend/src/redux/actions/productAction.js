@@ -4,6 +4,8 @@ import {
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
   CLEAR_ERRORS,
+  SHOW_LINE_SIGNUP,
+  SHOW_LINE_LOGIN,
 } from '../constants/productConstants';
 
 export const getProduct =
@@ -49,5 +51,19 @@ export const getProduct =
 export const clearErrors = () => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
+  });
+};
+
+export const showLineSignUp = register => async dispatch => {
+  dispatch({
+    type: SHOW_LINE_SIGNUP,
+    payload: register,
+  });
+};
+
+export const showLineLogin = login => async dispatch => {
+  dispatch({
+    type: SHOW_LINE_LOGIN,
+    payload: login,
   });
 };

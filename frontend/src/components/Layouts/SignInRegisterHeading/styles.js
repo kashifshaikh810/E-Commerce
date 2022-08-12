@@ -2,10 +2,9 @@ import {StyleSheet} from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
 const styles = StyleSheet.create({
-  container: tw`flex-1`,
-  scrollView: tw`flex-1 bg-white`,
-  inputsContainer: tw`p-5`,
-  paddingLeft: tw`pl-5`,
+  headingContainer: tw`flex-row flex-1 justify-between m-8`,
+  headingText: tw`text-xl uppercase`,
+  line: tw`p-5`,
 });
 
 export default styles;

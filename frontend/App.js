@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import {getProduct} from './src/redux/actions/productAction';
 import store from './src/redux/Store';
 import tw from 'tailwind-react-native-classnames';
-import Navigation from './src/navigation/Navigation';
+import {DrawerNavigation} from './src/DrawerNavigation/DrawerNavigation';
+import FlashMessage from 'react-native-flash-message';
 
 export const Main = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ export const Main = () => {
 const App = props => {
   return (
     <Provider store={store}>
-      <Navigation {...props} />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+      <DrawerNavigation />
+      <FlashMessage position={'top'} floating hideStatusBar />
     </Provider>
   );
 };
