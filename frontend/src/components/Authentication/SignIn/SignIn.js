@@ -25,7 +25,9 @@ import {SUCCESS_RESET} from '../../../redux/constants/userConstants';
 const SignIn = props => {
   const dispatch = useDispatch();
   const {show} = useSelector(state => state.showLine);
-  const {error, loading, success} = useSelector(state => state.userRegister);
+  const {error, loading, success, isAuthenticated} = useSelector(
+    state => state.userRegister,
+  );
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -63,7 +65,11 @@ const SignIn = props => {
       });
       dispatch(successClear());
     }
-  }, [error, dispatch, success]);
+
+    if (isAuthenticated) {
+      props.navigation.navigate('Home');
+    }
+  }, [error, dispatch, success, props.navigation]);
 
   return (
     <>

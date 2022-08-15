@@ -8,7 +8,7 @@ import {
   SHOW_LINE_LOGIN,
 } from '../constants/productConstants';
 
-export const getProduct =
+export const getAllProducts =
   (keyword = '', currentPage = 1, price = [0, 25000], category, ratings = 0) =>
   async dispatch => {
     try {

@@ -8,6 +8,8 @@ import {
   LOGIN_FAIL,
   SUCCESS,
   SUCCESS_RESET,
+  SHOW_PROFILE_DRAWER,
+  SHOW_MENU_DRAWER,
 } from '../constants/userConstants';
 
 export const userReducer = (state = {user: []}, action) => {
