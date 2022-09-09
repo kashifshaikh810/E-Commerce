@@ -9,6 +9,11 @@ import {
   LOGIN_FAIL,
   SUCCESS,
   SUCCESS_RESET,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -70,14 +75,51 @@ export const userLogin = (email, password) => async dispatch => {
 };
 
 // clearing errors
-export const clearErrors = () => async dispatch => {
+export const clearErrors = () => dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
 };
 
-export const successClear = () => async dispatch => {
+export const successClear = () => dispatch => {
   dispatch({
     type: SUCCESS_RESET,
   });
+};
+
+export const loadUser = () => async dispatch => {
+  try {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
+
+    let requestURL = 'http://192.168.100.18:5000/api/v1/me';
+
+    const {data} = await axios.get(requestURL);
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const logOut = () => async dispatch => {
+  try {
+    let requestURL = 'http://192.168.100.18:5000/api/v1/logout';
+
+    await axios.get(requestURL);
+
+    dispatch({type: LOGOUT_SUCCESS});
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

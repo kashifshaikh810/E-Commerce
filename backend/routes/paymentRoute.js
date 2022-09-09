@@ -1,21 +1,13 @@
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const express = require("express");
+const router = express.Router();
+const { isAuthenticatedUser } = require("../middleware/auth");
+const {
+  processPayment,
+  sendStripeApiKey,
+} = require("../controllers/paymentController");
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+router.route("/payment/process").post(isAuthenticatedUser, processPayment);
 
-exports.processPayment = catchAsyncErrors(async (req, res, next) => {
-  const myPayment = await stripe.paymentIntents.create({
-    amount: req.body.amount,
-    currency: "inr",
-    metadata: {
-      company: "Ecommerce",
-    },
-  });
+router.route("/stripeapikey").post(isAuthenticatedUser, sendStripeApiKey);
 
-  res
-    .status(200)
-    .json({ success: true, client_secret: myPayment.client_secret });
-});
-
-exports.sendStripeApiKey = catchAsyncErrors(async (req, res, next) => {
-  res.staus(200).json({ stripeApiKey: process.env.STRIPE_API_KEY });
-});
+module.exports = router;

@@ -10,21 +10,15 @@ import {useDispatch, useSelector} from 'react-redux';
 // Icons
 import EmailIcon from 'react-native-vector-icons/Fontisto';
 import PasswordIcon from 'react-native-vector-icons/Feather';
-import {
-  showLineLogin,
-  showLineSignUp,
-} from '../../../redux/actions/productAction';
 import {showMessage} from 'react-native-flash-message';
 import {
   clearErrors,
   userLogin,
   successClear,
 } from '../../../redux/actions/userAction';
-import {SUCCESS_RESET} from '../../../redux/constants/userConstants';
 
 const SignIn = props => {
   const dispatch = useDispatch();
-  const {show} = useSelector(state => state.showLine);
   const {error, loading, success, isAuthenticated} = useSelector(
     state => state.userRegister,
   );
@@ -32,13 +26,11 @@ const SignIn = props => {
   const [password, setPassword] = useState('');
 
   const login = () => {
-    dispatch(showLineLogin(!show));
     props.navigation.navigate('SignIn');
   };
 
   const register = () => {
     props.navigation.navigate('SignUp');
-    dispatch(showLineSignUp(!show));
   };
 
   const signInPressHandler = () => {
@@ -66,14 +58,14 @@ const SignIn = props => {
       dispatch(successClear());
     }
 
-    if (isAuthenticated) {
-      props.navigation.navigate('Home');
+    if (isAuthenticated === true) {
+      props.navigation.navigate('Profile');
     }
-  }, [error, dispatch, success, props.navigation]);
+  }, [error, dispatch, success, props.navigation, isAuthenticated]);
 
-  return (
-    <>
-      {show === false && (
+  if (isAuthenticated === false)
+    return (
+      <>
         <View style={styles.scrollView}>
           <Header {...props} />
           <ScrollView style={styles.container}>
@@ -84,7 +76,6 @@ const SignIn = props => {
                 register="register"
                 loginFunc={login}
                 registerFunc={register}
-                show={show}
               />
 
               <Input
@@ -126,9 +117,8 @@ const SignIn = props => {
             </View>
           </ScrollView>
         </View>
-      )}
-    </>
-  );
+      </>
+    );
 };
 
 export default SignIn;

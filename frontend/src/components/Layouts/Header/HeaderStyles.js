@@ -9,10 +9,12 @@ const styles = StyleSheet.create({
   menu: tw`pt-1`,
   avatar: tw`flex-1 justify-center items-end`,
   dialog: tw`flex-1 bg-transparent w-full pt-16 pr-5`,
-  mapContainer: tw`flex-1`,
   mapContent: tw`flex-row pt-5`,
-  iconsContainer: tw`flex-1 items-end`,
+  iconsContainer: tw`flex-1 flex-row justify-end items-center`,
   icons: tw`bg-white p-3 rounded-full`,
+  touchableOpacity: tw`flex-row self-end justify-end items-end`,
+  titleContainer: tw`pl-3 pr-3 h-6 mr-4 justify-center items-center bg-gray-500 rounded`,
+  titleText: tw`text-xs text-white`,
 });
 
 export default styles;

@@ -14,10 +14,6 @@ import {showMessage} from 'react-native-flash-message';
 import ProfileIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
 import PasswordIcon from 'react-native-vector-icons/Feather';
-import {
-  showLineLogin,
-  showLineSignUp,
-} from '../../../redux/actions/productAction';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   clearErrors,
@@ -27,7 +23,6 @@ import {
 
 const SignUp = props => {
   const dispatch = useDispatch();
-  const {show} = useSelector(state => state.showLine);
   const {loading, error, success} = useSelector(state => state.userRegister);
   const [imagePreview, setImagePreview] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -36,13 +31,11 @@ const SignUp = props => {
   const [password, setPassword] = useState('');
 
   const login = () => {
-    dispatch(showLineLogin(!show));
     props.navigation.navigate('SignIn');
   };
 
   const register = () => {
     props.navigation.navigate('SignUp');
-    dispatch(showLineSignUp(!show));
   };
 
   const openFile = async () => {
@@ -98,7 +91,6 @@ const SignUp = props => {
         description: 'SignUp Successfully',
         type: 'success',
       });
-      dispatch(showLineLogin(!show));
       dispatch(successClear());
       props.navigation.navigate('SignIn');
     }
@@ -106,106 +98,99 @@ const SignUp = props => {
 
   return (
     <>
-      {show && (
-        <View style={styles.scrollView}>
-          <Header {...props} title="ecommerce" />
-          <ScrollView style={styles.container}>
-            <View style={styles.inputsContainer}>
-              <SignInRegisterHeading
-                {...props}
-                login="login"
-                register="register"
-                loginFunc={login}
-                registerFunc={register}
-                show={show}
-              />
+      <View style={styles.scrollView}>
+        <Header {...props} title="ecommerce" />
+        <ScrollView style={styles.container}>
+          <View style={styles.inputsContainer}>
+            <SignInRegisterHeading
+              {...props}
+              login="login"
+              register="register"
+              loginFunc={login}
+              registerFunc={register}
+            />
 
-              <Input
-                style={styles.paddingLeft}
-                placeholder="Name"
-                leftIcon={
-                  <ProfileIcon
-                    name="face-man-profile"
-                    size={25}
-                    color="rgba(0,0,0,0.623)"
-                  />
-                }
-                value={name}
-                onChangeText={name => setName(name)}
-              />
+            <Input
+              style={styles.paddingLeft}
+              placeholder="Name"
+              leftIcon={
+                <ProfileIcon
+                  name="face-man-profile"
+                  size={25}
+                  color="rgba(0,0,0,0.623)"
+                />
+              }
+              value={name}
+              onChangeText={name => setName(name)}
+            />
 
-              <Input
-                style={styles.paddingLeft}
-                keyboardType="email-address"
-                placeholder="Email"
-                leftIcon={
-                  <EmailIcon name="email" size={25} color="rgba(0,0,0,0.623)" />
-                }
-                value={email}
-                onChangeText={email => setEmail(email)}
-              />
+            <Input
+              style={styles.paddingLeft}
+              keyboardType="email-address"
+              placeholder="Email"
+              leftIcon={
+                <EmailIcon name="email" size={25} color="rgba(0,0,0,0.623)" />
+              }
+              value={email}
+              onChangeText={email => setEmail(email)}
+            />
 
-              <Input
-                style={styles.paddingLeft}
-                secureTextEntry
-                placeholder="Password"
-                leftIcon={
-                  <PasswordIcon
-                    name="lock"
-                    size={25}
-                    color="rgba(0,0,0,0.623)"
-                  />
-                }
-                value={password}
-                onChangeText={password => setPassword(password)}
-              />
+            <Input
+              style={styles.paddingLeft}
+              secureTextEntry
+              placeholder="Password"
+              leftIcon={
+                <PasswordIcon name="lock" size={25} color="rgba(0,0,0,0.623)" />
+              }
+              value={password}
+              onChangeText={password => setPassword(password)}
+            />
 
-              <View style={styles.imgPreaviewContainer}>
-                {imagePreview ? (
-                  <View style={styles.marginTop}>
-                    <Avatar size={60} rounded source={{uri: imagePreview}} />
-                  </View>
-                ) : (
-                  <View style={styles.marginTop}>
-                    <Avatar
-                      size={60}
-                      rounded
-                      source={require('../../images/Profile.png')}
-                    />
-                  </View>
-                )}
-                <View style={styles.card}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      imagePreview ? setImagePreview('') : openFile()
-                    }>
-                    <Card>
-                      <Text
-                        style={[
-                          styles.chooseFileTitle,
-                          imagePreview ? styles.red : styles.gray,
-                        ]}>
-                        {imagePreview ? 'Remove' : 'Choose File'}
-                      </Text>
-                    </Card>
-                  </TouchableOpacity>
+            <View style={styles.imgPreaviewContainer}>
+              {imagePreview ? (
+                <View style={styles.marginTop}>
+                  <Avatar size={60} rounded source={{uri: imagePreview}} />
                 </View>
+              ) : (
+                <View style={styles.marginTop}>
+                  <Avatar
+                    size={60}
+                    rounded
+                    source={require('../../images/Profile.png')}
+                  />
+                </View>
+              )}
+              <View style={styles.card}>
+                <TouchableOpacity
+                  onPress={() =>
+                    imagePreview ? setImagePreview('') : openFile()
+                  }>
+                  <Card>
+                    <Text
+                      style={[
+                        styles.chooseFileTitle,
+                        imagePreview ? styles.red : styles.gray,
+                      ]}>
+                      {imagePreview ? 'Remove' : 'Choose File'}
+                    </Text>
+                  </Card>
+                </TouchableOpacity>
               </View>
-
-              <MyButton
-                {...props}
-                title="Register"
-                onPress={() => registerPressHandler()}
-                loading={loading}
-                disabled={!name || !email || !password || !avatar}
-                color={{color: '#b3b3b3'}}
-                buttonStyle={{backgroundColor: 'tomato', borderRadius: 10}}
-                size="lg"
-              />
             </View>
-          </ScrollView>
-        </View>
-      )}
+
+            <MyButton
+              {...props}
+              title="Register"
+              onPress={() => registerPressHandler()}
+              loading={loading}
+              disabled={!name || !email || !password || !avatar}
+              color={{color: '#b3b3b3'}}
+              buttonStyle={{backgroundColor: 'tomato', borderRadius: 10}}
+              size="lg"
+            />
+          </View>
+        </ScrollView>
+      </View>
     </>
   );
 };

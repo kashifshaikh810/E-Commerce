@@ -19,12 +19,14 @@ app.use(fileUpload());
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");
 const order = require("./routes/orderRoute");
-const { processPayment } = require("./routes/paymentRoute");
+const processPayment = require("./routes/paymentRoute");
+const country = require("./routes/countryRoute");
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", processPayment);
+app.use("/api/v1", country);
 
 // middleware for Errors
 app.use(errorMiddleware);

@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
 const SignInRegisterHeading = props => {
@@ -9,9 +8,9 @@ const SignInRegisterHeading = props => {
       <TouchableOpacity
         onPress={() => props.loginFunc()}
         style={[
-          props.show
-            ? {borderBottomWidth: 0, borderColor: '#fff'}
-            : {borderBottomWidth: 3, borderColor: 'tomato'},
+          props.route.name === 'SignIn'
+            ? {borderBottomWidth: 3, borderColor: 'tomato'}
+            : {borderBottomWidth: 0, borderColor: '#fff'},
           styles.line,
         ]}>
         <Text style={styles.headingText}>{props.login}</Text>
@@ -19,7 +18,7 @@ const SignInRegisterHeading = props => {
       <TouchableOpacity
         onPress={() => props.registerFunc()}
         style={[
-          props.show
+          props.route.name === 'SignUp'
             ? {borderBottomWidth: 3, borderColor: 'tomato'}
             : {borderBottomWidth: 0, borderColor: '#fff'},
           styles.line,

@@ -4,8 +4,18 @@ import {
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
   CLEAR_ERRORS,
-  SHOW_LINE_SIGNUP,
-  SHOW_LINE_LOGIN,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  ALL_COUNTRIES_REQUEST,
+  ALL_COUNTRIES_SUCCESS,
+  ALL_COUNTRIES_FAIL,
+  ALL_STATES_REQUEST,
+  ALL_STATES_SUCCESS,
+  ALL_STATES_FAIL,
 } from '../constants/productConstants';
 
 export const getAllProducts =
@@ -42,8 +52,6 @@ export const getAllProducts =
         type: ALL_PRODUCT_FAIL,
         payload: error?.response?.data?.message || error?.message,
       });
-
-      console.log(error.message);
     }
   };
 
@@ -54,16 +62,101 @@ export const clearErrors = () => async dispatch => {
   });
 };
 
-export const showLineSignUp = register => async dispatch => {
-  dispatch({
-    type: SHOW_LINE_SIGNUP,
-    payload: register,
-  });
+export const productDetails = productID => async dispatch => {
+  try {
+    dispatch({type: PRODUCT_DETAILS_REQUEST});
+
+    let link = `http://192.168.100.18:5000/api/v1/products/${productID}`;
+
+    const {data} = await axios.get(link);
+
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload: error?.response?.data?.message || error?.message,
+    });
+  }
 };
 
-export const showLineLogin = login => async dispatch => {
-  dispatch({
-    type: SHOW_LINE_LOGIN,
-    payload: login,
-  });
+export const newReview = review => async dispatch => {
+  try {
+    dispatch({
+      type: NEW_REVIEW_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    let link = `http://192.168.100.18:5000/api/v1/review`;
+
+    const {data} = await axios.put(link, review, config);
+
+    dispatch({
+      type: NEW_REVIEW_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAllCountries = () => async dispatch => {
+  try {
+    dispatch({
+      type: ALL_COUNTRIES_REQUEST,
+    });
+
+    let link = `http://192.168.100.18:5000/api/v1/countries`;
+
+    const {data} = await axios.get(link);
+
+    dispatch({
+      type: ALL_COUNTRIES_SUCCESS,
+      payload: data.countries,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_COUNTRIES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAllStates = country => async dispatch => {
+  try {
+    dispatch({
+      type: ALL_STATES_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    let link = `http://192.168.100.18:5000/api/v1/states`;
+
+    const {data} = await axios.post(link, {country: country}, config);
+
+    console.log(data, 'ac');
+    dispatch({
+      type: ALL_STATES_SUCCESS,
+      payload: data.states,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_STATES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

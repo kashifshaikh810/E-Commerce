@@ -1,16 +1,33 @@
 import React from 'react';
-import {View, Text, ScrollView, ImageBackground, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  ImageBackground,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import Footer from '../../Layouts/Footer/Footer';
 import Header from '../../Layouts/Header/Header';
 import styles from './styles';
-import Loader from '../../Layouts/Loader/Loader';
-import {Card, Button, AirbnbRating} from '@rneui/base';
+import {Card, Button, Skeleton} from '@rneui/base';
+import Stars from 'react-native-stars';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const HomeMarkup = props => {
   return (
     <View style={styles.container}>
       <Header {...props} />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        ref={props.scrollViewRef}
+        refreshControl={
+          <RefreshControl
+            onRefresh={props.onRefresh}
+            refreshing={props.refreshing}
+          />
+        }>
         <ImageBackground
           source={require('../../images/cover.jpg')}
           style={styles.imageBackground}>
@@ -30,10 +47,11 @@ const HomeMarkup = props => {
               FIND AMAZING PRODUCTS BELOW
             </Text>
 
-            <Button type="outline">Scroll</Button>
+            <Button type="outline" onPress={() => props.scollPressHandler()}>
+              Scroll
+            </Button>
           </View>
         </ImageBackground>
-
         <View style={styles.featuredTextContainer}>
           <Text
             style={[
@@ -43,47 +61,87 @@ const HomeMarkup = props => {
             Featured Products
           </Text>
         </View>
-
-        {props.loading ? (
-          <Loader {...props} size={40} color="tomato" />
-        ) : (
+        {props.products.length >= 1 ? (
           <FlatList
             data={props.products}
             contentContainerStyle={{flex: 1}}
-            renderItem={({item, index}) => (
-              <View style={styles.cardContainer} key={index}>
-                <Card>
-                  <View style={styles.marginBottom}>
-                    <Card.Image
-                      source={{uri: item.images[0].url}}
-                      style={styles.img}
-                    />
-                  </View>
-                  <Card.Divider />
-                  <Text>{item.name}</Text>
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) =>
+              props.loading || props.refreshing ? (
+                <Skeleton animation="wave" style={styles.skeleton} />
+              ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate('ProductDetails', {
+                      productID: item._id,
+                      isMyRoute: true,
+                    })
+                  }>
+                  <View style={styles.cardContainer} key={index}>
+                    <Card>
+                      <View style={styles.marginBottom}>
+                        <Card.Image
+                          source={{uri: item.images[0].url}}
+                          style={styles.img}
+                        />
+                      </View>
+                      <Card.Divider />
+                      <Text>{item.name}</Text>
 
-                  <View style={styles.ratingContainer}>
-                    <AirbnbRating
-                      size={28}
-                      showRating={false}
-                      count={5}
-                      isDisabled
-                      defaultRating={item.ratings}
-                    />
-                    <Text style={styles.marginLeft}>
-                      ({item.numOfReviews} Reviews)
-                    </Text>
-                  </View>
+                      <View style={styles.ratingContainer}>
+                        <Stars
+                          default={item.ratings}
+                          count={5}
+                          spacing={4}
+                          half
+                          starSize={60}
+                          disabled
+                          fullStar={
+                            <Icon
+                              size={25}
+                              name={'star'}
+                              style={[styles.myStarStyle]}
+                            />
+                          }
+                          emptyStar={
+                            <Icon
+                              size={25}
+                              name={'star-outline'}
+                              style={[
+                                styles.myStarStyle,
+                                styles.myEmptyStarStyle,
+                              ]}
+                            />
+                          }
+                          halfStar={
+                            <Icon
+                              size={25}
+                              name={'star-half-full'}
+                              style={[styles.myStarStyle]}
+                            />
+                          }
+                        />
 
-                  <View>
-                    <Text style={styles.price}>₹{item.price}</Text>
+                        <Text style={styles.marginLeft}>
+                          ({item.numOfReviews}{' '}
+                          {item.ratings > 1 ? 'Reviews' : 'Review'})
+                        </Text>
+                      </View>
+
+                      <View>
+                        <Text style={styles.price}>₹{item.price}</Text>
+                      </View>
+                    </Card>
                   </View>
-                </Card>
-              </View>
-            )}
+                </TouchableOpacity>
+              )
+            }
           />
+        ) : (
+          <View style={styles.warn}>
+            <Text>No Products</Text>
+          </View>
         )}
-
         <Footer />
       </ScrollView>
     </View>
