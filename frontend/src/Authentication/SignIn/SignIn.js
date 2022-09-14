@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView} from 'react-native';
-import Header from '../../Layouts/Header/Header';
+import Header from '../../components/Layouts/Header/Header';
 import styles from './SignInStyles';
 import {Input} from '@rneui/themed';
-import SignInRegisterHeading from '../../Layouts/SignInRegisterHeading/SignInRegisterHeading';
-import MyButton from '../../Layouts/Button/Button';
+import SignInRegisterHeading from '../../components/Layouts/SignInRegisterHeading/SignInRegisterHeading';
+import MyButton from '../../components/Layouts/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 
 // Icons
@@ -15,7 +15,7 @@ import {
   clearErrors,
   userLogin,
   successClear,
-} from '../../../redux/actions/userAction';
+} from '../../redux/actions/userAction';
 
 const SignIn = props => {
   const dispatch = useDispatch();

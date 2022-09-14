@@ -1,9 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  clearErrors,
-  getAllProducts,
-} from '../../../redux/actions/productAction';
+import {clearErrors, getAllProducts} from '../../redux/actions/productAction';
 import HomeMarkup from './HomeMarkup';
 import {showMessage} from 'react-native-flash-message';
 

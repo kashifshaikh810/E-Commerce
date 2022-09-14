@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, ScrollView, FlatList, Image} from 'react-native';
-import MyButton from '../../../Layouts/Button/Button';
-import Footer from '../../../Layouts/Footer/Footer';
-import Header from '../../../Layouts/Header/Header';
+import MyButton from '../../../components/Layouts/Button/Button';
+import Footer from '../../../components/Layouts/Footer/Footer';
+import Header from '../../../components/Layouts/Header/Header';
 import Progress from '../Progress';
 import styles from './styles';
 
@@ -96,19 +96,19 @@ const ConfirmOrder = props => {
             keyExtractor={(item, index) => index.toString()}
             data={[
               {
-                image: require('../../../images/cover.jpg'),
+                image: require('../../../components/images/cover.jpg'),
                 name: 'Mobile',
                 price: 4221,
                 quantity: 10,
               },
               {
-                image: require('../../../images/cover.jpg'),
+                image: require('../../../components/images/cover.jpg'),
                 name: 'Laptop',
                 price: 2413,
                 quantity: 6,
               },
               {
-                image: require('../../../images/cover.jpg'),
+                image: require('../../../components/images/cover.jpg'),
                 name: 'VIvo',
                 price: 5422,
                 quantity: 4,

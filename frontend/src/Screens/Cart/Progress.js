@@ -1,7 +1,10 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import {ProgressStep, ProgressSteps} from '../../Layouts/ProgressSteps/index';
+import {
+  ProgressStep,
+  ProgressSteps,
+} from '../../components/Layouts/ProgressSteps/index';
 
 const Progress = ({activeStep}) => {
   return (

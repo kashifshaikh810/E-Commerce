@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, TextInput, ScrollView} from 'react-native';
-import Footer from '../../../Layouts/Footer/Footer';
-import Header from '../../../Layouts/Header/Header';
+import Footer from '../../../components/Layouts/Footer/Footer';
+import Header from '../../../components/Layouts/Header/Header';
 import Progress from '../Progress';
 import styles from './styles';
 import CreditCardIcon from 'react-native-vector-icons/Feather';
 import EventIcon from 'react-native-vector-icons/MaterialIcons';
 import KeyIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MyButton from '../../../Layouts/Button/Button';
+import MyButton from '../../../components/Layouts/Button/Button';
 
 const Payment = props => {
   return (

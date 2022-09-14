@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, TextInput} from 'react-native';
-import Header from '../../Layouts/Header/Header';
-import Button from '../../Layouts/Button/Button';
+import Header from '../../components/Layouts/Header/Header';
+import Button from '../../components/Layouts/Button/Button';
 import styles from './styles';
 
 const SearchMarkup = props => {

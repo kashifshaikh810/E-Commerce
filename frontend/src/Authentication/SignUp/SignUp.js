@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, ScrollView, Image, ToastAndroid} from 'react-native';
-import Header from '../../Layouts/Header/Header';
+import Header from '../../components/Layouts/Header/Header';
 import styles from './SignUpStyles';
 import {Input, Card, Avatar} from '@rneui/themed';
-import SignInRegisterHeading from '../../Layouts/SignInRegisterHeading/SignInRegisterHeading';
-import MyButton from '../../Layouts/Button/Button';
+import SignInRegisterHeading from '../../components/Layouts/SignInRegisterHeading/SignInRegisterHeading';
+import MyButton from '../../components/Layouts/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import DocumentPicker from 'react-native-document-picker';
 import ImgToBase64 from 'react-native-image-base64';
@@ -19,7 +19,7 @@ import {
   clearErrors,
   successClear,
   userRegister,
-} from '../../../redux/actions/userAction';
+} from '../../redux/actions/userAction';
 
 const SignUp = props => {
   const dispatch = useDispatch();
@@ -156,7 +156,7 @@ const SignUp = props => {
                   <Avatar
                     size={60}
                     rounded
-                    source={require('../../images/Profile.png')}
+                    source={require('../../components/images/Profile.png')}
                   />
                 </View>
               )}

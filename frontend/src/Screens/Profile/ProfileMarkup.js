@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, ScrollView, Image} from 'react-native';
 import styles from './styles';
-import Header from '../../Layouts/Header/Header';
-import Footer from '../../Layouts/Footer/Footer';
-import MyButton from '../../Layouts/Button/Button';
+import Header from '../../components/Layouts/Header/Header';
+import Footer from '../../components/Layouts/Footer/Footer';
+import MyButton from '../../components/Layouts/Button/Button';
 import {Skeleton} from '@rneui/themed';
 
 const ProfileMarkup = props => {

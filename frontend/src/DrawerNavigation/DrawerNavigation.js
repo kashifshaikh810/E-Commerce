@@ -6,26 +6,26 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import SignUp from '../components/Authentication/SignUp/SignUp';
-import SignIn from '../components/Authentication/SignIn/SignIn';
-import Home from '../components/Screens/Home/Home';
-import Products from '../components/Screens/Products/Products';
-import Contact from '../components/Screens/Contact/Contact';
-import About from '../components/Screens/About/About';
+import SignUp from '../Authentication/SignUp/SignUp';
+import SignIn from '../Authentication/SignIn/SignIn';
+import Home from '../Screens/Home/Home';
+import Products from '../Screens/Products/Products';
+import Contact from '../Screens/Contact/Contact';
+import About from '../Screens/About/About';
 import tw from 'tailwind-react-native-classnames';
 import SearchIcon from 'react-native-vector-icons/AntDesign';
 import CartPlusIcon from 'react-native-vector-icons/FontAwesome5';
 import UserIcon from 'react-native-vector-icons/FontAwesome5';
-import Dashboard from '../components/Screens/Dashboard/Dashboard';
-import Orders from '../components/Screens/Orders/Orders';
-import Profile from '../components/Screens/Profile/Profile';
-import Cart from '../components/Screens/Cart/Cart';
-import Search from '../components/Screens/Search/Search';
+import Dashboard from '../Screens/Dashboard/Dashboard';
+import Orders from '../Screens/Orders/Orders';
+import Profile from '../Screens/Profile/Profile';
+import Cart from '../Screens/Cart/Cart';
+import Search from '../Screens/Search/Search';
 import {useSelector} from 'react-redux';
-import ProductDetails from '../components/Screens/ProductDetails/ProductDetails';
-import ShippingDetails from '../components/Screens/Cart/ShippingDetails/ShippingDetails';
-import ConfirmOrder from '../components/Screens/Cart/ConfirmOrder/ConfirmOrder';
-import Payment from '../components/Screens/Cart/Payment/Payment';
+import ProductDetails from '../Screens/ProductDetails/ProductDetails';
+import ShippingDetails from '../Screens/Cart/ShippingDetails/ShippingDetails';
+import ConfirmOrder from '../Screens/Cart/ConfirmOrder/ConfirmOrder';
+import Payment from '../Screens/Cart/Payment/Payment';
 
 function CustomDrawerContent(props) {
   const {isAuthenticated} = useSelector(state => state.userRegister);
@@ -117,14 +117,14 @@ const MyDrawer = () => {
         drawerPosition: 'left',
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
-      {!isAuthenticated && (
+      {isAuthenticated === false && (
         <Drawer.Screen
           name="SignIn"
           component={SignIn}
           options={hideContentInDrawer()}
         />
       )}
-      {!isAuthenticated && (
+      {isAuthenticated === false && (
         <Drawer.Screen
           name="SignUp"
           component={SignUp}

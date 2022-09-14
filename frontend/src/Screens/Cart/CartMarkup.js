@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import Header from '../../Layouts/Header/Header';
+import Header from '../../components/Layouts/Header/Header';
 import styles from './styles';
 import MinusIcon from 'react-native-vector-icons/AntDesign';
 import RemoveCartIcon from 'react-native-vector-icons/MaterialIcons';
-import MyButton from '../../Layouts/Button/Button';
-import Footer from '../../Layouts/Footer/Footer';
+import MyButton from '../../components/Layouts/Button/Button';
+import Footer from '../../components/Layouts/Footer/Footer';
 
 const CartMarkup = props => {
   return (

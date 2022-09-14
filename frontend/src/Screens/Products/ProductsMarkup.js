@@ -8,9 +8,9 @@ import {
   RefreshControl,
 } from 'react-native';
 import styles from './styles';
-import Header from '../../Layouts/Header/Header';
-import Footer from '../../Layouts/Footer/Footer';
-import RangeSlider from '../../Layouts/RangeSlider/RangeSlider';
+import Header from '../../components/Layouts/Header/Header';
+import Footer from '../../components/Layouts/Footer/Footer';
+import RangeSlider from '../../components/Layouts/RangeSlider/RangeSlider';
 import {Card, Skeleton, Slider} from '@rneui/themed';
 import Stars from 'react-native-stars';
 import CircleIcon from 'react-native-vector-icons/FontAwesome';

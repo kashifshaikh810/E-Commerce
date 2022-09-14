@@ -1,14 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
 import ProductDetailsMarkup from './ProductDetailsMarkup';
 import {useDispatch, useSelector} from 'react-redux';
-import {newReview, productDetails} from '../../../redux/actions/productAction';
-import Orientation from '../../Layouts/Orientation/Orientation';
+import {newReview, productDetails} from '../../redux/actions/productAction';
+import Orientation from '../../components/Layouts/Orientation/Orientation';
 import {Dimensions} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
-import {clearErrors} from '../../../redux/actions/userAction';
-import {NEW_REVIEW_RESET} from '../../../redux/constants/productConstants';
-import {getInputRangeFromIndexes} from '../../Layouts/Carousel/index';
-import {addItemsToCart} from '../../../redux/actions/cartAction';
+import {clearErrors} from '../../components/../redux/actions/userAction';
+import {NEW_REVIEW_RESET} from '../../components/../redux/constants/productConstants';
+import {getInputRangeFromIndexes} from '../../components/Layouts/Carousel/index';
+import {addItemsToCart} from '../../components/../redux/actions/cartAction';
 
 const ProductDetails = props => {
   const dispatch = useDispatch();

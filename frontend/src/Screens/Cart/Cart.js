@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import Orientation from '../../Layouts/Orientation/Orientation';
+import Orientation from '../../components/Layouts/Orientation/Orientation';
 import CartMarkup from './CartMarkup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   addItemsToCart,
   getCart,
   removeToCart,
-} from '../../../redux/actions/cartAction';
+} from '../../redux/actions/cartAction';
 import {showMessage} from 'react-native-flash-message';
 
 const Cart = props => {

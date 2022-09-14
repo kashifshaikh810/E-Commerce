@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import Footer from '../../Layouts/Footer/Footer';
-import Header from '../../Layouts/Header/Header';
+import Footer from '../../components/Layouts/Footer/Footer';
+import Header from '../../components/Layouts/Header/Header';
 import styles from './styles';
 import {Card, Button, Skeleton} from '@rneui/base';
 import Stars from 'react-native-stars';
@@ -29,7 +29,7 @@ const HomeMarkup = props => {
           />
         }>
         <ImageBackground
-          source={require('../../images/cover.jpg')}
+          source={require('../../components/images/cover.jpg')}
           style={styles.imageBackground}>
           <View style={styles.imageBackgroundContentContainer}>
             <Text

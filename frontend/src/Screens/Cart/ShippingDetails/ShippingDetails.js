@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, ScrollView, FlatList} from 'react-native';
-import Header from '../../../Layouts/Header/Header';
-import Footer from '../../../Layouts/Footer/Footer';
+import Header from '../../../components/Layouts/Header/Header';
+import Footer from '../../../components/Layouts/Footer/Footer';
 import styles from './styles';
 import Progress from '../Progress';
 import HomeIcon from 'react-native-vector-icons/Entypo';
@@ -13,9 +13,9 @@ import {Picker} from '@react-native-picker/picker';
 import {
   getAllCountries,
   getAllStates,
-} from '../../../../redux/actions/productAction';
+} from '../../../redux/actions/productAction';
 import {useDispatch, useSelector} from 'react-redux';
-import MyButton from '../../../Layouts/Button/Button';
+import MyButton from '../../../components/Layouts/Button/Button';
 
 const ShippingDetails = props => {
   const dispatch = useDispatch();

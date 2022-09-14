@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TextInput} from 'react-native';
 import {Overlay, AirbnbRating} from '@rneui/themed';
 import tw from 'tailwind-react-native-classnames';
-import MyButton from '../../Layouts/Button/Button';
+import MyButton from '../../components/Layouts/Button/Button';
 
 const SubmitReview = props => {
   return (

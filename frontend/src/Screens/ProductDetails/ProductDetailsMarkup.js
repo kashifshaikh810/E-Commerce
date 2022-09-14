@@ -1,16 +1,16 @@
 import React from 'react';
 import {View, Text, ScrollView, Image} from 'react-native';
 import styles from './styles';
-import Header from '../../Layouts/Header/Header';
-import Footer from '../../Layouts/Footer/Footer';
+import Header from '../../components/Layouts/Header/Header';
+import Footer from '../../components/Layouts/Footer/Footer';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MinusIcon from 'react-native-vector-icons/AntDesign';
-import MyButton from '../../Layouts/Button/Button';
+import MyButton from '../../components/Layouts/Button/Button';
 import {Card, Skeleton} from '@rneui/themed';
 import SubmitReview from './SubmitReview';
-import Carousel from '../../Layouts/Carousel/index';
-import {Pagination} from '../../Layouts/Carousel/index';
+import Carousel from '../../components/Layouts/Carousel/index';
+import {Pagination} from '../../components/Layouts/Carousel/index';
 
 const ProductDetailsMarkup = props => {
   return (
@@ -25,7 +25,10 @@ const ProductDetailsMarkup = props => {
             <Skeleton animation="wave" style={styles.image} />
           ) : (
             <Image
-              source={{uri: props?.image} || require('../../images/cover.jpg')}
+              source={
+                {uri: props?.image} ||
+                require('../../components/images/cover.jpg')
+              }
               style={styles.image}
             />
           )}
@@ -196,7 +199,7 @@ const ProductDetailsMarkup = props => {
               ) : (
                 <View style={styles.reviewsCard}>
                   <Image
-                    source={require('../../images/Profile.png')}
+                    source={require('../../components/images/Profile.png')}
                     style={styles.reviewUserImage}
                   />
                   <Text style={styles.reviewUserName}>{item.name}</Text>

@@ -96,7 +96,7 @@ const Header = props => {
     {
       title: 'Close',
       styles: tw`text-sm text-gray-400 font-bold`,
-      icon: <OrderIcon name="close-circle" size={25} color="#b3b3b3" />,
+      icon: <OrderIcon name="closecircle" size={25} color="#b3b3b3" />,
       onPress: () => setVisible(false),
     },
   ];
@@ -139,7 +139,7 @@ const Header = props => {
           size={25}
           onPress={() =>
             props.navigation.navigate(
-              props.route.params.isMyRoute ? 'Home' : props.backRouteName,
+              props?.route?.params?.isMyRoute ? 'Home' : props.backRouteName,
             )
           }
         />
@@ -157,6 +157,14 @@ const Header = props => {
         <View style={styles.avatar}>
           <TouchableOpacity onPress={() => openProfileDrawer()}>
             <Avatar size={45} rounded source={{uri: user.avatar.url}} />
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {isAuthenticated === false && (
+        <View style={styles.avatar}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('SignIn')}>
+            <Text>SignIn</Text>
           </TouchableOpacity>
         </View>
       )}

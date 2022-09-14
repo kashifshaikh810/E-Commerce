@@ -4,10 +4,7 @@ import ProductsMarkup from './ProductsMarkup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {showMessage} from 'react-native-flash-message';
-import {
-  clearErrors,
-  getAllProducts,
-} from '../../../redux/actions/productAction';
+import {clearErrors, getAllProducts} from '../../redux/actions/productAction';
 
 const Products = props => {
   const {loading, products, error} = useSelector(state => state.products);
