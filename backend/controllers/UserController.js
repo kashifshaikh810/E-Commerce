@@ -162,10 +162,14 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
 
-  const isPasswordMatched = user.comparePassword(req.body.oldPassword);
+  // const isPasswordMatched = user.comparePassword(req.body.oldPassword);
 
-  if (!isPasswordMatched) {
-    return next(new ErrorHandler("Old password is incorrect", 401));
+  // if (!isPasswordMatched) {
+  //   return next(new ErrorHandler("Old password is incorrect", 401));
+  // }
+
+  if (req.body.oldPassword !== user.password) {
+    return next(new ErrorHandler("Please Enter a Valid Password", 400));
   }
 
   if (req.body.newPassword !== req.body.confirmPassword) {
