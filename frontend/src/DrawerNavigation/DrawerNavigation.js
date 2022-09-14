@@ -26,6 +26,8 @@ import ProductDetails from '../Screens/ProductDetails/ProductDetails';
 import ShippingDetails from '../Screens/Cart/ShippingDetails/ShippingDetails';
 import ConfirmOrder from '../Screens/Cart/ConfirmOrder/ConfirmOrder';
 import Payment from '../Screens/Cart/Payment/Payment';
+import EditProfile from '../Screens/EditProfile/EditProfile';
+import ChangePassword from '../Screens/ChangePassword/ChangePassword';
 
 function CustomDrawerContent(props) {
   const {isAuthenticated} = useSelector(state => state.userRegister);
@@ -179,6 +181,16 @@ const MyDrawer = () => {
         name="Payment"
         options={hideContentInDrawer()}
         component={Payment}
+      />
+      <Drawer.Screen
+        name="EditProfile"
+        options={hideContentInDrawer()}
+        component={EditProfile}
+      />
+      <Drawer.Screen
+        name="ChangePassword"
+        options={hideContentInDrawer()}
+        component={ChangePassword}
       />
     </Drawer.Navigator>
   );

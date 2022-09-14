@@ -34,7 +34,9 @@ const ProfileMarkup = props => {
           <MyButton
             title="Edit Profile"
             {...props}
-            onPress={() => {}}
+            onPress={() =>
+              props.navigation.navigate('EditProfile', {forUse: true})
+            }
             color={{color: '#b3b3b3'}}
             buttonStyle={styles.buttonStyle}
             size="lg"
@@ -79,7 +81,7 @@ const ProfileMarkup = props => {
           <MyButton
             title="My Orders"
             {...props}
-            onPress={() => {}}
+            onPress={() => props.navigation.navigate('Orders')}
             color={{color: '#b3b3b3'}}
             buttonStyle={styles.myButtonStyle}
             size="lg"
@@ -88,7 +90,7 @@ const ProfileMarkup = props => {
           <MyButton
             title="Change Password"
             {...props}
-            onPress={() => {}}
+            onPress={() => props.navigation.navigate('ChangePassword')}
             color={{color: '#b3b3b3'}}
             buttonStyle={styles.myButtonStyle}
             size="lg"

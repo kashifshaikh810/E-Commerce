@@ -1,19 +1,10 @@
-import React, {useEffect} from 'react';
-import {BackHandler} from 'react-native';
+import React from 'react';
 import ProfileMarkup from './ProfileMarkup';
-import {useDispatch, useSelector} from 'react-redux';
-import {showLineLogin} from '../../redux/actions/productAction';
+import {useSelector} from 'react-redux';
 
 const Profile = props => {
-  const {loading, user, isAuthenticated} = useSelector(
-    state => state.userRegister,
-  );
-  const dispatch = useDispatch();
+  const {loading, user} = useSelector(state => state.userRegister);
 
-  if (isAuthenticated === false) {
-    dispatch(showLineLogin(false));
-    props.navigation.navigate('SignIn');
-  }
   return <ProfileMarkup {...props} user={user} loading={loading} />;
 };
 

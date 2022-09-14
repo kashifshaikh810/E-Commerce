@@ -14,6 +14,9 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -111,6 +114,10 @@ export const loadUser = () => async dispatch => {
 
 export const logOut = () => async dispatch => {
   try {
+    dispatch({
+      type: LOGIN_REQUEST,
+    });
+
     let requestURL = 'http://192.168.100.18:5000/api/v1/logout';
 
     await axios.get(requestURL);
@@ -119,6 +126,30 @@ export const logOut = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateProfile = profileData => async dispatch => {
+  try {
+    dispatch({
+      type: UPDATE_PROFILE_REQUEST,
+    });
+
+    const config = {headers: {'Content-Type': 'multipart/form-data'}};
+
+    let requestURL = 'http://192.168.100.18:5000/api/v1/me/update';
+
+    const {data} = await axios.put(requestURL, profileData, {config});
+
+    dispatch({
+      type: UPDATE_PROFILE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PROFILE_FAIL,
       payload: error.response.data.message,
     });
   }

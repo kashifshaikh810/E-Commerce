@@ -17,11 +17,14 @@ import {useRoute} from '@react-navigation/native';
 import {logOut} from '../../../redux/actions/userAction';
 import {getCart} from '../../../redux/actions/cartAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ModalLoader from '../ModalLoader/ModalLoader';
 
 const Header = props => {
   const [visible, setVisible] = useState(false);
   const [routeName, setRouteName] = useState('');
-  const {isAuthenticated, user} = useSelector(state => state.userRegister);
+  const {loading, isAuthenticated, user} = useSelector(
+    state => state.userRegister,
+  );
   const {cartItems} = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const route = useRoute();
@@ -40,8 +43,6 @@ const Header = props => {
 
   const logOutUser = () => {
     dispatch(logOut());
-    props.navigation.navigate('SignIn');
-    setVisible(false);
   };
 
   const data = [
@@ -103,7 +104,12 @@ const Header = props => {
 
   useEffect(() => {
     getCartItemsData();
-  }, []);
+
+    if (isAuthenticated === false) {
+      props.navigation.navigate('SignIn');
+      setVisible(false);
+    }
+  }, [isAuthenticated]);
 
   const getCartItemsData = async key => {
     try {
@@ -193,6 +199,8 @@ const Header = props => {
           </TouchableOpacity>
         ))}
       </Dialog>
+
+      <ModalLoader {...props} isVisible={loading} />
     </View>
   );
 };

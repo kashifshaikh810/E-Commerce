@@ -8,19 +8,18 @@ import {
   newReviewReducer,
   productDetailsReducer,
   productReducer,
-  signInAndSignUp,
 } from './reducers/productReducer';
-import {userReducer} from './reducers/userReducer';
+import {profileReducer, userReducer} from './reducers/userReducer';
 import {cartReducer} from './reducers/cartReducer';
 
 const reducer = combineReducers({
   products: productReducer,
-  showLine: signInAndSignUp,
   userRegister: userReducer,
   productDetails: productDetailsReducer,
   newReview: newReviewReducer,
   getCountries: getCountriesReducer,
   cart: cartReducer,
+  profile: profileReducer,
 });
 
 let initialState = {};
