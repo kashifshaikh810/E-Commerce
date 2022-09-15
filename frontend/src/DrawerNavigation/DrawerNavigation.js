@@ -30,7 +30,7 @@ import EditProfile from '../Screens/EditProfile/EditProfile';
 import ChangePassword from '../Screens/ChangePassword/ChangePassword';
 
 function CustomDrawerContent(props) {
-  const {isAuthenticated} = useSelector(state => state.userRegister);
+  const {user} = useSelector(state => state.userRegister);
 
   let routeStartWord = props?.state?.history[1]?.key
     ? props?.state?.history[1]?.key[0] +
@@ -41,7 +41,7 @@ function CustomDrawerContent(props) {
 
   return (
     <DrawerContentScrollView {...props}>
-      {isAuthenticated && (
+      {user !== null && (
         <View style={tw`flex-row flex-1 justify-around items-center pt-3`}>
           <TouchableOpacity
             style={tw`flex-row items-center p-2`}

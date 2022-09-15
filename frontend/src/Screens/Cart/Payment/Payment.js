@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, TextInput, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, TextInput, ScrollView, BackHandler} from 'react-native';
 import Footer from '../../../components/Layouts/Footer/Footer';
 import Header from '../../../components/Layouts/Header/Header';
 import Progress from '../Progress';
@@ -10,6 +10,21 @@ import KeyIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyButton from '../../../components/Layouts/Button/Button';
 
 const Payment = props => {
+  function handleBackButtonClick() {
+    props.navigation.navigate('ConfirmOrder');
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    };
+  }, [props.navigation, handleBackButtonClick]);
+
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="ConfirmOrder" />

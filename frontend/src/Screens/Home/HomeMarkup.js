@@ -65,7 +65,7 @@ const HomeMarkup = props => {
           <FlatList
             data={props.products}
             contentContainerStyle={{flex: 1}}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => `key-${index}`}
             renderItem={({item, index}) =>
               props.loading || props.refreshing ? (
                 <Skeleton animation="wave" style={styles.skeleton} />

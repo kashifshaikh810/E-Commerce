@@ -19,7 +19,7 @@ import {
 
 const SignIn = props => {
   const dispatch = useDispatch();
-  const {error, loading, success, isAuthenticated} = useSelector(
+  const {error, loading, success, user} = useSelector(
     state => state.userRegister,
   );
   const [email, setEmail] = useState('');
@@ -58,12 +58,12 @@ const SignIn = props => {
       dispatch(successClear());
     }
 
-    if (isAuthenticated === true) {
+    if (user !== null) {
       props.navigation.navigate('Profile');
     }
-  }, [error, dispatch, success, props.navigation, isAuthenticated]);
+  }, [error, dispatch, success, props.navigation, user]);
 
-  if (isAuthenticated === false)
+  if (user === null)
     return (
       <>
         <View style={styles.scrollView}>

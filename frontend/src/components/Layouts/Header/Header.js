@@ -153,21 +153,22 @@ const Header = props => {
     }
   };
 
+  console.log(props.loading);
   return (
     <View style={styles.container}>
       <View style={styles.menu}>{renderIcon()}</View>
 
       <Image source={require('../../images/logo.png')} style={styles.img} />
 
-      {isAuthenticated && (
+      {user !== null && (
         <View style={styles.avatar}>
           <TouchableOpacity onPress={() => openProfileDrawer()}>
-            <Avatar size={45} rounded source={{uri: user.avatar.url}} />
+            <Avatar size={45} rounded source={{uri: user?.avatar?.url}} />
           </TouchableOpacity>
         </View>
       )}
 
-      {isAuthenticated === false && (
+      {user === null && (
         <View style={styles.avatar}>
           <TouchableOpacity onPress={() => props.navigation.navigate('SignIn')}>
             <Text>SignIn</Text>
@@ -193,14 +194,25 @@ const Header = props => {
                     {item.title === 'Cart' && `(${cartItems.length})`}
                   </Text>
                 </View>
-                <View style={styles.icons}>{item.icon}</View>
+                <View style={item.title !== 'Profile' && styles.icons}>
+                  {item.title === 'Profile' ? null : item.icon}
+                  {item.title === 'Profile' && (
+                    <Image
+                      source={{uri: user?.avatar?.url}}
+                      style={{width: 50, height: 50, borderRadius: 25}}
+                    />
+                  )}
+                </View>
               </View>
             </View>
           </TouchableOpacity>
         ))}
       </Dialog>
 
-      <ModalLoader {...props} isVisible={loading} />
+      <ModalLoader
+        {...props}
+        isVisible={props.loading ? props.loading : loading}
+      />
     </View>
   );
 };

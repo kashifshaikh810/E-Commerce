@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput, ScrollView, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  FlatList,
+  BackHandler,
+} from 'react-native';
 import Header from '../../../components/Layouts/Header/Header';
 import Footer from '../../../components/Layouts/Footer/Footer';
 import styles from './styles';
@@ -29,6 +36,21 @@ const ShippingDetails = props => {
     //   dispatch(getAllStates(countryVal));
     // }
   }, [dispatch, countryVal]);
+
+  function handleBackButtonClick() {
+    props.navigation.navigate('Cart');
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    };
+  }, [props.navigation, handleBackButtonClick]);
 
   return (
     <View style={styles.container}>

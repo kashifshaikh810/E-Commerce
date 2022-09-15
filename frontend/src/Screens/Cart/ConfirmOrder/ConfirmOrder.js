@@ -1,5 +1,12 @@
-import React from 'react';
-import {View, Text, ScrollView, FlatList, Image} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  Image,
+  BackHandler,
+} from 'react-native';
 import MyButton from '../../../components/Layouts/Button/Button';
 import Footer from '../../../components/Layouts/Footer/Footer';
 import Header from '../../../components/Layouts/Header/Header';
@@ -7,6 +14,21 @@ import Progress from '../Progress';
 import styles from './styles';
 
 const ConfirmOrder = props => {
+  function handleBackButtonClick() {
+    props.navigation.navigate('ShippingDetails');
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    };
+  }, [props.navigation, handleBackButtonClick]);
+
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="ShippingDetails" />
@@ -93,7 +115,7 @@ const ConfirmOrder = props => {
           <Text style={styles.shippingText}>Your Cart Items</Text>
 
           <FlatList
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => `key-${index}`}
             data={[
               {
                 image: require('../../../components/images/cover.jpg'),

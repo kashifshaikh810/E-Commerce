@@ -34,7 +34,7 @@ const CartMarkup = props => {
               />
             }
             data={props?.cartItems}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => `key-${index}`}
             renderItem={({item, index}) => (
               <>
                 <View

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StatusBar, YellowBox} from 'react-native';
+import {StatusBar, LogBox} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/redux/Store';
 import {DrawerNavigation} from './src/DrawerNavigation/DrawerNavigation';
@@ -8,7 +8,9 @@ import {loadUser} from './src/redux/actions/userAction';
 
 const App = props => {
   useEffect(() => {
-    YellowBox.ignoreWarnings(['Animated: `useNativeDriver`']);
+    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs(['Each child in a list should have a unique']);
 
     store.dispatch(loadUser());
   }, [store.dispatch]);

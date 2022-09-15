@@ -11,7 +11,6 @@ const MyButton = props => {
         buttonStyle={props.buttonStyle}
         title={props.title}
         loadingProps={props.color}
-        loading={props.loading}
         disabled={props.loading || props.disabled}
         onPress={() => props.onPress()}
       />
