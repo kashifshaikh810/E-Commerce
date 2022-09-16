@@ -54,7 +54,7 @@ const ChangePassword = props => {
     if (error) {
       showMessage({
         message: 'Error',
-        description: 'All fields are required',
+        description: error,
         type: 'danger',
       });
       dispatch(clearErrors());
@@ -69,6 +69,9 @@ const ChangePassword = props => {
       dispatch({
         type: UPDATE_PASSWORD_RESET,
       });
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
     }
   }, [dispatch, error, isUpdated]);
 

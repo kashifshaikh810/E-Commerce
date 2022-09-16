@@ -28,6 +28,7 @@ import ConfirmOrder from '../Screens/Cart/ConfirmOrder/ConfirmOrder';
 import Payment from '../Screens/Cart/Payment/Payment';
 import EditProfile from '../Screens/EditProfile/EditProfile';
 import ChangePassword from '../Screens/ChangePassword/ChangePassword';
+import OrdersDetails from '../Screens/OrdersDetails/OrdersDetails';
 
 function CustomDrawerContent(props) {
   const {user} = useSelector(state => state.userRegister);
@@ -191,6 +192,11 @@ const MyDrawer = () => {
         name="ChangePassword"
         options={hideContentInDrawer()}
         component={ChangePassword}
+      />
+      <Drawer.Screen
+        name="OrdersDetails"
+        options={hideContentInDrawer()}
+        component={OrdersDetails}
       />
     </Drawer.Navigator>
   );
