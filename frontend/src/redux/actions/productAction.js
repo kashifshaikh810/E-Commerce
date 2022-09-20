@@ -148,7 +148,6 @@ export const getAllStates = country => async dispatch => {
 
     const {data} = await axios.post(link, {country: country}, config);
 
-    console.log(data, 'ac');
     dispatch({
       type: ALL_STATES_SUCCESS,
       payload: data.states,

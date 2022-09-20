@@ -153,7 +153,6 @@ const Header = props => {
     }
   };
 
-  console.log(props.loading);
   return (
     <View style={styles.container}>
       <View style={styles.menu}>{renderIcon()}</View>
