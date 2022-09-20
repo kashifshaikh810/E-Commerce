@@ -18,6 +18,7 @@ import {logOut} from '../../../redux/actions/userAction';
 import {getCart} from '../../../redux/actions/cartAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalLoader from '../ModalLoader/ModalLoader';
+import {getMyOrders} from '../../../redux/actions/ordersAction';
 
 const Header = props => {
   const [visible, setVisible] = useState(false);
@@ -62,6 +63,7 @@ const Header = props => {
       onPress: () => {
         props.navigation.navigate('Orders');
         setVisible(false);
+        dispatch(getMyOrders());
       },
     },
     {

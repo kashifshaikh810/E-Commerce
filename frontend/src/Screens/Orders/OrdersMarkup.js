@@ -63,7 +63,7 @@ const OrdersMarkup = props => {
 
   const element = (data, index, rowData) => (
     <TouchableOpacity
-      style={{flex: 1, paddingTop: 5}}
+      style={{flex: 1, paddingTop: 5, alignSelf: 'center'}}
       onPress={() =>
         props.navigation.navigate('OrdersDetails', {id: rowData[0]})
       }>
@@ -83,7 +83,7 @@ const OrdersMarkup = props => {
           />
         }>
         <View style={styles.tableContainer}>
-          <Table>
+          <Table borderStyle={styles.tableMain}>
             <Row
               data={headerRow}
               style={styles.head}
