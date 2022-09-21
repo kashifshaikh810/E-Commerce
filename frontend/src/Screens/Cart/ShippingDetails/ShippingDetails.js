@@ -23,24 +23,47 @@ import {
 } from '../../../redux/actions/productAction';
 import {useDispatch, useSelector} from 'react-redux';
 import MyButton from '../../../components/Layouts/Button/Button';
+import {saveShippingInfo} from '../../../redux/actions/cartAction';
 
 const ShippingDetails = props => {
   const dispatch = useDispatch();
   const {country, state} = useSelector(state => state.getCountries);
-  const [countryVal, setCountryVal] = useState('');
-  const [stateVal, setStateVal] = useState('');
+  const {shippingInfo} = useSelector(state => state.cart);
+  const [countryVal, setCountryVal] = useState(shippingInfo?.country);
+  const [stateVal, setStateVal] = useState(shippingInfo?.state);
+  const [address, setAddress] = useState(shippingInfo?.address);
+  const [city, setCity] = useState(shippingInfo?.city);
+  const [pinCode, setPinCode] = useState(shippingInfo?.pinCode);
+  const [phoneNumber, setPhoneNumber] = useState(shippingInfo?.phoneNumber);
 
   useEffect(() => {
-    // dispatch(getAllCountries());
-    // if (countryVal) {
-    //   dispatch(getAllStates(countryVal));
-    // }
+    dispatch(getAllCountries());
+    if (countryVal) {
+      dispatch(getAllStates(countryVal));
+    }
   }, [dispatch, countryVal]);
 
   function handleBackButtonClick() {
     props.navigation.navigate('Cart');
     return true;
   }
+
+  const continuePressHandler = () => {
+    if (address && city && pinCode && phoneNumber) {
+      dispatch(
+        saveShippingInfo({
+          address: address,
+          city: city,
+          pinCode,
+          pinCode,
+          phoneNumber: phoneNumber,
+          country: countryVal,
+          state: stateVal,
+        }),
+      );
+      props.navigation.navigate('ConfirmOrder');
+    }
+  };
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
@@ -63,12 +86,22 @@ const ShippingDetails = props => {
 
         <View>
           <HomeIcon name="home" size={20} color="black" style={styles.icon} />
-          <TextInput placeholder="Address" style={styles.textInput} />
+          <TextInput
+            placeholder="Address"
+            style={styles.textInput}
+            value={address}
+            onChangeText={text => setAddress(text)}
+          />
         </View>
 
         <View>
           <CityIcon name="city" size={20} color="black" style={styles.icon} />
-          <TextInput placeholder="City" style={styles.textInput} />
+          <TextInput
+            placeholder="City"
+            style={styles.textInput}
+            value={city}
+            onChangeText={text => setCity(text)}
+          />
         </View>
 
         <View>
@@ -82,6 +115,8 @@ const ShippingDetails = props => {
             placeholder="Pin Code"
             keyboardType="numeric"
             style={styles.textInput}
+            value={pinCode}
+            onChangeText={text => setPinCode(text)}
           />
         </View>
 
@@ -91,6 +126,8 @@ const ShippingDetails = props => {
             placeholder="Phone Number"
             keyboardType="numeric"
             style={styles.textInput}
+            value={phoneNumber}
+            onChangeText={text => setPhoneNumber(text)}
           />
         </View>
 
@@ -147,7 +184,7 @@ const ShippingDetails = props => {
             title="Continue"
             size="lg"
             buttonStyle={styles.buttonStyle}
-            onPress={() => props.navigation.navigate('ConfirmOrder')}
+            onPress={() => continuePressHandler()}
           />
         </View>
 

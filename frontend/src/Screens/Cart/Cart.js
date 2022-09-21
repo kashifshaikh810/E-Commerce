@@ -16,7 +16,7 @@ const Cart = props => {
     Orientation.isPortrait() ? 'portrait' : 'landscape',
   );
   const [quantity, setQuantity] = useState(1);
-  const [refresing, setRefresing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const {cartItems} = useSelector(state => state.cart);
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const Cart = props => {
   };
 
   const removeCartHandler = (id, i) => {
-    setRefresing(true);
+    setRefreshing(true);
     dispatch(removeToCart(id));
     showMessage({
       message: 'Success',
@@ -63,15 +63,15 @@ const Cart = props => {
       type: 'success',
     });
     setTimeout(() => {
-      setRefresing(false);
+      setRefreshing(false);
     }, 1000);
   };
 
   const onRefresh = () => {
-    setRefresing(true);
+    setRefreshing(true);
     getCartItemsData();
     setTimeout(() => {
-      setRefresing(false);
+      setRefreshing(false);
     }, 1000);
   };
 
@@ -85,7 +85,7 @@ const Cart = props => {
       decreaseQuantity={decreaseQuantity}
       removeCartHandler={removeCartHandler}
       onRefresh={onRefresh}
-      refresing={refresing}
+      refreshing={refreshing}
       // cartItems={cartItems.length >= 1 ? cartItems : cartItemsStorage}
       cartItems={cartItems?.length === 0 ? [] : cartItems}
     />

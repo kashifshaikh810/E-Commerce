@@ -81,7 +81,11 @@ const HomeMarkup = props => {
                     <Card>
                       <View style={styles.marginBottom}>
                         <Card.Image
-                          source={{uri: item.images[0].url}}
+                          source={
+                            item.images.length >= 1
+                              ? {uri: item.images[0].url}
+                              : require('../../components/images/cover.jpg')
+                          }
                           style={styles.img}
                         />
                       </View>

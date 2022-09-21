@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   GET_TO_CART,
   REMOVE_TO_CART,
+  SAVE_SHIPPING_INFO,
 } from '../constants/cartConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -42,4 +43,13 @@ export const removeToCart = id => async (dispatch, getState) => {
   });
 
   AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const saveShippingInfo = data => async (dispatch, getState) => {
+  dispatch({
+    type: SAVE_SHIPPING_INFO,
+    payload: data,
+  });
+
+  AsyncStorage.setItem('cartItems', JSON.stringify(data));
 };

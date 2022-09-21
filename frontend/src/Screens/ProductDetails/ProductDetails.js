@@ -51,7 +51,7 @@ const ProductDetails = props => {
     if (success) {
       showMessage({
         message: 'Success',
-        description: 'Review Submited Successfully',
+        description: 'Review Submitted Successfully',
         type: 'success',
       });
       setRatings(0);

@@ -30,7 +30,7 @@ const CartMarkup = props => {
             refreshControl={
               <RefreshControl
                 onRefresh={props.onRefresh}
-                refreshing={props.refresing}
+                refreshing={props.refreshing}
               />
             }
             data={props?.cartItems}
