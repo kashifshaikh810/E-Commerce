@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   BackHandler,
+  Platform,
 } from 'react-native';
 import Header from '../../../components/Layouts/Header/Header';
 import Footer from '../../../components/Layouts/Footer/Footer';
@@ -54,8 +55,7 @@ const ShippingDetails = props => {
         saveShippingInfo({
           address: address,
           city: city,
-          pinCode,
-          pinCode,
+          pinCode: pinCode,
           phoneNumber: phoneNumber,
           country: countryVal,
           state: stateVal,
@@ -131,12 +131,12 @@ const ShippingDetails = props => {
           />
         </View>
 
-        <View style={[styles.picker]}>
+        <View style={[Platform.OS === 'android' && styles.picker]}>
           <EarthIcon
             name="earth"
             size={20}
             color="black"
-            style={styles.iconTwo}
+            style={Platform.OS === 'ios' ? styles.iOSIconTwo : styles.iconTwo}
           />
           <Picker
             selectedValue={countryVal}
@@ -155,12 +155,12 @@ const ShippingDetails = props => {
         </View>
 
         {countryVal && (
-          <View style={[styles.picker]}>
+          <View style={[Platform.OS === 'android' && styles.picker]}>
             <ManIcon
               name="man"
               size={20}
               color="black"
-              style={styles.iconTwo}
+              style={Platform.OS === 'ios' ? styles.iOSIconTwo : styles.iconTwo}
             />
             <Picker
               selectedValue={stateVal}

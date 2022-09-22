@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {View, Image, Text, TouchableOpacity, Platform} from 'react-native';
 import styles from './HeaderStyles';
 import {Dialog, Avatar} from '@rneui/themed';
 
@@ -18,7 +18,6 @@ import {logOut} from '../../../redux/actions/userAction';
 import {getCart} from '../../../redux/actions/cartAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalLoader from '../ModalLoader/ModalLoader';
-import {getMyOrders} from '../../../redux/actions/ordersAction';
 
 const Header = props => {
   const [visible, setVisible] = useState(false);
@@ -63,7 +62,6 @@ const Header = props => {
       onPress: () => {
         props.navigation.navigate('Orders');
         setVisible(false);
-        dispatch(getMyOrders());
       },
     },
     {
@@ -78,13 +76,7 @@ const Header = props => {
     {
       title: 'Cart',
       styles: tw`text-sm text-gray-400 font-bold`,
-      icon: (
-        <CartIcon
-          name="shopping-cart"
-          size={25}
-          color={cartItems.length === 0 ? '#b3b3b3' : 'tomato'}
-        />
-      ),
+      icon: <CartIcon name="shopping-cart" size={25} color={'tomato'} />,
       onPress: () => {
         props.navigation.navigate('Cart');
         setVisible(false);
@@ -156,7 +148,8 @@ const Header = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, Platform.OS === 'ios' && styles.paddingTop]}>
       <View style={styles.menu}>{renderIcon()}</View>
 
       <Image source={require('../../images/logo.png')} style={styles.img} />
@@ -191,13 +184,13 @@ const Header = props => {
               <View style={styles.iconsContainer}>
                 <View style={styles.titleContainer}>
                   <Text style={styles.titleText}>
-                    {item.title}{' '}
-                    {item.title === 'Cart' && `(${cartItems.length})`}
+                    {item?.title}{' '}
+                    {item?.title === 'Cart' && `(${cartItems?.length})`}
                   </Text>
                 </View>
-                <View style={item.title !== 'Profile' && styles.icons}>
-                  {item.title === 'Profile' ? null : item.icon}
-                  {item.title === 'Profile' && (
+                <View style={item?.title !== 'Profile' && styles.icons}>
+                  {item?.title === 'Profile' ? null : item?.icon}
+                  {item?.title === 'Profile' && (
                     <Image
                       source={{uri: user?.avatar?.url}}
                       style={{width: 50, height: 50, borderRadius: 25}}

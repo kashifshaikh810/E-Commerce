@@ -26,7 +26,7 @@ export const getAllProducts =
         type: ALL_PRODUCT_REQUEST,
       });
 
-      let link = `http://192.168.100.18:5000/api/v1/products`;
+      let link = `http://192.168.100.4:5000/api/v1/products`;
 
       if (
         keyword !== '' ||
@@ -34,11 +34,11 @@ export const getAllProducts =
         price > [0, 25000] ||
         ratings >= 1
       ) {
-        link = `http://192.168.100.18:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+        link = `http://192.168.100.4:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
       }
 
       if (category) {
-        link = `http://192.168.100.18:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        link = `http://192.168.100.4:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const {data} = await axios.get(link);
@@ -66,7 +66,7 @@ export const productDetails = productID => async dispatch => {
   try {
     dispatch({type: PRODUCT_DETAILS_REQUEST});
 
-    let link = `http://192.168.100.18:5000/api/v1/products/${productID}`;
+    let link = `http://192.168.100.4:5000/api/v1/products/${productID}`;
 
     const {data} = await axios.get(link);
 
@@ -94,7 +94,7 @@ export const newReview = review => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.18:5000/api/v1/review`;
+    let link = `http://192.168.100.4:5000/api/v1/review`;
 
     const {data} = await axios.put(link, review, config);
 
@@ -116,7 +116,7 @@ export const getAllCountries = () => async dispatch => {
       type: ALL_COUNTRIES_REQUEST,
     });
 
-    let link = `http://192.168.100.18:5000/api/v1/countries`;
+    let link = `http://192.168.100.4:5000/api/v1/countries`;
 
     const {data} = await axios.get(link);
 
@@ -144,7 +144,7 @@ export const getAllStates = country => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.18:5000/api/v1/states`;
+    let link = `http://192.168.100.4:5000/api/v1/states`;
 
     const {data} = await axios.post(link, {country: country}, config);
 

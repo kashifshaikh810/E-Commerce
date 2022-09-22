@@ -30,7 +30,7 @@ export const userRegister = userData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/register';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/register';
 
     const {data} = await axios.post(requestURL, userData, {config});
 
@@ -59,7 +59,7 @@ export const userLogin = (email, password) => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/login';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/login';
 
     const {data} = await axios.post(requestURL, {email, password}, {config});
 
@@ -99,7 +99,7 @@ export const loadUser = () => async dispatch => {
       type: LOAD_USER_REQUEST,
     });
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/me';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/me';
 
     const {data} = await axios.get(requestURL);
 
@@ -121,7 +121,7 @@ export const logOut = () => async dispatch => {
       type: LOGIN_REQUEST,
     });
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/logout';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/logout';
 
     await axios.get(requestURL);
 
@@ -142,7 +142,7 @@ export const updateProfile = profileData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/me/update';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/me/update';
 
     const {data} = await axios.put(requestURL, profileData, {config});
 
@@ -166,7 +166,7 @@ export const updatePassword = passwordData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.18:5000/api/v1/password/update';
+    let requestURL = 'http://192.168.100.4:5000/api/v1/password/update';
 
     const {data} = await axios.put(requestURL, passwordData, {config});
 

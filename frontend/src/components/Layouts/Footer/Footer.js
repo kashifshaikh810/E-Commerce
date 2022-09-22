@@ -9,7 +9,7 @@ const Footer = props => {
         <Text
           style={[
             styles.heading,
-            {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
+            // {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},/
           ]}>
           ECOMMERCE.
         </Text>

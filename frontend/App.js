@@ -5,6 +5,11 @@ import store from './src/redux/Store';
 import {DrawerNavigation} from './src/DrawerNavigation/DrawerNavigation';
 import FlashMessage from 'react-native-flash-message';
 import {loadUser} from './src/redux/actions/userAction';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+Icon.loadFont();
+// console.ignoredYellowBox = true;
+LogBox.ignoreAllLogs();
 
 const App = props => {
   useEffect(() => {

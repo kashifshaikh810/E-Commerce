@@ -37,7 +37,9 @@ const ProductsMarkup = props => {
             onRefresh={props.onRefresh}
             refreshing={props.refreshing}
           />
-        }>
+        }
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.productsFilter}>
           <View>
             <Text style={styles.priceText}>Price</Text>
@@ -110,7 +112,7 @@ const ProductsMarkup = props => {
             <Text
               style={[
                 styles.featuredText,
-                {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
+                // {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
               ]}>
               Products
             </Text>

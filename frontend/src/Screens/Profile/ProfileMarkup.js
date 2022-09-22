@@ -10,12 +10,15 @@ const ProfileMarkup = props => {
   return (
     <View style={styles.container}>
       <Header {...props} />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.profileContainer}>
           <Text
             style={[
               styles.myProfile,
-              {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
+              // {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
             ]}>
             My Profile
           </Text>

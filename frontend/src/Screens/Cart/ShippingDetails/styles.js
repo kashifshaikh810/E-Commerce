@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   textInput: tw`border-2 border-gray-400 rounded w-11/12 h-14 self-center mt-5 mb-5 pl-14 pr-5`,
   icon: tw`absolute top-9 left-10 bottom-0 right-0 mt-0.5`,
   iconTwo: tw`absolute top-4 left-6 bottom-0 right-0 mt-0.5`,
+  iOSIconTwo: tw`absolute top-24 left-4 bottom-0 right-0`,
   picker: tw`border-2 border-gray-400 rounded w-11/12 h-14 self-center mt-5 mb-5 pl-10 pr-5`,
   buttonStyle: tw`w-11/12 h-14 bg-red-400 self-center mb-10 rounded-xl`,
 });

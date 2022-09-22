@@ -35,7 +35,7 @@ const HomeMarkup = props => {
             <Text
               style={[
                 styles.findText,
-                {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
+                // {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
               ]}>
               Welcome To Ecommerce
             </Text>
@@ -56,7 +56,7 @@ const HomeMarkup = props => {
           <Text
             style={[
               styles.featuredText,
-              {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
+              // {fontFamily: 'DynaPuff-VariableFont_wdth,wght'},
             ]}>
             Featured Products
           </Text>

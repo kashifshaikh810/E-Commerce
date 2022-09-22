@@ -19,7 +19,9 @@ const ProductDetailsMarkup = props => {
       <ScrollView
         style={styles.scrollView}
         nestedScrollEnabled
-        scrollEnabled={true}>
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
         <View>
           {props.detailsLoading ? (
             <Skeleton animation="wave" style={styles.image} />

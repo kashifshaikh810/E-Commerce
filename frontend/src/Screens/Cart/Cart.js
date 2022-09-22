@@ -32,7 +32,10 @@ const Cart = props => {
     try {
       const jsonValue = await AsyncStorage.getItem('cartItems');
       const res = jsonValue != null ? JSON.parse(jsonValue) : null;
-      dispatch(getCart(res));
+      if (res !== null) {
+        dispatch(getCart(res));
+        console.log(res, 'res');
+      }
     } catch (e) {
       console.log(e, 'err');
     }
@@ -75,6 +78,7 @@ const Cart = props => {
     }, 1000);
   };
 
+  console.log(cartItems);
   return (
     <CartMarkup
       {...props}
@@ -86,7 +90,6 @@ const Cart = props => {
       removeCartHandler={removeCartHandler}
       onRefresh={onRefresh}
       refreshing={refreshing}
-      // cartItems={cartItems.length >= 1 ? cartItems : cartItemsStorage}
       cartItems={cartItems?.length === 0 ? [] : cartItems}
     />
   );

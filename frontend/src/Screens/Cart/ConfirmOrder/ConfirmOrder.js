@@ -7,6 +7,7 @@ import {
   Image,
   BackHandler,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import MyButton from '../../../components/Layouts/Button/Button';
 import Footer from '../../../components/Layouts/Footer/Footer';
 import Header from '../../../components/Layouts/Header/Header';
@@ -14,6 +15,9 @@ import Progress from '../Progress';
 import styles from './styles';
 
 const ConfirmOrder = props => {
+  const {user} = useSelector(state => state.userRegister);
+  const {cartItems, shippingInfo} = useSelector(state => state.cart);
+
   function handleBackButtonClick() {
     props.navigation.navigate('ShippingDetails');
     return true;
@@ -29,6 +33,7 @@ const ConfirmOrder = props => {
     };
   }, [props.navigation, handleBackButtonClick]);
 
+  console.log(cartItems, 'cartItems');
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="ShippingDetails" />
@@ -41,18 +46,21 @@ const ConfirmOrder = props => {
           <View style={styles.shippingAreaMain}>
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Name :</Text>
-              <Text style={styles.shippingSubTitle}>Muhammad KAshif</Text>
+              <Text style={styles.shippingSubTitle}>{user && user?.name}</Text>
             </View>
 
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Phone :</Text>
-              <Text style={styles.shippingSubTitle}>03142439553</Text>
+              <Text style={styles.shippingSubTitle}>
+                {shippingInfo && shippingInfo.phoneNumber}
+              </Text>
             </View>
 
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Address :</Text>
               <Text style={styles.shippingSubTitle}>
-                Karachi, New Karachi, 04, ZM, 3231312
+                {shippingInfo &&
+                  `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.country}, ${shippingInfo.pinCode}`}
               </Text>
             </View>
           </View>
@@ -116,29 +124,10 @@ const ConfirmOrder = props => {
 
           <FlatList
             keyExtractor={(item, index) => `key-${index}`}
-            data={[
-              {
-                image: require('../../../components/images/cover.jpg'),
-                name: 'Mobile',
-                price: 4221,
-                quantity: 10,
-              },
-              {
-                image: require('../../../components/images/cover.jpg'),
-                name: 'Laptop',
-                price: 2413,
-                quantity: 6,
-              },
-              {
-                image: require('../../../components/images/cover.jpg'),
-                name: 'VIvo',
-                price: 5422,
-                quantity: 4,
-              },
-            ]}
+            data={cartItems}
             renderItem={({item, index}) => (
               <View style={styles.flatListContent}>
-                <Image source={item.image} style={styles.image} />
+                <Image source={{uri: item.image}} style={styles.image} />
                 <Text style={styles.name}>{item.name}</Text>
                 <View style={styles.subTitleContainer}>
                   <Text>

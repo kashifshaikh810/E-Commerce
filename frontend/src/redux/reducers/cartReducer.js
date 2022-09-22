@@ -11,20 +11,18 @@ export const cartReducer = (
 ) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const item = action?.payload;
+      const item = action.payload;
 
-      const isItemExist =
-        state.cartItems.length >= 1 &&
-        state?.cartItems?.find((it, ind) => it?.product === item?.product);
+      const isItemExist = state?.cartItems?.find(
+        i => i?.product === item?.product,
+      );
 
       if (isItemExist) {
         return {
           ...state,
-          cartItems:
-            state.cartItems &&
-            state?.cartItems?.map((it, ind) =>
-              it?.product === isItemExist?.product ? item : it,
-            ),
+          cartItems: state?.cartItems?.map(i =>
+            i?.product === isItemExist?.product ? item : i,
+          ),
         };
       } else {
         return {
@@ -33,17 +31,18 @@ export const cartReducer = (
         };
       }
 
-    case GET_TO_CART:
-      return {
-        cartItems: action?.payload,
-      };
-
     case REMOVE_TO_CART:
       return {
         ...state,
         cartItems: state?.cartItems?.filter(
-          (item, i) => item?.product !== action?.payload,
+          i => i?.product !== action?.payload,
         ),
+      };
+
+    case GET_TO_CART:
+      return {
+        ...state,
+        cartItems: action.payload,
       };
 
     case SAVE_SHIPPING_INFO:

@@ -13,7 +13,7 @@ export const getMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch({type: ALL_MY_ORDERS_REQUEST});
 
-    let link = `http://192.168.100.18:5000/api/v1/orders/me`;
+    let link = `http://192.168.100.4:5000/api/v1/orders/me`;
 
     const {data} = await axios.get(link);
 
@@ -36,7 +36,7 @@ export const getOrderDetails = id => async (dispatch, getState) => {
   try {
     dispatch({type: ORDER_DETAILS_REQUEST});
 
-    let link = `http://192.168.100.18:5000/api/v1/order/${id}`;
+    let link = `http://192.168.100.4:5000/api/v1/order/${id}`;
 
     const {data} = await axios.get(link);
 

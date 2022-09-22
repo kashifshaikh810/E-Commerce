@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   touchableOpacity: tw`flex-row self-end justify-end items-end`,
   titleContainer: tw`pl-3 pr-3 h-6 mr-4 justify-center items-center bg-gray-500 rounded`,
   titleText: tw`text-xs text-white`,
+  paddingTop: tw`pt-14`,
 });
 
 export default styles;

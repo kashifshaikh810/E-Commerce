@@ -12,28 +12,33 @@ export const getCart = data => async (dispatch, getState) => {
     type: GET_TO_CART,
     payload: data,
   });
-
-  AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
 
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-  let link = `http://192.168.100.18:5000/api/v1/products/${id}`;
+  try {
+    let link = `http://192.168.100.4:5000/api/v1/products/${id}`;
 
-  const {data} = await axios.get(link);
+    const {data} = await axios.get(link);
 
-  dispatch({
-    type: ADD_TO_CART,
-    payload: {
-      product: data.product._id,
-      name: data.product.name,
-      price: data.product.price,
-      image: data.product.images[0].url,
-      stock: data.product.Stock,
-      quantity,
-    },
-  });
+    dispatch({
+      type: ADD_TO_CART,
+      payload: {
+        product: data.product._id,
+        name: data.product.name,
+        price: data.product.price,
+        image: data.product.images[0].url,
+        stock: data.product.Stock,
+        quantity,
+      },
+    });
 
-  AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    AsyncStorage?.setItem(
+      'cartItems',
+      JSON.stringify(getState()?.cart?.cartItems),
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const removeToCart = id => async (dispatch, getState) => {
@@ -51,5 +56,5 @@ export const saveShippingInfo = data => async (dispatch, getState) => {
     payload: data,
   });
 
-  AsyncStorage.setItem('cartItems', JSON.stringify(data));
+  AsyncStorage.setItem('shippingInfo', JSON.stringify(data));
 };

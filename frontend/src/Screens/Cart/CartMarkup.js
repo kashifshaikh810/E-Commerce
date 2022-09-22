@@ -43,7 +43,7 @@ const CartMarkup = props => {
                       ? styles.tableContentTwo
                       : styles.tableContent
                   }>
-                  <View>
+                  <View style={styles.productContainer}>
                     <Image source={{uri: item.image}} style={styles.image} />
                     <Text style={styles.name}>{item.name}</Text>
                     <Text style={styles.name}>Price: ₹{item.price}</Text>
@@ -66,11 +66,12 @@ const CartMarkup = props => {
                     </View>
                     <View>
                       <Text
-                        style={
+                        style={[
                           props.orientation === 'portrait'
                             ? styles.numOfQuantity
-                            : styles.numOfQuantityTwo
-                        }>
+                            : styles.numOfQuantityTwo,
+                          item.quantity >= 10 && {marginHorizontal: -6},
+                        ]}>
                         {item.quantity}
                       </Text>
                     </View>
@@ -88,7 +89,9 @@ const CartMarkup = props => {
                       />
                     </View>
                   </View>
-                  <Text>{`₹${item.price * item.quantity}`}</Text>
+                  <Text style={styles.price}>{`₹${
+                    item.price * item.quantity
+                  }`}</Text>
                 </View>
               </>
             )}
