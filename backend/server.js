@@ -23,7 +23,7 @@ cloudinary.config({
 });
 
 const server = app.listen(process.env.PORT, () => {
-  console.log(`server is runing on http://192.168.100.18:${process.env.PORT}`);
+  console.log(`server is runing on http://192.168.100.4:${process.env.PORT}`);
 });
 
 // unhandled promise rejections
