@@ -108,8 +108,10 @@ const Header = props => {
   const getCartItemsData = async key => {
     try {
       const jsonValue = await AsyncStorage.getItem('cartItems');
-      const res = jsonValue != null ? JSON.parse(jsonValue) : null;
-      dispatch(getCart(res));
+      const res = jsonValue != null ? JSON.parse(jsonValue) : [];
+      if (res !== null) {
+        dispatch(getCart(res));
+      }
     } catch (e) {
       console.log(e, 'err');
     }
@@ -173,7 +175,10 @@ const Header = props => {
       <Dialog
         isVisible={visible}
         animationType="fade"
-        overlayStyle={styles.dialog}
+        overlayStyle={[
+          styles.dialog,
+          user?.role === 'admin' && Platform.OS === 'ios' && styles.marginTop,
+        ]}
         onBackdropPress={toggleDialog}>
         {data.map((item, index) => (
           <TouchableOpacity
@@ -182,14 +187,31 @@ const Header = props => {
             style={styles.touchableOpacity}>
             <View style={styles.mapContent}>
               <View style={styles.iconsContainer}>
-                <View style={styles.titleContainer}>
+                <View
+                  style={
+                    user?.role !== 'admin' && item.title === 'Dashboard'
+                      ? ''
+                      : styles.titleContainer
+                  }>
                   <Text style={styles.titleText}>
-                    {item?.title}{' '}
-                    {item?.title === 'Cart' && `(${cartItems?.length})`}
+                    {user?.role !== 'admin' && item.title === 'Dashboard'
+                      ? ''
+                      : item?.title}{' '}
+                    {item?.title === 'Cart' &&
+                      `(${cartItems && cartItems?.length})`}
                   </Text>
                 </View>
-                <View style={item?.title !== 'Profile' && styles.icons}>
-                  {item?.title === 'Profile' ? null : item?.icon}
+                <View
+                  style={
+                    user?.role !== 'admin' && item.title === 'Dashboard'
+                      ? ''
+                      : item?.title !== 'Profile' && styles.icons
+                  }>
+                  {user?.role !== 'admin' && item.title === 'Dashboard'
+                    ? ''
+                    : item?.title === 'Profile'
+                    ? null
+                    : item?.icon}
                   {item?.title === 'Profile' && (
                     <Image
                       source={{uri: user?.avatar?.url}}

@@ -6,7 +6,7 @@ import {showMessage} from 'react-native-flash-message';
 
 const Orders = props => {
   const {user} = useSelector(state => state.userRegister);
-  const {loading, orders, error} = useSelector(state => state.orders);
+  const {orders, error} = useSelector(state => state.orders);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
 
@@ -34,7 +34,6 @@ const Orders = props => {
       {...props}
       user={user}
       orders={orders}
-      loading={loading}
       onRefresh={onRefresh}
       refreshing={refreshing}
     />

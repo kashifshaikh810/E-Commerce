@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect} from 'react';
 import {
   View,
@@ -18,6 +19,36 @@ const ConfirmOrder = props => {
   const {user} = useSelector(state => state.userRegister);
   const {cartItems, shippingInfo} = useSelector(state => state.cart);
 
+  const subTotal = cartItems.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0,
+  );
+
+  const shippingCharges = subTotal > 1000 ? 0 : 200;
+
+  const tax = subTotal * 0.18;
+
+  const totalPrice = subTotal + shippingCharges + tax;
+
+  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.country}, ${shippingInfo.pinCode}`;
+
+  const proceedToPayment = () => {
+    const data = {
+      subTotal,
+      tax,
+      shippingCharges,
+      totalPrice,
+    };
+
+    AsyncStorage.setItem('orderInfo', JSON.stringify(data));
+    props.navigation.navigate('Payment', {
+      runUseEffect: true,
+      creaditCard: '1234 1234 1234 1234',
+      event: 'MM/YY',
+      key: 'CVC',
+    });
+  };
+
   function handleBackButtonClick() {
     props.navigation.navigate('ShippingDetails');
     return true;
@@ -33,7 +64,6 @@ const ConfirmOrder = props => {
     };
   }, [props.navigation, handleBackButtonClick]);
 
-  console.log(cartItems, 'cartItems');
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="ShippingDetails" />
@@ -52,16 +82,13 @@ const ConfirmOrder = props => {
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Phone :</Text>
               <Text style={styles.shippingSubTitle}>
-                {shippingInfo && shippingInfo.phoneNumber}
+                {shippingInfo && shippingInfo.phoneNo}
               </Text>
             </View>
 
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Address :</Text>
-              <Text style={styles.shippingSubTitle}>
-                {shippingInfo &&
-                  `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.country}, ${shippingInfo.pinCode}`}
-              </Text>
+              <Text style={styles.shippingSubTitle}>{address}</Text>
             </View>
           </View>
         </View>
@@ -75,14 +102,14 @@ const ConfirmOrder = props => {
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>SubTotal :</Text>
               <View style={styles.subTitleContainer}>
-                <Text style={styles.subTitle}>₹36000</Text>
+                <Text style={styles.subTitle}>₹{subTotal}</Text>
               </View>
             </View>
 
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Shipping Charges :</Text>
               <View style={styles.subTitleContainer}>
-                <Text style={styles.subTitle}>₹36000</Text>
+                <Text style={styles.subTitle}>₹{shippingCharges}</Text>
               </View>
             </View>
 
@@ -90,7 +117,7 @@ const ConfirmOrder = props => {
               style={[styles.shippingAreaContainer, styles.paddingBottomNone]}>
               <Text style={styles.shippingTitle}>GST :</Text>
               <View style={styles.subTitleContainer}>
-                <Text style={styles.subTitle}>₹36000</Text>
+                <Text style={styles.subTitle}>₹{tax}</Text>
               </View>
             </View>
           </View>
@@ -105,7 +132,7 @@ const ConfirmOrder = props => {
             ]}>
             <Text style={styles.totalText}>Total :</Text>
             <View style={styles.subTitleContainer}>
-              <Text style={styles.numOfTotal}>₹36000</Text>
+              <Text style={styles.numOfTotal}>₹{totalPrice}</Text>
             </View>
           </View>
 
@@ -114,7 +141,7 @@ const ConfirmOrder = props => {
               title="Proceed To Payment"
               size="lg"
               buttonStyle={styles.buttonStyle}
-              onPress={() => props.navigation.navigate('Payment')}
+              onPress={() => proceedToPayment()}
             />
           </View>
         </View>

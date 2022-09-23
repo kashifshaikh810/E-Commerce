@@ -110,7 +110,7 @@ const CartMarkup = props => {
               title="Check Out"
               size="lg"
               buttonStyle={styles.checkOutButtonStyle}
-              onPress={() => props.navigation.navigate('ShippingDetails')}
+              onPress={() => props.checkOutPressHandler()}
             />
           </View>
 

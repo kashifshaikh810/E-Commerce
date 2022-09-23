@@ -4,6 +4,9 @@ import {
   ALL_MY_ORDERS_REQUEST,
   ALL_MY_ORDERS_SUCCESS,
   CLEAR_ERRORS,
+  CREATE_ORDER_FAIL,
+  CREATE_ORDER_REQUEST,
+  CREATE_ORDER_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
@@ -44,6 +47,25 @@ export const getOrderDetails = id => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const createNewOrder = orderData => async (dispatch, getState) => {
+  try {
+    dispatch({type: CREATE_ORDER_REQUEST});
+
+    let link = `http://192.168.100.4:5000/api/v1/order/new`;
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const {data} = await axios.post(link, orderData, config);
+
+    dispatch({type: CREATE_ORDER_SUCCESS, payload: data});
+  } catch (error) {
+    dispatch({
+      type: CREATE_ORDER_FAIL,
       payload: error.response.data.message,
     });
   }

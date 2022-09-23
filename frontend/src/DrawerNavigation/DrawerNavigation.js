@@ -29,6 +29,7 @@ import Payment from '../Screens/Cart/Payment/Payment';
 import EditProfile from '../Screens/EditProfile/EditProfile';
 import ChangePassword from '../Screens/ChangePassword/ChangePassword';
 import OrdersDetails from '../Screens/OrdersDetails/OrdersDetails';
+import Success from '../Screens/Cart/Success';
 
 function CustomDrawerContent(props) {
   const {user} = useSelector(state => state.userRegister);
@@ -102,7 +103,7 @@ function CustomDrawerContent(props) {
 const Drawer = createDrawerNavigator();
 
 const MyDrawer = () => {
-  const {isAuthenticated} = useSelector(state => state.userRegister);
+  const {isAuthenticated, user} = useSelector(state => state.userRegister);
   const hideContentInDrawer = () => {
     return {
       drawerItemStyle: {height: 0},
@@ -138,11 +139,13 @@ const MyDrawer = () => {
       <Drawer.Screen name="Products" component={Products} />
       <Drawer.Screen name="Contact" component={Contact} />
       <Drawer.Screen name="About" component={About} />
-      <Drawer.Screen
-        name="Dashboard"
-        options={hideContentInDrawer()}
-        component={Dashboard}
-      />
+      {user?.role === 'admin' && (
+        <Drawer.Screen
+          name="Dashboard"
+          options={hideContentInDrawer()}
+          component={Dashboard}
+        />
+      )}
       <Drawer.Screen
         name="Orders"
         options={hideContentInDrawer()}
@@ -197,6 +200,11 @@ const MyDrawer = () => {
         name="OrdersDetails"
         options={hideContentInDrawer()}
         component={OrdersDetails}
+      />
+      <Drawer.Screen
+        name="Success"
+        options={hideContentInDrawer()}
+        component={Success}
       />
     </Drawer.Navigator>
   );

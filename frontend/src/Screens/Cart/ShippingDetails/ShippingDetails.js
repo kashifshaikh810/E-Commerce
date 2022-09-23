@@ -29,13 +29,13 @@ import {saveShippingInfo} from '../../../redux/actions/cartAction';
 const ShippingDetails = props => {
   const dispatch = useDispatch();
   const {country, state} = useSelector(state => state.getCountries);
-  const {shippingInfo} = useSelector(state => state.cart);
-  const [countryVal, setCountryVal] = useState(shippingInfo?.country);
-  const [stateVal, setStateVal] = useState(shippingInfo?.state);
-  const [address, setAddress] = useState(shippingInfo?.address);
-  const [city, setCity] = useState(shippingInfo?.city);
-  const [pinCode, setPinCode] = useState(shippingInfo?.pinCode);
-  const [phoneNumber, setPhoneNumber] = useState(shippingInfo?.phoneNumber);
+  let shippingInfoData = props?.route?.params?.shippingData;
+  const [countryVal, setCountryVal] = useState(shippingInfoData?.country);
+  const [stateVal, setStateVal] = useState(shippingInfoData?.state);
+  const [address, setAddress] = useState(shippingInfoData?.address);
+  const [city, setCity] = useState(shippingInfoData?.city);
+  const [pinCode, setPinCode] = useState(shippingInfoData?.pinCode);
+  const [phoneNo, setPhoneNo] = useState(shippingInfoData?.phoneNo);
 
   useEffect(() => {
     dispatch(getAllCountries());
@@ -50,13 +50,13 @@ const ShippingDetails = props => {
   }
 
   const continuePressHandler = () => {
-    if (address && city && pinCode && phoneNumber) {
+    if (address && city && pinCode && phoneNo) {
       dispatch(
         saveShippingInfo({
           address: address,
           city: city,
           pinCode: pinCode,
-          phoneNumber: phoneNumber,
+          phoneNo: phoneNo,
           country: countryVal,
           state: stateVal,
         }),
@@ -91,6 +91,7 @@ const ShippingDetails = props => {
             style={styles.textInput}
             value={address}
             onChangeText={text => setAddress(text)}
+            maxLength={15}
           />
         </View>
 
@@ -101,6 +102,7 @@ const ShippingDetails = props => {
             style={styles.textInput}
             value={city}
             onChangeText={text => setCity(text)}
+            maxLength={15}
           />
         </View>
 
@@ -117,6 +119,7 @@ const ShippingDetails = props => {
             style={styles.textInput}
             value={pinCode}
             onChangeText={text => setPinCode(text)}
+            maxLength={6}
           />
         </View>
 
@@ -126,8 +129,9 @@ const ShippingDetails = props => {
             placeholder="Phone Number"
             keyboardType="numeric"
             style={styles.textInput}
-            value={phoneNumber}
-            onChangeText={text => setPhoneNumber(text)}
+            value={phoneNo}
+            onChangeText={text => setPhoneNo(text)}
+            maxLength={11}
           />
         </View>
 

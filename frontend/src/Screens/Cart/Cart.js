@@ -17,24 +17,37 @@ const Cart = props => {
   );
   const [quantity, setQuantity] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState({});
 
-  const {cartItems} = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const {cartItems} = useSelector(state => state.cart);
 
   useEffect(() => {
     Dimensions.addEventListener('change', () => {
       setOrientation(Orientation.isPortrait() ? 'portrait' : 'landscape');
     });
     getCartItemsData();
+    getShippingInfoData();
   }, [AsyncStorage]);
 
   const getCartItemsData = async key => {
     try {
       const jsonValue = await AsyncStorage.getItem('cartItems');
-      const res = jsonValue != null ? JSON.parse(jsonValue) : null;
+      const res = jsonValue != null ? JSON.parse(jsonValue) : [];
       if (res !== null) {
         dispatch(getCart(res));
-        console.log(res, 'res');
+      }
+    } catch (e) {
+      console.log(e, 'err');
+    }
+  };
+
+  const getShippingInfoData = async key => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('shippingInfo');
+      const res = jsonValue != null ? JSON.parse(jsonValue) : {};
+      if (res != null) {
+        setData(res);
       }
     } catch (e) {
       console.log(e, 'err');
@@ -70,6 +83,10 @@ const Cart = props => {
     }, 1000);
   };
 
+  const checkOutPressHandler = () => {
+    props.navigation.navigate('ShippingDetails', {shippingData: data});
+  };
+
   const onRefresh = () => {
     setRefreshing(true);
     getCartItemsData();
@@ -78,7 +95,6 @@ const Cart = props => {
     }, 1000);
   };
 
-  console.log(cartItems);
   return (
     <CartMarkup
       {...props}
@@ -90,6 +106,7 @@ const Cart = props => {
       removeCartHandler={removeCartHandler}
       onRefresh={onRefresh}
       refreshing={refreshing}
+      checkOutPressHandler={checkOutPressHandler}
       cartItems={cartItems?.length === 0 ? [] : cartItems}
     />
   );
