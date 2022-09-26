@@ -16,7 +16,7 @@ import tw from 'tailwind-react-native-classnames';
 import SearchIcon from 'react-native-vector-icons/AntDesign';
 import CartPlusIcon from 'react-native-vector-icons/FontAwesome5';
 import UserIcon from 'react-native-vector-icons/FontAwesome5';
-import Dashboard from '../Screens/Dashboard/Dashboard';
+import Dashboard from '../Screens/Admin/Dashboard/Dashboard';
 import Orders from '../Screens/Orders/Orders';
 import Profile from '../Screens/Profile/Profile';
 import Cart from '../Screens/Cart/Cart';
@@ -30,6 +30,11 @@ import EditProfile from '../Screens/EditProfile/EditProfile';
 import ChangePassword from '../Screens/ChangePassword/ChangePassword';
 import OrdersDetails from '../Screens/OrdersDetails/OrdersDetails';
 import Success from '../Screens/Cart/Success';
+import AllOrders from '../Screens/Admin/AllOrders/AllOrders';
+import AllProducts from '../Screens/Admin/AllProducts/AllProducts';
+import CreateProduct from '../Screens/Admin/CreateProduct/CreateProduct';
+import AllReviews from '../Screens/Admin/AllReviews/AllReviews';
+import AllUsers from '../Screens/Admin/AllUsers/AllUsers';
 
 function CustomDrawerContent(props) {
   const {user} = useSelector(state => state.userRegister);
@@ -205,6 +210,31 @@ const MyDrawer = () => {
         name="Success"
         options={hideContentInDrawer()}
         component={Success}
+      />
+      <Drawer.Screen
+        name="AllOrders"
+        options={hideContentInDrawer()}
+        component={AllOrders}
+      />
+      <Drawer.Screen
+        name="AllProducts"
+        options={hideContentInDrawer()}
+        component={AllProducts}
+      />
+      <Drawer.Screen
+        name="CreateProduct"
+        options={hideContentInDrawer()}
+        component={CreateProduct}
+      />
+      <Drawer.Screen
+        name="AllReviews"
+        options={hideContentInDrawer()}
+        component={AllReviews}
+      />
+      <Drawer.Screen
+        name="AllUsers"
+        options={hideContentInDrawer()}
+        component={AllUsers}
       />
     </Drawer.Navigator>
   );
