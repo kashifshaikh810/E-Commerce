@@ -19,35 +19,6 @@ import LaunchIcon from 'react-native-vector-icons/MaterialIcons';
 const OrdersMarkup = props => {
   const headerRow = ['Order ID', 'Status', 'Items Qty', 'Amount', 'Actions'];
 
-  const DataRow = [
-    ['number1', 'number 2', 'num 4', 'num 5', 'button'],
-    ['number1', 'number 2', 'num 4', 'num 5', 'button'],
-  ];
-
-  const testing = [
-    {
-      title: 'here wo go',
-      id: '203232frewf-jw',
-      name: 'Sard',
-      father: 'mart',
-      button: 'button',
-    },
-    {
-      title: 'here wo go',
-      id: '203232frewf-jw',
-      name: 'few',
-      father: 'mart',
-      button: 'button',
-    },
-    {
-      title: 'here wo go',
-      id: '203232frewf-jw',
-      name: 'Sard',
-      father: 'mart',
-      button: 'button',
-    },
-  ];
-
   const rows = [];
 
   props?.orders &&

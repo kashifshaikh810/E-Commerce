@@ -16,6 +16,13 @@ import {
   ALL_STATES_SUCCESS,
   ALL_STATES_FAIL,
   ALL_STATES_REQUEST,
+  ADMIN_PRODUCTS_REQUEST,
+  ADMIN_PRODUCTS_SUCCESS,
+  ADMIN_PRODUCTS_FAIL,
+  NEW_PRODUCT_REQUEST,
+  NEW_PRODUCT_SUCCESS,
+  NEW_PRODUCT_FAIL,
+  NEW_PRODUCT_RESET,
 } from '../constants/productConstants';
 
 const productsState = {
@@ -148,6 +155,72 @@ export const getCountriesReducer = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const adminProductsReducer = (state = {products: []}, action) => {
+  switch (action.type) {
+    case ADMIN_PRODUCTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADMIN_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        products: action.payload,
+      };
+    case ADMIN_PRODUCTS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const newProductReducer = (state = {product: {}}, action) => {
+  switch (action.type) {
+    case NEW_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NEW_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.success,
+        product: action.payload.product,
+      };
+    case NEW_PRODUCT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case NEW_PRODUCT_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

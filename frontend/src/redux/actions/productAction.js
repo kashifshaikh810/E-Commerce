@@ -16,6 +16,12 @@ import {
   ALL_STATES_REQUEST,
   ALL_STATES_SUCCESS,
   ALL_STATES_FAIL,
+  ADMIN_PRODUCTS_REQUEST,
+  ADMIN_PRODUCTS_SUCCESS,
+  ADMIN_PRODUCTS_FAIL,
+  NEW_PRODUCT_REQUEST,
+  NEW_PRODUCT_SUCCESS,
+  NEW_PRODUCT_FAIL,
 } from '../constants/productConstants';
 
 export const getAllProducts =
@@ -155,6 +161,56 @@ export const getAllStates = country => async dispatch => {
   } catch (error) {
     dispatch({
       type: ALL_STATES_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAdminProducts = () => async dispatch => {
+  try {
+    dispatch({
+      type: ADMIN_PRODUCTS_REQUEST,
+    });
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/products`;
+
+    const {data} = await axios.get(link);
+
+    dispatch({
+      type: ADMIN_PRODUCTS_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCTS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const createProduct = newProductData => async dispatch => {
+  try {
+    dispatch({
+      type: NEW_PRODUCT_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/product/new`;
+
+    const {data} = await axios.post(link, newProductData, config);
+
+    dispatch({
+      type: NEW_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_PRODUCT_FAIL,
       payload: error.response.data.message,
     });
   }
