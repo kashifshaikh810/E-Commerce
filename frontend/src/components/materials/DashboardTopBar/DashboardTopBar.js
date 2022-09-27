@@ -74,7 +74,6 @@ const DashboardTopBar = props => {
     }
   };
 
-  console.log(props.route.name);
   return (
     <View>
       <ScrollView
