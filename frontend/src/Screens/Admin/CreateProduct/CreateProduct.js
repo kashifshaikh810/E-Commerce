@@ -4,7 +4,11 @@ import DocumentPicker from 'react-native-document-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import {useDispatch, useSelector} from 'react-redux';
 import {showMessage} from 'react-native-flash-message';
-import {clearErrors, createProduct} from '../../../redux/actions/productAction';
+import {
+  clearErrors,
+  createProduct,
+  getAdminProducts,
+} from '../../../redux/actions/productAction';
 import {NEW_PRODUCT_RESET} from '../../../redux/constants/productConstants';
 
 const CreateProduct = props => {
@@ -54,6 +58,7 @@ const CreateProduct = props => {
         images: images,
       };
       dispatch(createProduct(data));
+      dispatch(getAdminProducts());
     }
   };
 

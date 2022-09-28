@@ -30,11 +30,15 @@ const AllProductsMarkup = props => {
 
   const element = (data, index, rowData) => (
     <View style={styles.elementContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          props.navigation.navigate('UpdateProduct', {data: rowData[0]})
+        }>
         <EditIcon name="edit" size={25} color="#b3b3b3" style={styles.icon} />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.deleteProductOnPressHandler(rowData)}>
         <DeleteIcon
           name="delete"
           size={25}
