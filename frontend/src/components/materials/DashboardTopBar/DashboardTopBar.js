@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
@@ -10,9 +10,12 @@ import PeopleIcon from 'react-native-vector-icons/Ionicons';
 import RateReviewIcon from 'react-native-vector-icons/MaterialIcons';
 import PostAddIcon from 'react-native-vector-icons/MaterialIcons';
 import AddIcon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
+import {getAdminProducts} from '../../../redux/actions/productAction';
 
 const DashboardTopBar = props => {
   const [showProductsList, setShowProductsList] = useState(false);
+  const dispatch = useDispatch();
 
   const showProducts = () => {
     setShowProductsList(!showProductsList);
@@ -74,6 +77,12 @@ const DashboardTopBar = props => {
     }
   };
 
+  useEffect(() => {
+    if (props.paramFromCreateProduct) {
+      setShowProductsList(false);
+    }
+  }, [props.paramFromCreateProduct]);
+
   return (
     <View>
       <ScrollView
@@ -99,6 +108,7 @@ const DashboardTopBar = props => {
               style={styles.flexRow}
               onPress={() => {
                 props.navigation.navigate('AllProducts');
+                dispatch(getAdminProducts());
                 setShowProductsList(false);
               }}>
               <PostAddIcon name="post-add" size={25} color="#b3b3b3" />

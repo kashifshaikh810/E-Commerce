@@ -12,6 +12,7 @@ import {DELETE_PRODUCT_RESET} from '../../../redux/constants/productConstants';
 
 const AllProducts = props => {
   const dispatch = useDispatch();
+  let paramFromCreateProduct = props?.route?.params?.success;
   const {loading, products, error} = useSelector(state => state.adminProducts);
   const {isDeleted, error: deleteProductError} = useSelector(
     state => state.deleteProduct,
@@ -40,6 +41,8 @@ const AllProducts = props => {
     }
 
     if (isDeleted) {
+      dispatch(getAdminProducts());
+      dispatch(getAllProducts());
       showMessage({
         message: 'Success',
         description: 'Product Deleted Successfully',
@@ -58,18 +61,17 @@ const AllProducts = props => {
   const deleteProductOnPressHandler = data => {
     let productId = data ? data[0] : '';
     dispatch(deleteProduct(productId));
-    dispatch(getAdminProducts());
-    dispatch(getAllProducts());
   };
 
   return (
     <AllProductsMarkup
       {...props}
-      loading={loading}
+      loading={paramFromCreateProduct ? false : loading}
       products={products}
       refreshing={refreshing}
       onRefresh={onRefresh}
       deleteProductOnPressHandler={deleteProductOnPressHandler}
+      paramFromCreateProduct={paramFromCreateProduct}
     />
   );
 };

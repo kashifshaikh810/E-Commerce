@@ -149,6 +149,17 @@ const Header = props => {
     }
   };
 
+  const renderModal = () => {
+    if (props.loading || loading) {
+      return (
+        <ModalLoader
+          {...props}
+          isVisible={props.loading ? props.loading : loading}
+        />
+      );
+    }
+  };
+
   return (
     <View
       style={[styles.container, Platform.OS === 'ios' && styles.paddingTop]}>
@@ -225,10 +236,7 @@ const Header = props => {
         ))}
       </Dialog>
 
-      <ModalLoader
-        {...props}
-        isVisible={props.loading ? props.loading : loading}
-      />
+      {renderModal()}
     </View>
   );
 };

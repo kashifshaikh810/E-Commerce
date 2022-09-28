@@ -35,6 +35,7 @@ import AllProducts from '../Screens/Admin/AllProducts/AllProducts';
 import CreateProduct from '../Screens/Admin/CreateProduct/CreateProduct';
 import AllReviews from '../Screens/Admin/AllReviews/AllReviews';
 import AllUsers from '../Screens/Admin/AllUsers/AllUsers';
+import UpdateProduct from '../Screens/Admin/UpdateProduct/UpdateProduct';
 
 function CustomDrawerContent(props) {
   const {user} = useSelector(state => state.userRegister);
@@ -235,6 +236,11 @@ const MyDrawer = () => {
         name="AllUsers"
         options={hideContentInDrawer()}
         component={AllUsers}
+      />
+      <Drawer.Screen
+        name="UpdateProduct"
+        options={hideContentInDrawer()}
+        component={UpdateProduct}
       />
     </Drawer.Navigator>
   );

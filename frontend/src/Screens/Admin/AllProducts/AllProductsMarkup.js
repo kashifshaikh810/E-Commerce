@@ -31,9 +31,9 @@ const AllProductsMarkup = props => {
   const element = (data, index, rowData) => (
     <View style={styles.elementContainer}>
       <TouchableOpacity
-        onPress={() =>
-          props.navigation.navigate('UpdateProduct', {data: rowData[0]})
-        }>
+        onPress={() => {
+          props.navigation.navigate('UpdateProduct', {data: rowData[0]});
+        }}>
         <EditIcon name="edit" size={25} color="#b3b3b3" style={styles.icon} />
       </TouchableOpacity>
 
