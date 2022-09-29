@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAdminOrders} from '../../../redux/actions/ordersAction';
 import {getAdminProducts} from '../../../redux/actions/productAction';
+import {getAdminUsers} from '../../../redux/actions/userAction';
 import DashboardMarkup from './DashboardMarkup';
 
 const Dashboard = props => {
@@ -10,6 +11,7 @@ const Dashboard = props => {
   const dispatch = useDispatch();
   const {products} = useSelector(state => state.adminProducts);
   const {orders} = useSelector(state => state.adminOrders);
+  const {users} = useSelector(state => state.adminUsers);
 
   // outofstock
   let outOfStock = 0;
@@ -26,14 +28,6 @@ const Dashboard = props => {
     orders.forEach(item => {
       totalAmount = item.totalPrice;
     });
-
-  const renderLineChartData = () => {
-    if (totalAmount) {
-      return {
-        data: [0, totalAmount],
-      };
-    }
-  };
 
   const chartConfigs = [
     {
@@ -82,7 +76,7 @@ const Dashboard = props => {
       title: 'Users',
       backgroundColor: 'lightblue',
       textColor: 'rgb(255, 255, 255)',
-      quantity: 6,
+      quantity: users && users?.length,
       onPress: () => {
         props.navigation.navigate('AllUsers', {backRouteName: 'Dashboard'});
       },
@@ -93,12 +87,14 @@ const Dashboard = props => {
     setRefreshing(true);
     dispatch(getAdminProducts());
     dispatch(getAdminOrders());
+    dispatch(getAdminUsers());
     setRefreshing(false);
   };
 
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(getAdminOrders());
+    dispatch(getAdminUsers());
   }, [dispatch]);
 
   return (
@@ -107,7 +103,6 @@ const Dashboard = props => {
       chartConfigs={chartConfigs}
       pieChartData={pieChartData}
       circleData={circleData}
-      renderLineChartData={renderLineChartData}
       totalAmount={totalAmount}
       onRefresh={onRefresh}
       refreshing={refreshing}

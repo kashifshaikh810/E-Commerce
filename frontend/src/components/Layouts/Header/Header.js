@@ -14,10 +14,12 @@ import LogOutIcon from 'react-native-vector-icons/MaterialIcons';
 import tw from 'tailwind-react-native-classnames';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
-import {logOut} from '../../../redux/actions/userAction';
+import {getAdminUsers, logOut} from '../../../redux/actions/userAction';
 import {getCart} from '../../../redux/actions/cartAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalLoader from '../ModalLoader/ModalLoader';
+import {getAdminOrders} from '../../../redux/actions/ordersAction';
+import {getAdminProducts} from '../../../redux/actions/productAction';
 
 const Header = props => {
   const [visible, setVisible] = useState(false);
@@ -51,6 +53,9 @@ const Header = props => {
       styles: tw`text-sm text-gray-400 font-bold`,
       icon: <DashboardIcon name="dashboard" size={25} color="#b3b3b3" />,
       onPress: () => {
+        dispatch(getAdminProducts());
+        dispatch(getAdminOrders());
+        dispatch(getAdminUsers());
         props.navigation.navigate('Dashboard');
         setVisible(false);
       },

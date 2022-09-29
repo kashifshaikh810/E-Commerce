@@ -71,7 +71,11 @@ const DashboardMarkup = props => {
                 <LineChart
                   data={{
                     labels: ['Initial Amount', 'Amount Earned'],
-                    datasets: [props.renderLineChartData()],
+                    datasets: [
+                      {
+                        data: [0, props?.totalAmount && props?.totalAmount],
+                      },
+                    ],
                   }}
                   width={Dimensions.get('window').width * 1.6} // from react-native
                   height={400}

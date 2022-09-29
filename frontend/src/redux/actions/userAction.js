@@ -20,6 +20,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
+  ADMIN_USERS_REQUEST,
+  ADMIN_USERS_SUCCESS,
+  ADMIN_USERS_FAIL,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -177,6 +180,28 @@ export const updatePassword = passwordData => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAdminUsers = () => async dispatch => {
+  try {
+    dispatch({
+      type: ADMIN_USERS_REQUEST,
+    });
+
+    let requestURL = 'http://192.168.100.4:5000/api/v1/admin/users';
+
+    const {data} = await axios.get(requestURL);
+
+    dispatch({
+      type: ADMIN_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_USERS_FAIL,
       payload: error.response.data.message,
     });
   }

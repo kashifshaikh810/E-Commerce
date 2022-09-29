@@ -22,6 +22,9 @@ import {
   UPDATE_PASSWORD_RESET,
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
+  ADMIN_USERS_REQUEST,
+  ADMIN_USERS_SUCCESS,
+  ADMIN_USERS_FAIL,
 } from '../constants/userConstants';
 
 export const userReducer = (state = {user: []}, action) => {
@@ -114,6 +117,36 @@ export const profileReducer = (state = {}, action) => {
     case UPDATE_PASSWORD_RESET:
       return {
         isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const adminUsersReducer = (state = {users: []}, action) => {
+  switch (action.type) {
+    case ADMIN_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADMIN_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload,
+      };
+    case ADMIN_USERS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {
