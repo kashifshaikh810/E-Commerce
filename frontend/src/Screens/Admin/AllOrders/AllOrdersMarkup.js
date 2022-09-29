@@ -46,7 +46,8 @@ const AllOrdersMarkup = props => {
         <EditIcon name="edit" size={25} color="#b3b3b3" style={styles.icon} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity
+        onPress={() => props.deleteOrderOnPressHandler(rowData[0])}>
         <DeleteIcon
           name="delete"
           size={25}

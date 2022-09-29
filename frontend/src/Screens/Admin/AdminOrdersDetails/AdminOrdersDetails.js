@@ -10,8 +10,8 @@ import AdminOrdersDetailsMarkup from './AdminOrdersDetailsMarkup';
 import {UPDATE_ORDER_STATUS_RESET} from '../../../redux/constants/ordersConstants';
 
 const AdminOrdersDetails = props => {
-  const {loading, order, error} = useSelector(state => state.orderDetails);
   const dispatch = useDispatch();
+  const {loading, order, error} = useSelector(state => state.orderDetails);
   let orderId = props?.route?.params?.id;
   const [status, setStatus] = useState('');
   const {

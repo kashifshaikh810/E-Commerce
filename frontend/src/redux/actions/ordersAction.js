@@ -10,6 +10,9 @@ import {
   CREATE_ORDER_FAIL,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
@@ -108,6 +111,23 @@ export const updateOrder = (id, status) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UPDATE_ORDER_STATUS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteOrder = id => async (dispatch, getState) => {
+  try {
+    dispatch({type: DELETE_ORDER_REQUEST});
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/order/${id}`;
+
+    const {data} = await axios.delete(link);
+
+    dispatch({type: DELETE_ORDER_SUCCESS, payload: data.success});
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
       payload: error.response.data.message,
     });
   }

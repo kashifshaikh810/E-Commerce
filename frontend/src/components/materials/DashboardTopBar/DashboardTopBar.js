@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
@@ -21,12 +21,17 @@ const DashboardTopBar = props => {
     setShowProductsList(!showProductsList);
   };
 
+  const scrollViewRef = useRef();
+
+  console.log(scrollViewRef);
   const data = [
     {
       name: 'Dashboard',
       icon: <DashboardIcon name="dashboard" size={25} color="#b3b3b3" />,
       onPress: () => {
-        props.navigation.navigate('Dashboard'), setShowProductsList(false);
+        props.navigation.navigate('Dashboard');
+        setShowProductsList(false);
+        scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
     },
     {
@@ -39,28 +44,36 @@ const DashboardTopBar = props => {
         />
       ),
       onPress: () => {
-        props.navigation.navigate('Dashboard'), setShowProductsList(false);
+        props.navigation.navigate('Dashboard');
+        setShowProductsList(false);
+        scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
     },
     {
       name: 'Orders',
       icon: <ListAltIcon name="list-alt" size={25} color="#b3b3b3" />,
       onPress: () => {
-        props.navigation.navigate('AllOrders'), setShowProductsList(false);
+        props.navigation.navigate('AllOrders');
+        setShowProductsList(false);
+        scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
     },
     {
       name: 'Users',
       icon: <PeopleIcon name="people" size={25} color="#b3b3b3" />,
       onPress: () => {
-        props.navigation.navigate('AllUsers'), setShowProductsList(false);
+        props.navigation.navigate('AllUsers');
+        setShowProductsList(false);
+        scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
     },
     {
       name: 'Reviews',
       icon: <RateReviewIcon name="rate-review" size={25} color="#b3b3b3" />,
       onPress: () => {
-        props.navigation.navigate('AllReviews'), setShowProductsList(false);
+        props.navigation.navigate('AllReviews');
+        setShowProductsList(false);
+        scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
     },
   ];
@@ -89,7 +102,8 @@ const DashboardTopBar = props => {
         scrollEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        ref={scrollViewRef}>
         {data.map((item, index) => (
           <TouchableOpacity
             key={index}

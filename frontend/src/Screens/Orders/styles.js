@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   tableContainer: tw`p-2 pl-0 pr-0 mt-4`,
   footerText: tw`text-white text-base`,
   tableMain: {borderWidth: 1, borderColor: 'rgba(0,0,0,0.200)'},
+  noStyle: tw`h-64 text-center text-xl text-gray-400 pt-24 mt-10`,
 });
 
 export default styles;

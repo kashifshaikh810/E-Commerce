@@ -45,6 +45,7 @@ const OrdersMarkup = props => {
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="Home" />
+
       <ScrollView
         style={styles.scrollView}
         refreshControl={
@@ -60,25 +61,29 @@ const OrdersMarkup = props => {
               style={styles.head}
               textStyle={styles.headerText}
             />
-            {rows.map((rowData, index) => (
-              <TableWrapper key={index} style={styles.row}>
-                {rowData.map((cellData, cellIndex) => (
-                  <Cell
-                    key={cellIndex}
-                    data={
-                      cellIndex === 4
-                        ? element(cellData, index, rowData)
-                        : cellData
-                    }
-                    textStyle={[
-                      styles.text,
-                      cellData === 'Processing' && {color: 'red'},
-                      cellData === 'Delivered' && {color: 'green'},
-                    ]}
-                  />
-                ))}
-              </TableWrapper>
-            ))}
+            {props.orders.length === 0 ? (
+              <Text style={styles.noStyle}>No Orders yet</Text>
+            ) : (
+              rows.map((rowData, index) => (
+                <TableWrapper key={index} style={styles.row}>
+                  {rowData.map((cellData, cellIndex) => (
+                    <Cell
+                      key={cellIndex}
+                      data={
+                        cellIndex === 4
+                          ? element(cellData, index, rowData)
+                          : cellData
+                      }
+                      textStyle={[
+                        styles.text,
+                        cellData === 'Processing' && {color: 'red'},
+                        cellData === 'Delivered' && {color: 'green'},
+                      ]}
+                    />
+                  ))}
+                </TableWrapper>
+              ))
+            )}
           </Table>
         </View>
       </ScrollView>
