@@ -20,6 +20,7 @@ import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AllProductsMarkup = props => {
   const headerRow = ['Product ID', 'Name', 'Stock', 'Price', 'Actions'];
+  let param = props?.route?.params?.backRouteName;
 
   const rows = [];
 
@@ -50,7 +51,7 @@ const AllProductsMarkup = props => {
   );
   return (
     <View style={styles.container}>
-      <Header {...props} backRouteName="Home" />
+      <Header {...props} backRouteName={param ? param : 'Home'} />
 
       <DashboardTopBar {...props} />
 

@@ -5,9 +5,11 @@ import Header from '../../../components/Layouts/Header/Header';
 import DashboardTopBar from '../../../components/materials/DashboardTopBar/DashboardTopBar';
 
 const AllUsersMarkup = props => {
+  let param = props?.route?.params?.backRouteName;
+
   return (
     <View style={styles.container}>
-      <Header {...props} backRouteName="Home" />
+      <Header {...props} backRouteName={param ? param : 'Home'} />
 
       <DashboardTopBar {...props} />
 

@@ -11,51 +11,7 @@ import Header from '../../../components/Layouts/Header/Header';
 import DashboardTopBar from '../../../components/materials/DashboardTopBar/DashboardTopBar';
 import {LineChart, PieChart} from 'react-native-chart-kit';
 
-const chartConfigs = [
-  {
-    color: (opacity = 1) => `rgba(26, 255, 223, ${opacity})`,
-  },
-];
-
-const pieChartData = [
-  {
-    name: 'Out of Stock',
-    stock: 20,
-    color: 'tomato',
-    legendFontColor: '#7F7F7F',
-    legendFontSize: 14,
-  },
-  {
-    name: 'InStock',
-    stock: 10,
-    color: 'green',
-    legendFontColor: '#7F7F7F',
-    legendFontSize: 14,
-  },
-];
-
 const DashboardMarkup = props => {
-  const circleData = [
-    {
-      title: 'Products',
-      backgroundColor: 'rgb(255, 110, 110)',
-      textColor: 'rgb(255, 255, 255)',
-      quantity: 2,
-    },
-    {
-      title: 'Orders',
-      backgroundColor: 'lightgreen',
-      textColor: 'rgb(0, 0, 0)',
-      quantity: 4,
-    },
-    {
-      title: 'Users',
-      backgroundColor: 'lightblue',
-      textColor: 'rgb(255, 255, 255)',
-      quantity: 6,
-    },
-  ];
-
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="Home" />
@@ -74,13 +30,14 @@ const DashboardMarkup = props => {
             <Text style={styles.totalAmountText}>$40432</Text>
           </View>
 
-          {circleData.map((item, index) => (
+          {props.circleData.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={[
                 styles.circleContainer,
                 {backgroundColor: item.backgroundColor},
-              ]}>
+              ]}
+              onPress={item.onPress}>
               <View style={styles.circleContent}>
                 <Text style={[styles.circleTitle, {color: item.textColor}]}>
                   {item.title}
@@ -92,7 +49,7 @@ const DashboardMarkup = props => {
             </TouchableOpacity>
           ))}
 
-          {chartConfigs.map(chartConfig => {
+          {props.chartConfigs.map(chartConfig => {
             const graphStyle = {
               marginVertical: 25,
               ...chartConfig.style,
@@ -145,7 +102,7 @@ const DashboardMarkup = props => {
                   }}
                 />
                 <PieChart
-                  data={pieChartData}
+                  data={props.pieChartData}
                   height={height}
                   width={width}
                   chartConfig={chartConfig}
