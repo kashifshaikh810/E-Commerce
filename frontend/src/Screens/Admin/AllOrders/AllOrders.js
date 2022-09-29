@@ -6,6 +6,7 @@ import {clearErrors, getAdminOrders} from '../../../redux/actions/ordersAction';
 
 const AllOrders = props => {
   const dispatch = useDispatch();
+  let paramFromAdminOrdersDetails = props?.route?.params?.success;
   const {loading, orders, error} = useSelector(state => state.adminOrders);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -34,7 +35,7 @@ const AllOrders = props => {
       orders={orders}
       onRefresh={onRefresh}
       refreshing={refreshing}
-      loading={loading}
+      loading={paramFromAdminOrdersDetails ? false : loading}
     />
   );
 };

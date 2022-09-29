@@ -12,6 +12,10 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  UPDATE_ORDER_STATUS_FAIL,
+  UPDATE_ORDER_STATUS_REQUEST,
+  UPDATE_ORDER_STATUS_RESET,
+  UPDATE_ORDER_STATUS_SUCCESS,
 } from '../constants/ordersConstants';
 
 export const myOrdersReducer = (state = {orders: []}, action) => {
@@ -119,6 +123,40 @@ export const adminOrdersReducer = (state = {orders: []}, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_ORDER_STATUS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_ORDER_STATUS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_ORDER_STATUS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_ORDER_STATUS_RESET:
+      return {
+        ...state,
+        isUpdated: false,
       };
     case CLEAR_ERRORS:
       return {

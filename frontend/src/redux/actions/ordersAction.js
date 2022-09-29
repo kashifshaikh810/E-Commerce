@@ -13,6 +13,9 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  UPDATE_ORDER_STATUS_FAIL,
+  UPDATE_ORDER_STATUS_REQUEST,
+  UPDATE_ORDER_STATUS_SUCCESS,
 } from '../constants/ordersConstants';
 
 export const getMyOrders = () => async (dispatch, getState) => {
@@ -86,6 +89,25 @@ export const getAdminOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_ORDERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateOrder = (id, status) => async (dispatch, getState) => {
+  try {
+    dispatch({type: UPDATE_ORDER_STATUS_REQUEST});
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/order/${id}`;
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const {data} = await axios.put(link, status, config);
+
+    dispatch({type: UPDATE_ORDER_STATUS_SUCCESS, payload: data.success});
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ORDER_STATUS_FAIL,
       payload: error.response.data.message,
     });
   }

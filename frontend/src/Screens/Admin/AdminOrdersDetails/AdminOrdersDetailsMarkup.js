@@ -7,6 +7,57 @@ import {Picker} from '@react-native-picker/picker';
 import AccountTreeIcon from 'react-native-vector-icons/MaterialIcons';
 
 const AdminOrdersDetailsMarkup = props => {
+  const renderProcessOrderSection = () => {
+    if (props?.order?.ordersStatus === 'Delivered') {
+      return null;
+    } else {
+      return (
+        <>
+          <View style={styles.divider} />
+          <View style={styles.processContainer}>
+            <View style={styles.processMain}>
+              <Text style={styles.processText}>Process Order</Text>
+            </View>
+            <View style={[Platform.OS === 'android' && styles.picker]}>
+              <AccountTreeIcon
+                name="account-tree"
+                size={20}
+                color="black"
+                style={
+                  Platform.OS === 'ios' ? styles.iOSIconTwo : styles.iconTwo
+                }
+              />
+              <Picker
+                selectedValue={props.status}
+                onValueChange={(itemValue, itemIndex) =>
+                  props.setStatus(itemValue)
+                }
+                mode="dropdown">
+                <Picker.Item label="Choose Category" value={null} />
+                {props?.order?.ordersStatus === 'Processing' && (
+                  <Picker.Item label="Shipped" value="Shipped" />
+                )}
+                {props?.order?.ordersStatus === 'Shipped' && (
+                  <Picker.Item label="Delivered" value="Delivered" />
+                )}
+              </Picker>
+            </View>
+
+            <View>
+              <MyButton
+                title="PROCESS"
+                size="lg"
+                buttonStyle={styles.buttonStyle}
+                disabled={props.loading}
+                onPress={() => props.updateUserOrder()}
+              />
+            </View>
+          </View>
+        </>
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="AllOrders" />
@@ -113,41 +164,7 @@ const AdminOrdersDetailsMarkup = props => {
             )}
           />
 
-          <View style={styles.divider} />
-
-          <View style={styles.processContainer}>
-            <View style={styles.processMain}>
-              <Text style={styles.processText}>Process Order</Text>
-            </View>
-            <View style={[Platform.OS === 'android' && styles.picker]}>
-              <AccountTreeIcon
-                name="account-tree"
-                size={20}
-                color="black"
-                style={
-                  Platform.OS === 'ios' ? styles.iOSIconTwo : styles.iconTwo
-                }
-              />
-              <Picker
-                selectedValue=""
-                onValueChange={(itemValue, itemIndex) => console.log(itemValue)}
-                mode="dropdown">
-                <Picker.Item label="Choose Category" value="" />
-                <Picker.Item label="Shipped" value="Shipped" />
-                {props?.order?.ordersStatus === 'Shipped' && (
-                  <Picker.Item label="Delivered" value="Delivered" />
-                )}
-              </Picker>
-            </View>
-
-            <View>
-              <MyButton
-                title="PROCESS"
-                size="lg"
-                buttonStyle={styles.buttonStyle}
-              />
-            </View>
-          </View>
+          {renderProcessOrderSection()}
         </View>
       </ScrollView>
     </View>

@@ -101,6 +101,7 @@ const AllOrdersMarkup = props => {
                         styles.text,
                         cellData === 'Processing' && {color: 'red'},
                         cellData === 'Delivered' && {color: 'green'},
+                        cellData === 'Shipped' && {color: 'red'},
                       ]}
                       data={
                         cellIndex === 4
