@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  ADMIN_ORDERS_FAIL,
+  ADMIN_ORDERS_REQUEST,
+  ADMIN_ORDERS_SUCCESS,
   ALL_MY_ORDERS_FAIL,
   ALL_MY_ORDERS_REQUEST,
   ALL_MY_ORDERS_SUCCESS,
@@ -66,6 +69,23 @@ export const createNewOrder = orderData => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAdminOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({type: ADMIN_ORDERS_REQUEST});
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/orders`;
+
+    const {data} = await axios.get(link);
+
+    dispatch({type: ADMIN_ORDERS_SUCCESS, payload: data.orders});
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ORDERS_FAIL,
       payload: error.response.data.message,
     });
   }

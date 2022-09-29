@@ -1,10 +1,39 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAdminOrders} from '../../../redux/actions/ordersAction';
 import {getAdminProducts} from '../../../redux/actions/productAction';
 import DashboardMarkup from './DashboardMarkup';
 
 const Dashboard = props => {
+  const [refreshing, setRefreshing] = useState(false);
+
   const dispatch = useDispatch();
+  const {products} = useSelector(state => state.adminProducts);
+  const {orders} = useSelector(state => state.adminOrders);
+
+  // outofstock
+  let outOfStock = 0;
+  products &&
+    products.forEach(item => {
+      if (item.Stock === 0) {
+        outOfStock += 1;
+      }
+    });
+
+  // total amount
+  let totalAmount = 0;
+  orders &&
+    orders.forEach(item => {
+      totalAmount = item.totalPrice;
+    });
+
+  const renderLineChartData = () => {
+    if (totalAmount) {
+      return {
+        data: [0, totalAmount],
+      };
+    }
+  };
 
   const chartConfigs = [
     {
@@ -15,14 +44,14 @@ const Dashboard = props => {
   const pieChartData = [
     {
       name: 'Out of Stock',
-      stock: 20,
+      stock: outOfStock && outOfStock,
       color: 'tomato',
       legendFontColor: '#7F7F7F',
       legendFontSize: 14,
     },
     {
       name: 'InStock',
-      stock: 10,
+      stock: products && products?.length - outOfStock,
       color: 'green',
       legendFontColor: '#7F7F7F',
       legendFontSize: 14,
@@ -34,7 +63,7 @@ const Dashboard = props => {
       title: 'Products',
       backgroundColor: 'rgb(255, 110, 110)',
       textColor: 'rgb(255, 255, 255)',
-      quantity: 2,
+      quantity: products && products?.length,
       onPress: () => {
         dispatch(getAdminProducts());
         props.navigation.navigate('AllProducts', {backRouteName: 'Dashboard'});
@@ -44,7 +73,7 @@ const Dashboard = props => {
       title: 'Orders',
       backgroundColor: 'lightgreen',
       textColor: 'rgb(0, 0, 0)',
-      quantity: 4,
+      quantity: orders && orders?.length,
       onPress: () => {
         props.navigation.navigate('AllOrders', {backRouteName: 'Dashboard'});
       },
@@ -60,12 +89,28 @@ const Dashboard = props => {
     },
   ];
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getAdminProducts());
+    dispatch(getAdminOrders());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    dispatch(getAdminProducts());
+    dispatch(getAdminOrders());
+  }, [dispatch]);
+
   return (
     <DashboardMarkup
       {...props}
       chartConfigs={chartConfigs}
       pieChartData={pieChartData}
       circleData={circleData}
+      renderLineChartData={renderLineChartData}
+      totalAmount={totalAmount}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
     />
   );
 };

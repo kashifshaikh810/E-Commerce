@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import styles from './styles';
 import Header from '../../../components/Layouts/Header/Header';
@@ -18,7 +19,14 @@ const DashboardMarkup = props => {
 
       <DashboardTopBar {...props} />
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={props.refreshing}
+            onRefresh={props.onRefresh}
+          />
+        }>
         <View style={styles.dashboardContent}>
           <View style={styles.dashboardHeadingContainer}>
             <Text style={styles.dashboardHeadingText}>Dashboard</Text>
@@ -27,7 +35,9 @@ const DashboardMarkup = props => {
           <View style={styles.totalAmountContainer}>
             <Text style={styles.totalAmountText}>Total Amount</Text>
             <View style={styles.divider} />
-            <Text style={styles.totalAmountText}>$40432</Text>
+            <Text style={styles.totalAmountText}>
+              ${props?.totalAmount && props?.totalAmount}
+            </Text>
           </View>
 
           {props.circleData.map((item, index) => (
@@ -61,11 +71,7 @@ const DashboardMarkup = props => {
                 <LineChart
                   data={{
                     labels: ['Initial Amount', 'Amount Earned'],
-                    datasets: [
-                      {
-                        data: [0, 25000],
-                      },
-                    ],
+                    datasets: [props.renderLineChartData()],
                   }}
                   width={Dimensions.get('window').width * 1.6} // from react-native
                   height={400}
