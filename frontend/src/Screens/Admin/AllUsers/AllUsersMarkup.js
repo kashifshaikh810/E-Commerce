@@ -38,9 +38,7 @@ const AllUsersMarkup = props => {
         <EditIcon name="edit" size={25} color="#b3b3b3" style={styles.icon} />
       </TouchableOpacity>
 
-      <TouchableOpacity
-      // onPress={() => props.deleteProductOnPressHandler(rowData)}
-      >
+      <TouchableOpacity onPress={() => props.deleteUserOnPressHandler(rowData)}>
         <DeleteIcon
           name="delete"
           size={25}

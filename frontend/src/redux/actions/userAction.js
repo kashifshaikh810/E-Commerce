@@ -23,6 +23,10 @@ import {
   ADMIN_USERS_REQUEST,
   ADMIN_USERS_SUCCESS,
   ADMIN_USERS_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  LOGOUT_REQUEST,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -121,7 +125,7 @@ export const loadUser = () => async dispatch => {
 export const logOut = () => async dispatch => {
   try {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: LOGOUT_REQUEST,
     });
 
     let requestURL = 'http://192.168.100.4:5000/api/v1/logout';
@@ -202,6 +206,28 @@ export const getAdminUsers = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: ADMIN_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const adminDeleteUser = id => async dispatch => {
+  try {
+    dispatch({
+      type: DELETE_USER_REQUEST,
+    });
+
+    let requestURL = `http://192.168.100.4:5000/api/v1/admin/user/${id}`;
+
+    const {data} = await axios.delete(requestURL);
+
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_USER_FAIL,
       payload: error.response.data.message,
     });
   }

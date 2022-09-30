@@ -14,6 +14,7 @@ import {
 } from './reducers/productReducer';
 import {
   adminUsersReducer,
+  deleteUserReducer,
   profileReducer,
   userReducer,
 } from './reducers/userReducer';
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   adminUsers: adminUsersReducer,
   updateOrderStatus: updateOrderReducer,
   deleteUserOrder: deleteOrderReducer,
+  deleteUser: deleteUserReducer,
 });
 
 let initialState = {};
