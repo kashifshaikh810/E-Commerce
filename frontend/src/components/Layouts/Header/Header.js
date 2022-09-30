@@ -44,6 +44,7 @@ const Header = props => {
   };
 
   const logOutUser = () => {
+    props.navigation.navigate('SignIn');
     dispatch(logOut());
   };
 
