@@ -23,7 +23,9 @@ import {
 
 const SignUp = props => {
   const dispatch = useDispatch();
-  const {loading, error, success} = useSelector(state => state.userRegister);
+  const {loading, error, success, user, isAuthenticated} = useSelector(
+    state => state.userRegister,
+  );
   const [imagePreview, setImagePreview] = useState('');
   const [avatar, setAvatar] = useState('');
   const [name, setName] = useState('');
@@ -80,7 +82,7 @@ const SignUp = props => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (success && user !== null && isAuthenticated === true) {
       setName('');
       setEmail('');
       setPassword('');

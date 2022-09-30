@@ -19,7 +19,7 @@ import {
 
 const SignIn = props => {
   const dispatch = useDispatch();
-  const {error, loading, success, user} = useSelector(
+  const {isAuthenticated, error, loading, success, user} = useSelector(
     state => state.userRegister,
   );
   const [email, setEmail] = useState('');
@@ -47,7 +47,7 @@ const SignIn = props => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (success && user !== null && isAuthenticated === true) {
       setEmail('');
       setPassword('');
       showMessage({
@@ -56,10 +56,6 @@ const SignIn = props => {
         type: 'success',
       });
       dispatch(successClear());
-    }
-
-    if (user !== null) {
-      props.navigation.navigate('Profile');
     }
   }, [error, dispatch, success, props.navigation, user]);
 
