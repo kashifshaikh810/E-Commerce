@@ -19,7 +19,7 @@ const ModalLoader = props => {
 export default ModalLoader;
 
 const styles = StyleSheet.create({
-  loadingDialog: tw`bg-gray-200 h-64 w-11/12`,
+  loadingDialog: tw`flex-1 w-full bg-gray-200`,
   loadingText: tw`text-2xl uppercase text-gray-400`,
   bgTransparent: tw`bg-transparent`,
 });
