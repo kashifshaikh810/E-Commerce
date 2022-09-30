@@ -12,6 +12,8 @@ import PostAddIcon from 'react-native-vector-icons/MaterialIcons';
 import AddIcon from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {getAdminProducts} from '../../../redux/actions/productAction';
+import {getAdminOrders} from '../../../redux/actions/ordersAction';
+import {getAdminUsers} from '../../../redux/actions/userAction';
 
 const DashboardTopBar = props => {
   const [showProductsList, setShowProductsList] = useState(false);
@@ -30,6 +32,9 @@ const DashboardTopBar = props => {
       icon: <DashboardIcon name="dashboard" size={25} color="#b3b3b3" />,
       onPress: () => {
         props.navigation.navigate('Dashboard');
+        dispatch(getAdminProducts());
+        dispatch(getAdminOrders());
+        dispatch(getAdminUsers());
         setShowProductsList(false);
         scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
@@ -45,6 +50,9 @@ const DashboardTopBar = props => {
       ),
       onPress: () => {
         props.navigation.navigate('Dashboard');
+        dispatch(getAdminProducts());
+        dispatch(getAdminOrders());
+        dispatch(getAdminUsers());
         setShowProductsList(false);
         scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
@@ -54,6 +62,7 @@ const DashboardTopBar = props => {
       icon: <ListAltIcon name="list-alt" size={25} color="#b3b3b3" />,
       onPress: () => {
         props.navigation.navigate('AllOrders');
+        dispatch(getAdminOrders());
         setShowProductsList(false);
         scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
@@ -63,6 +72,7 @@ const DashboardTopBar = props => {
       icon: <PeopleIcon name="people" size={25} color="#b3b3b3" />,
       onPress: () => {
         props.navigation.navigate('AllUsers');
+        dispatch(getAdminUsers());
         setShowProductsList(false);
         scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
       },
