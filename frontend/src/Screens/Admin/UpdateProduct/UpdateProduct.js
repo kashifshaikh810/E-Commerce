@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import CreateProductMarkup from './UpdateProductMarkup';
+import UpdateProductMarkup from './UpdateProductMarkup';
 import DocumentPicker from 'react-native-document-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import {useDispatch, useSelector} from 'react-redux';
@@ -32,7 +32,11 @@ const UpdateProduct = props => {
     isUpdated,
     error: updateError,
   } = useSelector(state => state.deleteProduct);
-  const {product, error} = useSelector(state => state.productDetails);
+  const {
+    loading: detailsLoading,
+    product,
+    error,
+  } = useSelector(state => state.productDetails);
 
   const openFile = async () => {
     try {
@@ -114,6 +118,7 @@ const UpdateProduct = props => {
       });
       dispatch(getAdminProducts());
       dispatch(getAllProducts());
+      dispatch(productDetails(productId));
       setName('');
       setPrice('');
       setDescription('');
@@ -135,7 +140,7 @@ const UpdateProduct = props => {
   ]);
 
   return (
-    <CreateProductMarkup
+    <UpdateProductMarkup
       {...props}
       openFile={openFile}
       name={name}
@@ -152,7 +157,7 @@ const UpdateProduct = props => {
       createOnPressHandler={createOnPressHandler}
       imagePreview={imagePreview}
       imagePreviewLocal={imagePreviewLocal}
-      loading={loading}
+      loading={loading ? loading : detailsLoading}
     />
   );
 };
