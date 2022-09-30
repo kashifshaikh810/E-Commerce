@@ -25,7 +25,6 @@ const DashboardTopBar = props => {
 
   const scrollViewRef = useRef();
 
-  console.log(scrollViewRef);
   const data = [
     {
       name: 'Dashboard',
