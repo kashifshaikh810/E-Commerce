@@ -71,7 +71,11 @@ const AllOrders = props => {
       onRefresh={onRefresh}
       refreshing={refreshing}
       loading={
-        paramFromAdminOrdersDetails ? false : loading ? loading : deleteLoading
+        paramFromAdminOrdersDetails
+          ? false
+          : loading || paramFromAdminOrdersDetails
+          ? false
+          : deleteLoading
       }
       deleteOrderOnPressHandler={deleteOrderOnPressHandler}
     />
