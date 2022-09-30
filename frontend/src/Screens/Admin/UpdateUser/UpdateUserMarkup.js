@@ -84,7 +84,7 @@ const UpdateUserMarkup = props => {
             <MyButton
               title="UPDATE"
               buttonStyle={styles.buttonStyle}
-              onPress={() => {}}
+              onPress={() => props.updateUserOnPressHandler()}
               size="lg"
               disabled={!props.name || !props.email || props.role === 'null'}
             />

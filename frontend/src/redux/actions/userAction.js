@@ -30,6 +30,9 @@ import {
   USER_DETAIL_REQUEST,
   USER_DETAIL_SUCCESS,
   USER_DETAIL_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -253,6 +256,30 @@ export const getUserDetails = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: USER_DETAIL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateUserDetails = (id, userData) => async dispatch => {
+  try {
+    dispatch({
+      type: UPDATE_USER_REQUEST,
+    });
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    let requestURL = `http://192.168.100.4:5000/api/v1/admin/user/${id}`;
+
+    const {data} = await axios.put(requestURL, userData, config);
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
       payload: error.response.data.message,
     });
   }
