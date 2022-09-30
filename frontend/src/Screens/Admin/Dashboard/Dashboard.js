@@ -69,6 +69,7 @@ const Dashboard = props => {
       textColor: 'rgb(0, 0, 0)',
       quantity: orders && orders?.length,
       onPress: () => {
+        dispatch(getAdminOrders());
         props.navigation.navigate('AllOrders', {backRouteName: 'Dashboard'});
       },
     },
@@ -78,6 +79,7 @@ const Dashboard = props => {
       textColor: 'rgb(255, 255, 255)',
       quantity: users && users?.length,
       onPress: () => {
+        dispatch(getAdminUsers());
         props.navigation.navigate('AllUsers', {backRouteName: 'Dashboard'});
       },
     },
