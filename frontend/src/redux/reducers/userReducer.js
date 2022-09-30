@@ -29,6 +29,9 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
   DELETE_USER_RESET,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAIL,
 } from '../constants/userConstants';
 
 export const userReducer = (state = {user: []}, action) => {
@@ -186,6 +189,36 @@ export const deleteUserReducer = (state = {}, action) => {
       return {
         ...state,
         isDeleted: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userDetailReducer = (state = {user: {}}, action) => {
+  switch (action.type) {
+    case USER_DETAIL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case USER_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {
