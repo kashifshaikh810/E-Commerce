@@ -1,10 +1,44 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import Header from '../../../components/Layouts/Header/Header';
 import DashboardTopBar from '../../../components/materials/DashboardTopBar/DashboardTopBar';
+import StarIcon from 'react-native-vector-icons/Entypo';
+import {Input} from '@rneui/themed';
+import MyButton from '../../../components/Layouts/Button/Button';
+import {
+  Table,
+  TableWrapper,
+} from '../../../components/materials/TableComponent/components/table.js';
+import {Cell} from '../../../components/materials/TableComponent/components/cell';
+import {Row} from '../../../components/materials/TableComponent/components/rows';
+import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AllReviewsMarkup = props => {
+  const headerRow = ['Product ID', 'Name', 'Stock', 'Price', 'Actions'];
+
+  const rows = [];
+
+  // props?.products &&
+  //   props?.products?.forEach((item, i) =>
+  rows.push(['dada', 'eerggre', 'grweeed', 'fwccweerrff', 'button']);
+  // ,
+  // );
+
+  const element = (data, index, rowData) => (
+    <View style={styles.elementContainer}>
+      <TouchableOpacity
+        onPress={() => props.deleteProductOnPressHandler(rowData)}>
+        <DeleteIcon
+          name="delete"
+          size={25}
+          color="#b3b3b3"
+          style={styles.icon}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Header {...props} backRouteName="Home" />
@@ -12,7 +46,63 @@ const AllReviewsMarkup = props => {
       <DashboardTopBar {...props} />
 
       <ScrollView style={styles.scrollView}>
-        <Text>AllReviewsMarkup</Text>
+        <View>
+          <View style={styles.allReviewsHeadingContainer}>
+            <Text
+              style={[
+                styles.allReviewsHeadingText,
+                {fontFamily: 'AbrilFatface-Regular'},
+              ]}>
+              All Reviews
+            </Text>
+          </View>
+
+          <View style={styles.inputsSectionContainer}>
+            <View style={styles.marginTop}>
+              <Input
+                style={[styles.input, {fontFamily: 'DancingScript-Regular'}]}
+                placeholder="Product id"
+                leftIcon={
+                  <StarIcon name="star" size={25} color="rgba(0,0,0,0.623)" />
+                }
+                value={props.productId}
+                onChangeText={props.setProductId}
+              />
+            </View>
+          </View>
+
+          <MyButton
+            title="SEARCH"
+            buttonStyle={styles.buttonStyle}
+            onPress={() => props.createOnPressHandler()}
+            size="lg"
+          />
+
+          <View style={styles.table}>
+            <Table borderStyle={styles.tableMain}>
+              <Row
+                data={headerRow}
+                style={styles.head}
+                textStyle={styles.headerText}
+              />
+              {rows.map((rowData, index) => (
+                <TableWrapper key={index} style={styles.row}>
+                  {rowData.map((cellData, cellIndex) => (
+                    <Cell
+                      key={cellIndex}
+                      textStyle={styles.text}
+                      data={
+                        cellIndex === 4
+                          ? element(cellData, index, rowData)
+                          : cellData
+                      }
+                    />
+                  ))}
+                </TableWrapper>
+              ))}
+            </Table>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
