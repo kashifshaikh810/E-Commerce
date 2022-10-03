@@ -15,15 +15,14 @@ import {Row} from '../../../components/materials/TableComponent/components/rows'
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AllReviewsMarkup = props => {
-  const headerRow = ['Product ID', 'Name', 'Stock', 'Price', 'Actions'];
+  const headerRow = ['Review ID', 'User', 'Comment', 'Rating', 'Actions'];
 
   const rows = [];
 
-  // props?.products &&
-  //   props?.products?.forEach((item, i) =>
-  rows.push(['dada', 'eerggre', 'grweeed', 'fwccweerrff', 'button']);
-  // ,
-  // );
+  props?.reviews &&
+    props?.reviews?.forEach((item, i) =>
+      rows.push([item._id, item.name, item.comment, item.rating, 'button']),
+    );
 
   const element = (data, index, rowData) => (
     <View style={styles.elementContainer}>
@@ -66,7 +65,7 @@ const AllReviewsMarkup = props => {
                   <StarIcon name="star" size={25} color="rgba(0,0,0,0.623)" />
                 }
                 value={props.productId}
-                onChangeText={props.setProductId}
+                onChangeText={props.productOnChangeText}
               />
             </View>
           </View>
@@ -74,34 +73,42 @@ const AllReviewsMarkup = props => {
           <MyButton
             title="SEARCH"
             buttonStyle={styles.buttonStyle}
-            onPress={() => props.createOnPressHandler()}
+            onPress={() => props.searchOnPressHandler()}
             size="lg"
           />
 
-          <View style={styles.table}>
-            <Table borderStyle={styles.tableMain}>
-              <Row
-                data={headerRow}
-                style={styles.head}
-                textStyle={styles.headerText}
-              />
-              {rows.map((rowData, index) => (
-                <TableWrapper key={index} style={styles.row}>
-                  {rowData.map((cellData, cellIndex) => (
-                    <Cell
-                      key={cellIndex}
-                      textStyle={styles.text}
-                      data={
-                        cellIndex === 4
-                          ? element(cellData, index, rowData)
-                          : cellData
-                      }
-                    />
-                  ))}
-                </TableWrapper>
-              ))}
-            </Table>
-          </View>
+          {props?.reviews?.length === 0 ? (
+            <Text> No Reviews Found</Text>
+          ) : (
+            <View style={styles.table}>
+              <Table borderStyle={styles.tableMain}>
+                <Row
+                  data={headerRow}
+                  style={styles.head}
+                  textStyle={styles.headerText}
+                />
+                {rows.map((rowData, index) => (
+                  <TableWrapper key={index} style={styles.row}>
+                    {rowData.map((cellData, cellIndex) => (
+                      <Cell
+                        key={cellIndex}
+                        textStyle={[
+                          styles.text,
+                          cellData >= 3 && rowData[3] >= 3 && {color: 'green'},
+                          cellData <= 3 && rowData[3] <= 3 && {color: 'red'},
+                        ]}
+                        data={
+                          cellIndex === 4
+                            ? element(cellData, index, rowData)
+                            : cellData
+                        }
+                      />
+                    ))}
+                  </TableWrapper>
+                ))}
+              </Table>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

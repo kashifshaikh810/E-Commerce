@@ -31,6 +31,10 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAIL,
   UPDATE_PRODUCT_RESET,
+  ALL_REVIEWS_REQUEST,
+  ALL_REVIEWS_SUCCESS,
+  ALL_REVIEWS_FAIL,
+  CLEAR_REVIEWS,
 } from '../constants/productConstants';
 
 const productsState = {
@@ -272,6 +276,37 @@ export const deleteProductReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allAdminReviewReducer = (state = {reviews: []}, action) => {
+  switch (action.type) {
+    case ALL_REVIEWS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ALL_REVIEWS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        reviews: action.payload,
+      };
+    case ALL_REVIEWS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        reviews: [],
       };
     case CLEAR_ERRORS:
       return {

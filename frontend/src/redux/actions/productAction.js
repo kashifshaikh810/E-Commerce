@@ -29,6 +29,10 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAIL,
   UPDATE_PRODUCT_RESET,
+  ALL_REVIEWS_REQUEST,
+  ALL_REVIEWS_SUCCESS,
+  ALL_REVIEWS_FAIL,
+  CLEAR_REVIEWS,
 } from '../constants/productConstants';
 
 export const getAllProducts =
@@ -270,6 +274,26 @@ export const updateProduct = (id, productData) => async dispatch => {
     dispatch({
       type: UPDATE_PRODUCT_FAIL,
       payload: error.response.data.message,
+    });
+  }
+};
+
+export const getAllReviews = id => async dispatch => {
+  try {
+    dispatch({type: ALL_REVIEWS_REQUEST});
+
+    let link = `http://192.168.100.4:5000/api/v1/admin/reviews?id=${id}`;
+
+    const {data} = await axios.get(link);
+
+    dispatch({
+      type: ALL_REVIEWS_SUCCESS,
+      payload: data.reviews,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_REVIEWS_FAIL,
+      payload: error?.response?.data?.message || error?.message,
     });
   }
 };
