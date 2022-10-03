@@ -26,8 +26,7 @@ const AllReviewsMarkup = props => {
 
   const element = (data, index, rowData) => (
     <View style={styles.elementContainer}>
-      <TouchableOpacity
-        onPress={() => props.deleteProductOnPressHandler(rowData)}>
+      <TouchableOpacity onPress={() => {}}>
         <DeleteIcon
           name="delete"
           size={25}
@@ -78,7 +77,7 @@ const AllReviewsMarkup = props => {
           />
 
           {props?.reviews?.length === 0 ? (
-            <Text> No Reviews Found</Text>
+            <Text style={{textAlign: 'center'}}>No Reviews Found</Text>
           ) : (
             <View style={styles.table}>
               <Table borderStyle={styles.tableMain}>
