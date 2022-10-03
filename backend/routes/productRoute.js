@@ -32,7 +32,7 @@ router.route("/products/:id").get(getProductsDetails);
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 
 router
-  .route("/reviews")
+  .route("/admin/reviews")
   .get(getProductReviews)
   .delete(isAuthenticatedUser, deleteReview);
 
