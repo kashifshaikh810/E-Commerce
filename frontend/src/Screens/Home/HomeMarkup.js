@@ -11,9 +11,10 @@ import {
 import Footer from '../../components/Layouts/Footer/Footer';
 import Header from '../../components/Layouts/Header/Header';
 import styles from './styles';
-import {Card, Button, Skeleton} from '@rneui/base';
+import {Card, Skeleton} from '@rneui/base';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MyButton from '../../components/Layouts/Button/Button';
 
 const HomeMarkup = props => {
   return (
@@ -29,7 +30,7 @@ const HomeMarkup = props => {
           />
         }>
         <ImageBackground
-          source={require('../../components/images/cover.jpg')}
+          source={require('../../components/images/ecommerce.jpeg')}
           style={styles.imageBackground}>
           <View style={styles.imageBackgroundContentContainer}>
             <Text
@@ -47,9 +48,11 @@ const HomeMarkup = props => {
               FIND AMAZING PRODUCTS BELOW
             </Text>
 
-            <Button type="outline" onPress={() => props.scollPressHandler()}>
-              Scroll
-            </Button>
+            <MyButton
+              title="Scroll"
+              buttonStyle={styles.buttonStyle}
+              onPress={() => props.scollPressHandler()}
+            />
           </View>
         </ImageBackground>
         <View style={styles.featuredTextContainer}>

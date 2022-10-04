@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   imageBackground: tw`flex-1 h-64 mt-1.5`,
   imageBackgroundContentContainer: tw`flex-1 max-h-64 justify-around items-center`,
   findText: tw`text-white`,
+  buttonStyle: tw`w-8/12 p-1 self-center bg-gray-400`,
   featuredTextContainer: tw`flex-1 justify-center items-center pt-10`,
   featuredText: tw`text-xl border-b-2 border-gray-200 w-8/12 text-center pb-2`,
   cardContainer: tw`mb-10`,
