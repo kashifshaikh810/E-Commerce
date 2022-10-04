@@ -26,7 +26,7 @@ const AllReviewsMarkup = props => {
 
   const element = (data, index, rowData) => (
     <View style={styles.elementContainer}>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => props.deleteReview(rowData)}>
         <DeleteIcon
           name="delete"
           size={25}
