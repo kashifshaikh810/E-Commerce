@@ -12,6 +12,7 @@ const MyButton = props => {
         title={props.title}
         loadingProps={props.color}
         disabled={props.loading || props.disabled}
+        type={props.type}
         onPress={() => props.onPress()}
       />
     </View>
