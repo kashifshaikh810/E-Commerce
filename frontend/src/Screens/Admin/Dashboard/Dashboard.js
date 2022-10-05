@@ -7,6 +7,7 @@ import DashboardMarkup from './DashboardMarkup';
 
 const Dashboard = props => {
   const [refreshing, setRefreshing] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState('');
 
   const dispatch = useDispatch();
   const {products} = useSelector(state => state.adminProducts);
@@ -39,14 +40,14 @@ const Dashboard = props => {
     {
       name: 'Out of Stock',
       stock: outOfStock && outOfStock,
-      color: 'tomato',
+      color: '#01a6b4',
       legendFontColor: '#7F7F7F',
       legendFontSize: 14,
     },
     {
       name: 'InStock',
       stock: products && products?.length - outOfStock,
-      color: 'green',
+      color: '#6800b4',
       legendFontColor: '#7F7F7F',
       legendFontSize: 14,
     },
@@ -108,6 +109,8 @@ const Dashboard = props => {
       totalAmount={totalAmount}
       onRefresh={onRefresh}
       refreshing={refreshing}
+      scrollPosition={scrollPosition}
+      setScrollPosition={setScrollPosition}
     />
   );
 };

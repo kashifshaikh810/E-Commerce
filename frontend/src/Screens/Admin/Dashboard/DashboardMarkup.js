@@ -17,9 +17,10 @@ const DashboardMarkup = props => {
     <View style={styles.container}>
       <Header {...props} backRouteName="Home" />
 
-      <DashboardTopBar {...props} />
+      {props.scrollPosition === 0 && <DashboardTopBar {...props} />}
 
       <ScrollView
+        onScroll={e => props.setScrollPosition(e.nativeEvent.contentOffset.y)}
         style={styles.scrollView}
         refreshControl={
           <RefreshControl
