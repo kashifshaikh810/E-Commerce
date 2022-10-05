@@ -21,12 +21,14 @@ const user = require("./routes/userRoute");
 const order = require("./routes/orderRoute");
 const processPayment = require("./routes/paymentRoute");
 const country = require("./routes/countryRoute");
+const cart = require("./routes/cartRoute");
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", processPayment);
 app.use("/api/v1", country);
+app.use("/api/v1", cart);
 
 // middleware for Errors
 app.use(errorMiddleware);
