@@ -1,4 +1,14 @@
-export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_TO_CART_REQUEST = 'ADD_TO_CART_REQUEST';
+export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
+export const ADD_TO_CART_FAIL = 'ADD_TO_CART_FAIL';
+export const ADD_TO_CART_RESET = 'ADD_TO_CART_RESET';
+
+export const GET_TO_CART_REQUEST = 'GET_TO_CART_REQUEST';
+export const GET_TO_CART_SUCCESS = 'GET_TO_CART_SUCCESS';
+export const GET_TO_CART_FAIL = 'GET_TO_CART_FAIL';
+
 export const REMOVE_TO_CART = 'REMOVE_TO_CART';
-export const GET_TO_CART = 'GET_TO_CART';
+
 export const SAVE_SHIPPING_INFO = 'SAVE_SHIPPING_INFO';
+
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';

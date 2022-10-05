@@ -6,7 +6,9 @@ import CartMarkup from './CartMarkup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   addItemsToCart,
+  clearErrors,
   getCart,
+  getCartItem,
   removeToCart,
 } from '../../redux/actions/cartAction';
 import {showMessage} from 'react-native-flash-message';
@@ -20,15 +22,26 @@ const Cart = props => {
   const [data, setData] = useState({});
 
   const dispatch = useDispatch();
-  const {cartItems} = useSelector(state => state.cart);
+  const {loading, cartItems, error} = useSelector(state => state.cart);
 
   useEffect(() => {
     Dimensions.addEventListener('change', () => {
       setOrientation(Orientation.isPortrait() ? 'portrait' : 'landscape');
     });
+
+    if (error) {
+      showMessage({
+        message: 'Error',
+        description: error,
+        type: 'danger',
+      });
+      dispatch(clearErrors());
+    }
+
     getCartItemsData();
     getShippingInfoData();
-  }, [AsyncStorage]);
+    dispatch(getCartItem());
+  }, [dispatch, AsyncStorage, error]);
 
   const getCartItemsData = async key => {
     try {
@@ -107,7 +120,8 @@ const Cart = props => {
       onRefresh={onRefresh}
       refreshing={refreshing}
       checkOutPressHandler={checkOutPressHandler}
-      cartItems={cartItems?.length === 0 ? [] : cartItems}
+      cartItems={cartItems}
+      // loading={loading ? loading : false}
     />
   );
 };

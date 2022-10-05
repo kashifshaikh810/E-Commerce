@@ -15,7 +15,7 @@ import tw from 'tailwind-react-native-classnames';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import {getAdminUsers, logOut} from '../../../redux/actions/userAction';
-import {getCart} from '../../../redux/actions/cartAction';
+import {getCart, getCartItem} from '../../../redux/actions/cartAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalLoader from '../ModalLoader/ModalLoader';
 import {getAdminOrders} from '../../../redux/actions/ordersAction';
@@ -27,8 +27,8 @@ const Header = props => {
   const {loading, isAuthenticated, user} = useSelector(
     state => state.userRegister,
   );
-  const {cartItems} = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const {cartItems} = useSelector(state => state.cart);
   const route = useRoute();
 
   const openDrawer = () => {
@@ -103,25 +103,13 @@ const Header = props => {
   ];
 
   useEffect(() => {
-    getCartItemsData();
+    dispatch(getCartItem());
 
     if (isAuthenticated === false) {
       props.navigation.navigate('SignIn');
       setVisible(false);
     }
-  }, [isAuthenticated]);
-
-  const getCartItemsData = async key => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('cartItems');
-      const res = jsonValue != null ? JSON.parse(jsonValue) : [];
-      if (res !== null) {
-        dispatch(getCart(res));
-      }
-    } catch (e) {
-      console.log(e, 'err');
-    }
-  };
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     setRouteName(route.name);

@@ -1,6 +1,15 @@
 import {
   ADD_TO_CART,
+  ADD_TO_CART_FAIL,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_RESET,
+  ADD_TO_CART_SUCCESS,
+  CLEAR_ERRORS,
   GET_TO_CART,
+  GET_TO_CART_FAIL,
+  GET_TO_CART_REQUEST,
+  GET_TO_CART_RESET,
+  GET_TO_CART_SUCCESS,
   REMOVE_TO_CART,
   SAVE_SHIPPING_INFO,
 } from '../constants/cartConstants';
@@ -10,39 +19,37 @@ export const cartReducer = (
   action,
 ) => {
   switch (action.type) {
-    case ADD_TO_CART:
-      const item = action.payload;
-
-      const isItemExist = state?.cartItems?.find(
-        i => i?.product === item?.product,
-      );
-
-      if (isItemExist) {
-        return {
-          ...state,
-          cartItems: state?.cartItems?.map(i =>
-            i?.product === isItemExist?.product ? item : i,
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          cartItems: [...state?.cartItems, item],
-        };
-      }
-
-    case REMOVE_TO_CART:
+    case ADD_TO_CART_REQUEST:
+    case GET_TO_CART_REQUEST:
       return {
         ...state,
-        cartItems: state?.cartItems?.filter(
-          i => i?.product !== action?.payload,
-        ),
+        loading: true,
+      };
+    case ADD_TO_CART_SUCCESS:
+    case GET_TO_CART_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cartItems: action.payload,
+        success: action.payload,
+      };
+    case ADD_TO_CART_FAIL:
+    case GET_TO_CART_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case ADD_TO_CART_RESET:
+      return {
+        ...state,
+        success: false,
       };
 
-    case GET_TO_CART:
+    case CLEAR_ERRORS:
       return {
         ...state,
-        cartItems: action.payload,
+        error: null,
       };
 
     case SAVE_SHIPPING_INFO:

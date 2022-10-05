@@ -9,11 +9,18 @@ import {clearErrors} from '../../components/../redux/actions/userAction';
 import {NEW_REVIEW_RESET} from '../../components/../redux/constants/productConstants';
 import {getInputRangeFromIndexes} from '../../components/Layouts/Carousel/index';
 import {addItemsToCart} from '../../components/../redux/actions/cartAction';
+import {ADD_TO_CART_RESET} from '../../redux/constants/cartConstants';
 
 const ProductDetails = props => {
   const dispatch = useDispatch();
   const productID = props?.route?.params?.productID;
   const {loading, product, error} = useSelector(state => state.productDetails);
+  const {
+    loading: addToCartLoading,
+    cartItems,
+    success: addToCartSuccess,
+    error: addToCartError,
+  } = useSelector(state => state.cart);
   const {user} = useSelector(state => state.userRegister);
   const {
     loading: reviewLoading,
@@ -78,8 +85,17 @@ const ProductDetails = props => {
       dispatch(clearErrors());
     }
 
+    if (addToCartSuccess) {
+      showMessage({
+        message: 'Success',
+        description: 'Cart Added Sucessfully',
+        type: 'success',
+      });
+      dispatch({type: ADD_TO_CART_RESET});
+    }
+
     dispatch(productDetails(productID));
-  }, [dispatch, productID, reviewError, error, success]);
+  }, [dispatch, productID, reviewError, error, success, cartItems]);
 
   product &&
     product?.images?.forEach((i, a) => {
@@ -111,18 +127,12 @@ const ProductDetails = props => {
 
   const addToCart = async () => {
     dispatch(addItemsToCart(productID, quantity));
-    showMessage({
-      message: 'Success',
-      description: 'Cart Added Sucessfully',
-      type: 'success',
-    });
   };
 
   return (
     <ProductDetailsMarkup
       {...props}
       orientation={orientation}
-      detailsLoading={loading}
       product={product}
       image={image}
       quantity={quantity}
@@ -135,7 +145,11 @@ const ProductDetails = props => {
       setRatings={setRatings}
       comment={comment}
       setComment={setComment}
-      loading={reviewLoading}
+      loading={
+        reviewLoading
+          ? reviewLoading
+          : loading || (addToCartLoading && addToCartLoading)
+      }
       user={user}
       index={index}
       setIndex={setIndex}
