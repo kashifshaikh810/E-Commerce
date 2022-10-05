@@ -50,7 +50,7 @@ const AllUsersMarkup = props => {
   );
   return (
     <View style={styles.container}>
-      <Header {...props} backRouteName={param ? param : 'Home'} />
+      <Header {...props} backRouteName="Dashboard" />
 
       <DashboardTopBar {...props} />
 
