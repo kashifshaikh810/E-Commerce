@@ -8,14 +8,14 @@ import {loadUser} from './src/redux/actions/userAction';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 Icon.loadFont();
-// console.ignoredYellowBox = true;
+console.ignoredYellowBox = true;
 LogBox.ignoreAllLogs();
 
 const App = props => {
   useEffect(() => {
-    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    LogBox.ignoreLogs(['Each child in a list should have a unique']);
+    // LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+    // LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    // LogBox.ignoreLogs(['Each child in a list should have a unique']);
 
     store.dispatch(loadUser());
   }, [store.dispatch]);

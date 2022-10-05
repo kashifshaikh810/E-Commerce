@@ -12,11 +12,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, createNewOrder} from '../../../redux/actions/ordersAction';
 import {showMessage} from 'react-native-flash-message';
+import Success from '../Success';
 
 const Payment = props => {
   const [orderInfoData, setOrderInfoData] = useState({});
   const [cartNo, setCartNo] = useState('');
   const [cartMonthAndYear, setCartMonthAndYear] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const [cartCVC, setCartCVC] = useState('');
   let params = props?.route?.params;
 
@@ -36,9 +38,7 @@ const Payment = props => {
   };
 
   const proceedToPay = () => {
-    if (cartNo && cartMonthAndYear && cartCVC) {
-      dispatch(createNewOrder(orderData));
-    }
+    dispatch(createNewOrder(orderData));
   };
 
   function handleBackButtonClick() {
@@ -59,7 +59,8 @@ const Payment = props => {
     }
 
     if (order) {
-      props.navigation.navigate('Success');
+      // props.navigation.navigate('Success');
+      setModalVisible(true);
     }
 
     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
@@ -69,7 +70,13 @@ const Payment = props => {
         handleBackButtonClick,
       );
     };
-  }, [props.navigation, handleBackButtonClick, params?.runUseEffect]);
+  }, [
+    props.navigation,
+    handleBackButtonClick,
+    params?.runUseEffect,
+    error,
+    order,
+  ]);
 
   const getOrderInfoData = async key => {
     try {
@@ -142,6 +149,7 @@ const Payment = props => {
             <MyButton
               title={`Pay - ₹${orderInfoData && orderInfoData?.totalPrice}`}
               size="lg"
+              disabled={!cartCVC || !cartNo || !cartMonthAndYear}
               buttonStyle={styles.buttonStyle}
               onPress={() => {
                 proceedToPay();
@@ -150,6 +158,11 @@ const Payment = props => {
               loading={loading}
             />
           </View>
+          <Success
+            {...props}
+            visible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
         </View>
 
         <Footer />
