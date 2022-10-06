@@ -34,7 +34,7 @@ const Payment = props => {
     taxPrice: orderInfoData.tax,
     shippingPrice: orderInfoData.shippingCharges,
     totalPrice: orderInfoData.totalPrice,
-    paymentInfo: {id: user._id, status: 'succeeded'},
+    paymentInfo: {id: user?._id, status: 'succeeded'},
   };
 
   const proceedToPay = () => {
