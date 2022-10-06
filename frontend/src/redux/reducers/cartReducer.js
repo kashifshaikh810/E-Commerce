@@ -26,12 +26,20 @@ export const cartReducer = (
         loading: true,
       };
     case ADD_TO_CART_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cartItems:
+          state?.cartItems?.length === 0
+            ? action.payload
+            : [...state.cartItems, action.payload],
+        success: action.payload,
+      };
     case GET_TO_CART_SUCCESS:
       return {
         ...state,
         loading: false,
         cartItems: action.payload,
-        success: action.payload,
       };
     case ADD_TO_CART_FAIL:
     case GET_TO_CART_FAIL:

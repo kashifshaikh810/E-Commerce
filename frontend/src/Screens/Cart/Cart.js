@@ -6,10 +6,11 @@ import CartMarkup from './CartMarkup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   addItemsToCart,
-  clearErrors,
+  clearCartErrors,
   getCart,
   getCartItem,
   removeToCart,
+  updateQuantity,
 } from '../../redux/actions/cartAction';
 import {showMessage} from 'react-native-flash-message';
 
@@ -35,25 +36,12 @@ const Cart = props => {
         description: error,
         type: 'danger',
       });
-      dispatch(clearErrors());
+      dispatch(clearCartErrors());
     }
 
-    getCartItemsData();
     getShippingInfoData();
     dispatch(getCartItem());
   }, [dispatch, AsyncStorage, error]);
-
-  const getCartItemsData = async key => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('cartItems');
-      const res = jsonValue != null ? JSON.parse(jsonValue) : [];
-      if (res !== null) {
-        dispatch(getCart(res));
-      }
-    } catch (e) {
-      console.log(e, 'err');
-    }
-  };
 
   const getShippingInfoData = async key => {
     try {
@@ -67,20 +55,29 @@ const Cart = props => {
     }
   };
 
-  const increaseQuantity = (id, quantity, stock) => {
+  const increaseQuantity = item => {
+    let stock = item.stock;
+    let quantity = item.quantity;
+    let id = item._id;
     const newQty = quantity + 1;
     if (stock <= quantity) {
       return;
     }
-    dispatch(addItemsToCart(id, newQty));
+    console.log(item);
+    dispatch(updateQuantity(id, newQty));
+    dispatch(getCartItem());
   };
 
-  const decreaseQuantity = (id, quantity) => {
+  const decreaseQuantity = item => {
+    let quantity = item.quantity;
+    let id = item._id;
     const newQty = quantity - 1;
     if (1 >= quantity) {
       return;
     }
-    dispatch(addItemsToCart(id, newQty));
+
+    dispatch(updateQuantity(id, newQty));
+    dispatch(getCartItem());
   };
 
   const removeCartHandler = (id, i) => {

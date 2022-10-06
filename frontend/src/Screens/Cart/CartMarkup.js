@@ -59,9 +59,7 @@ const CartMarkup = props => {
                           <MinusIcon name="minus" size={20} color="#FFF" />
                         }
                         buttonStyle={styles.buttonStyle}
-                        onPress={() =>
-                          props.decreaseQuantity(item.product, item.quantity)
-                        }
+                        onPress={() => props.decreaseQuantity(item)}
                       />
                     </View>
                     <View>
@@ -79,13 +77,7 @@ const CartMarkup = props => {
                       <MyButton
                         title={<MinusIcon name="plus" size={20} color="#FFF" />}
                         buttonStyle={styles.buttonStyle}
-                        onPress={() =>
-                          props.increaseQuantity(
-                            item.product,
-                            item.quantity,
-                            item.stock,
-                          )
-                        }
+                        onPress={() => props.increaseQuantity(item)}
                       />
                     </View>
                   </View>

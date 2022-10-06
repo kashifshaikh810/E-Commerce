@@ -6,6 +6,10 @@ import Orientation from '../../components/Layouts/Orientation/Orientation';
 import {Dimensions} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {clearErrors} from '../../components/../redux/actions/userAction';
+import {
+  clearCartErrors,
+  getCartItem,
+} from '../../components/../redux/actions/cartAction';
 import {NEW_REVIEW_RESET} from '../../components/../redux/constants/productConstants';
 import {getInputRangeFromIndexes} from '../../components/Layouts/Carousel/index';
 import {addItemsToCart} from '../../components/../redux/actions/cartAction';
@@ -17,8 +21,8 @@ const ProductDetails = props => {
   const {loading, product, error} = useSelector(state => state.productDetails);
   const {
     loading: addToCartLoading,
-    cartItems,
     success: addToCartSuccess,
+    cartItems,
     error: addToCartError,
   } = useSelector(state => state.cart);
   const {user} = useSelector(state => state.userRegister);
@@ -85,7 +89,17 @@ const ProductDetails = props => {
       dispatch(clearErrors());
     }
 
+    if (addToCartError) {
+      showMessage({
+        message: 'Error',
+        description: addToCartError,
+        type: 'danger',
+      });
+      dispatch(clearCartErrors());
+    }
+
     if (addToCartSuccess) {
+      dispatch(getCartItem());
       showMessage({
         message: 'Success',
         description: 'Cart Added Sucessfully',
@@ -95,7 +109,15 @@ const ProductDetails = props => {
     }
 
     dispatch(productDetails(productID));
-  }, [dispatch, productID, reviewError, error, success, cartItems]);
+  }, [
+    dispatch,
+    productID,
+    reviewError,
+    error,
+    success,
+    addToCartSuccess,
+    addToCartError,
+  ]);
 
   product &&
     product?.images?.forEach((i, a) => {
@@ -126,7 +148,7 @@ const ProductDetails = props => {
   };
 
   const addToCart = async () => {
-    dispatch(addItemsToCart(productID, quantity));
+    dispatch(addItemsToCart(productID, quantity, cartItems));
   };
 
   return (
@@ -145,11 +167,7 @@ const ProductDetails = props => {
       setRatings={setRatings}
       comment={comment}
       setComment={setComment}
-      loading={
-        reviewLoading
-          ? reviewLoading
-          : loading || (addToCartLoading && addToCartLoading)
-      }
+      loading={reviewLoading || loading}
       user={user}
       index={index}
       setIndex={setIndex}
