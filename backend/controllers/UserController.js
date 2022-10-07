@@ -319,3 +319,20 @@ exports.getUserShippingDetails = catchAsyncErrors(async (req, res, next) => {
     shippingDetails: shippingDetails[0],
   });
 });
+
+exports.updateUserShippingDetails = catchAsyncErrors(async (req, res, next) => {
+  const shippingDetails = await Shipping.findByIdAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: true,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    shippingDetails,
+  });
+});
