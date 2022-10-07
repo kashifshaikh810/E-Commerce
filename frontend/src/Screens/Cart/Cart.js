@@ -13,6 +13,7 @@ import {
   updateQuantity,
 } from '../../redux/actions/cartAction';
 import {showMessage} from 'react-native-flash-message';
+import {REMOVE_TO_CART_RESET} from '../../redux/constants/cartConstants';
 
 const Cart = props => {
   const [orientation, setOrientation] = useState(
@@ -23,7 +24,9 @@ const Cart = props => {
   const [data, setData] = useState({});
 
   const dispatch = useDispatch();
-  const {loading, cartItems, error} = useSelector(state => state.cart);
+  const {loading, cartItems, isDeleted, error} = useSelector(
+    state => state.cart,
+  );
 
   useEffect(() => {
     Dimensions.addEventListener('change', () => {
@@ -39,9 +42,19 @@ const Cart = props => {
       dispatch(clearCartErrors());
     }
 
+    if (isDeleted) {
+      dispatch(getCartItem());
+      showMessage({
+        message: 'Success',
+        description: 'CartItem Removed Successfully',
+        type: 'success',
+      });
+      dispatch({type: REMOVE_TO_CART_RESET});
+    }
+
     getShippingInfoData();
     dispatch(getCartItem());
-  }, [dispatch, AsyncStorage, error]);
+  }, [dispatch, AsyncStorage, error, isDeleted]);
 
   const getShippingInfoData = async key => {
     try {
@@ -80,12 +93,13 @@ const Cart = props => {
     dispatch(getCartItem());
   };
 
-  const removeCartHandler = (id, i) => {
+  const removeCartHandler = item => {
+    let id = item._id;
     setRefreshing(true);
     dispatch(removeToCart(id));
     showMessage({
       message: 'Success',
-      description: 'Successfully Removed...',
+      description: 'Removed Successfully',
       type: 'success',
     });
     setTimeout(() => {

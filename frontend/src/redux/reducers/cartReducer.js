@@ -11,6 +11,10 @@ import {
   GET_TO_CART_RESET,
   GET_TO_CART_SUCCESS,
   REMOVE_TO_CART,
+  REMOVE_TO_CART_FAIL,
+  REMOVE_TO_CART_REQUEST,
+  REMOVE_TO_CART_RESET,
+  REMOVE_TO_CART_SUCCESS,
   SAVE_SHIPPING_INFO,
 } from '../constants/cartConstants';
 
@@ -19,6 +23,7 @@ export const cartReducer = (
   action,
 ) => {
   switch (action.type) {
+    case REMOVE_TO_CART_REQUEST:
     case ADD_TO_CART_REQUEST:
     case GET_TO_CART_REQUEST:
       return {
@@ -35,12 +40,19 @@ export const cartReducer = (
             : [...state.cartItems, action.payload],
         success: action.payload,
       };
+    case REMOVE_TO_CART_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
     case GET_TO_CART_SUCCESS:
       return {
         ...state,
         loading: false,
         cartItems: action.payload,
       };
+    case REMOVE_TO_CART_FAIL:
     case ADD_TO_CART_FAIL:
     case GET_TO_CART_FAIL:
       return {
@@ -52,6 +64,11 @@ export const cartReducer = (
       return {
         ...state,
         success: false,
+      };
+    case REMOVE_TO_CART_RESET:
+      return {
+        ...state,
+        isDeleted: false,
       };
 
     case CLEAR_ERRORS:

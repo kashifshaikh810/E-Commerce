@@ -8,6 +8,9 @@ import {
   GET_TO_CART_REQUEST,
   GET_TO_CART_SUCCESS,
   REMOVE_TO_CART,
+  REMOVE_TO_CART_FAIL,
+  REMOVE_TO_CART_REQUEST,
+  REMOVE_TO_CART_SUCCESS,
   SAVE_SHIPPING_INFO,
 } from '../constants/cartConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -80,12 +83,23 @@ export const getCartItem = () => async (dispatch, getState) => {
 };
 
 export const removeToCart = id => async (dispatch, getState) => {
-  dispatch({
-    type: REMOVE_TO_CART,
-    payload: id,
-  });
+  try {
+    dispatch({type: REMOVE_TO_CART_REQUEST});
 
-  AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    let url = `http://192.168.100.4:5000/api/v1/remove/cartItem/${id}`;
+
+    const {data} = await axios.delete(url);
+
+    dispatch({
+      type: REMOVE_TO_CART_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_TO_CART_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
 };
 
 export const saveShippingInfo = data => async (dispatch, getState) => {

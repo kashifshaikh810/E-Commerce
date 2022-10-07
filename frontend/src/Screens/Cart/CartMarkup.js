@@ -48,7 +48,7 @@ const CartMarkup = props => {
                     <Text style={styles.name}>{item.name}</Text>
                     <Text style={styles.name}>Price: ₹{item.price}</Text>
                     <TouchableOpacity
-                      onPress={() => props.removeCartHandler(item.product)}>
+                      onPress={() => props.removeCartHandler(item)}>
                       <Text style={styles.removeText}>Remove</Text>
                     </TouchableOpacity>
                   </View>
