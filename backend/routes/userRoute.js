@@ -41,11 +41,9 @@ router
 
 router
   .route("/shippingDetails")
-  .post(isAuthenticatedUser, userShippingDetails)
-  .get(isAuthenticatedUser, getUserShippingDetails);
+  .post(userShippingDetails)
+  .get(getUserShippingDetails);
 
-router
-  .route("/shippingDetails/:id")
-  .put(isAuthenticatedUser, updateUserShippingDetails);
+router.route("/shippingDetails/:id").put(updateUserShippingDetails);
 
 module.exports = router;
