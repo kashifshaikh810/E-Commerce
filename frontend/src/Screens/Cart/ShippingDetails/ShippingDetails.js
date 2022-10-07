@@ -28,6 +28,7 @@ import {
   clearErrors,
   getShippingDetails,
   postShippingDetails,
+  updateShippingDetails,
 } from '../../../redux/actions/userAction';
 import {showMessage} from 'react-native-flash-message';
 
@@ -83,10 +84,12 @@ const ShippingDetails = props => {
       state: stateVal,
     };
 
-    if (data) {
+    if (data && shippingDetailsData === undefined) {
       dispatch(postShippingDetails(data));
       props.navigation.navigate('ConfirmOrder');
     } else {
+      let id = shippingDetailsData._id;
+      dispatch(updateShippingDetails(data, id));
       props.navigation.navigate('ConfirmOrder');
     }
   };
