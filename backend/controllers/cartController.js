@@ -35,17 +35,13 @@ exports.getUserCartItem = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updateQuantity = catchAsyncErrors(async (req, res, next) => {
-  try {
-    await Cart.findByIdAndUpdate({ _id: req.params.productId }, req.body, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: true,
-    });
+  await Cart.findByIdAndUpdate({ _id: req.params.productId }, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: true,
+  });
 
-    res.status(201).json({
-      success: true,
-    });
-  } catch (error) {
-    console.log("backend", error);
-  }
+  res.status(201).json({
+    success: true,
+  });
 });
