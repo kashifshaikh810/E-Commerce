@@ -45,3 +45,17 @@ exports.updateQuantity = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.removeCartItem = catchAsyncErrors(async (req, res, next) => {
+  const cart = await Cart.findById(req.params.productId);
+
+  if (!cart) {
+    return next(new ErrorHandler("Cart not found with this id", 404));
+  }
+
+  await cart.remove();
+
+  res.status(201).json({
+    success: true,
+  });
+});
