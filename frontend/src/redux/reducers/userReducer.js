@@ -36,6 +36,9 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
   UPDATE_USER_RESET,
+  SHIPPING_DETAILS_REQUEST,
+  SHIPPING_DETAILS_SUCCESS,
+  SHIPPING_DETAILS_FAIL,
 } from '../constants/userConstants';
 
 export const userReducer = (state = {user: []}, action) => {
@@ -258,6 +261,39 @@ export const updateUserReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const shippingDetailsReducer = (
+  state = {shippingDetails: {}},
+  action,
+) => {
+  switch (action.type) {
+    case SHIPPING_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SHIPPING_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        shippingDetails: action.payload,
+      };
+    case SHIPPING_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {

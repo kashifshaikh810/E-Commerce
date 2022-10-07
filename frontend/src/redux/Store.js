@@ -18,6 +18,7 @@ import {
   adminUsersReducer,
   deleteUserReducer,
   profileReducer,
+  shippingDetailsReducer,
   updateUserReducer,
   userDetailReducer,
   userReducer,
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   updateUser: updateUserReducer,
   allAdminReviews: allAdminReviewReducer,
   deleteUserReview: deleteReviewReducer,
+  shipping: shippingDetailsReducer,
 });
 
 let initialState = {};

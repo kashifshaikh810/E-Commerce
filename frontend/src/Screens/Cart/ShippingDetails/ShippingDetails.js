@@ -25,17 +25,18 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import MyButton from '../../../components/Layouts/Button/Button';
 import {saveShippingInfo} from '../../../redux/actions/cartAction';
+import {shippingDetails} from '../../../redux/actions/userAction';
 
 const ShippingDetails = props => {
   const dispatch = useDispatch();
   const {country, state} = useSelector(state => state.getCountries);
-  let shippingInfoData = props?.route?.params?.shippingData;
-  const [countryVal, setCountryVal] = useState(shippingInfoData?.country);
-  const [stateVal, setStateVal] = useState(shippingInfoData?.state);
-  const [address, setAddress] = useState(shippingInfoData?.address);
-  const [city, setCity] = useState(shippingInfoData?.city);
-  const [pinCode, setPinCode] = useState(shippingInfoData?.pinCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfoData?.phoneNo);
+  // const {loading, shippingDetails, error} = useSelector(state => state.shipping);
+  const [countryVal, setCountryVal] = useState(shippingDetails?.country);
+  const [stateVal, setStateVal] = useState(shippingDetails?.state);
+  const [address, setAddress] = useState(shippingDetails?.address);
+  const [city, setCity] = useState(shippingDetails?.city);
+  const [pinCode, setPinCode] = useState(shippingDetails?.pinCode);
+  const [phoneNo, setPhoneNo] = useState(shippingDetails?.phoneNo);
 
   useEffect(() => {
     dispatch(getAllCountries());
@@ -49,18 +50,22 @@ const ShippingDetails = props => {
     return true;
   }
 
+  // useEffect(() => {
+
+  // }, [dispatch]);
+
   const continuePressHandler = () => {
-    if (address && city && pinCode && phoneNo) {
-      dispatch(
-        saveShippingInfo({
-          address: address,
-          city: city,
-          pinCode: pinCode,
-          phoneNo: phoneNo,
-          country: countryVal,
-          state: stateVal,
-        }),
-      );
+    const data = {
+      address: address,
+      city: city,
+      pinCode: pinCode,
+      phoneNo: phoneNo,
+      country: countryVal,
+      state: stateVal,
+    };
+
+    if (data) {
+      dispatch(shippingDetails(data));
       props.navigation.navigate('ConfirmOrder');
     }
   };
