@@ -14,7 +14,11 @@ import LogOutIcon from 'react-native-vector-icons/MaterialIcons';
 import tw from 'tailwind-react-native-classnames';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
-import {getAdminUsers, logOut} from '../../../redux/actions/userAction';
+import {
+  getAdminUsers,
+  getShippingDetails,
+  logOut,
+} from '../../../redux/actions/userAction';
 import {getCartItem} from '../../../redux/actions/cartAction';
 import ModalLoader from '../ModalLoader/ModalLoader';
 import {getAdminOrders, getMyOrders} from '../../../redux/actions/ordersAction';
@@ -40,6 +44,7 @@ const Header = props => {
     dispatch(getAdminProducts());
     dispatch(getMyOrders());
     dispatch(getCartItem());
+    dispatch(getShippingDetails());
     setVisible(!visible);
   };
 
@@ -89,6 +94,7 @@ const Header = props => {
       styles: tw`text-sm text-gray-400 font-bold`,
       icon: <CartIcon name="shopping-cart" size={25} color={'tomato'} />,
       onPress: () => {
+        dispatch(getShippingDetails());
         props.navigation.navigate('Cart');
         setVisible(false);
       },

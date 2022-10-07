@@ -39,6 +39,9 @@ import {
   SHIPPING_DETAILS_REQUEST,
   SHIPPING_DETAILS_SUCCESS,
   SHIPPING_DETAILS_FAIL,
+  GET_SHIPPING_DETAILS_REQUEST,
+  GET_SHIPPING_DETAILS_SUCCESS,
+  GET_SHIPPING_DETAILS_FAIL,
 } from '../constants/userConstants';
 
 export const userReducer = (state = {user: []}, action) => {
@@ -274,21 +277,24 @@ export const updateUserReducer = (state = {}, action) => {
 };
 
 export const shippingDetailsReducer = (
-  state = {shippingDetails: {}},
+  state = {shippingDetailsData: {}},
   action,
 ) => {
   switch (action.type) {
+    case GET_SHIPPING_DETAILS_REQUEST:
     case SHIPPING_DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
       };
+    case GET_SHIPPING_DETAILS_SUCCESS:
     case SHIPPING_DETAILS_SUCCESS:
       return {
         ...state,
         loading: false,
-        shippingDetails: action.payload,
+        shippingDetailsData: action.payload,
       };
+    case GET_SHIPPING_DETAILS_FAIL:
     case SHIPPING_DETAILS_FAIL:
       return {
         ...state,

@@ -23,12 +23,13 @@ const Payment = props => {
   let params = props?.route?.params;
 
   const {loading, order, error} = useSelector(state => state.newOrder);
-  const {cartItems, shippingInfo} = useSelector(state => state.cart);
+  const {cartItems} = useSelector(state => state.cart);
+  const {shippingDetailsData} = useSelector(state => state.shipping);
   const {user} = useSelector(state => state.userRegister);
   const dispatch = useDispatch();
 
   const orderData = {
-    shippingInfo,
+    shippingDetailsData,
     orderItems: cartItems,
     itemsPrice: orderInfoData.subtotal,
     taxPrice: orderInfoData.tax,

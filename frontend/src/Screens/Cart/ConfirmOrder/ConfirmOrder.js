@@ -17,7 +17,8 @@ import styles from './styles';
 
 const ConfirmOrder = props => {
   const {user} = useSelector(state => state.userRegister);
-  const {cartItems, shippingInfo} = useSelector(state => state.cart);
+  const {cartItems} = useSelector(state => state.cart);
+  const {shippingDetailsData} = useSelector(state => state.shipping);
 
   const subTotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
@@ -30,7 +31,7 @@ const ConfirmOrder = props => {
 
   const totalPrice = subTotal + shippingCharges + tax;
 
-  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.country}, ${shippingInfo.pinCode}`;
+  const address = `${shippingDetailsData?.address}, ${shippingDetailsData?.city}, ${shippingDetailsData?.state}, ${shippingDetailsData?.country}, ${shippingDetailsData?.pinCode}`;
 
   const proceedToPayment = () => {
     const data = {
@@ -82,7 +83,7 @@ const ConfirmOrder = props => {
             <View style={styles.shippingAreaContainer}>
               <Text style={styles.shippingTitle}>Phone :</Text>
               <Text style={styles.shippingSubTitle}>
-                {shippingInfo && shippingInfo.phoneNo}
+                {shippingDetailsData && shippingDetailsData?.phoneNo}
               </Text>
             </View>
 

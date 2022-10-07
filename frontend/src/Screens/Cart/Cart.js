@@ -14,6 +14,7 @@ import {
 } from '../../redux/actions/cartAction';
 import {showMessage} from 'react-native-flash-message';
 import {REMOVE_TO_CART_RESET} from '../../redux/constants/cartConstants';
+import {getShippingDetails} from '../../redux/actions/userAction';
 
 const Cart = props => {
   const [orientation, setOrientation] = useState(
@@ -108,12 +109,13 @@ const Cart = props => {
   };
 
   const checkOutPressHandler = () => {
-    props.navigation.navigate('ShippingDetails', {shippingData: data});
+    dispatch(getShippingDetails());
+    props.navigation.navigate('ShippingDetails');
   };
 
   const onRefresh = () => {
     setRefreshing(true);
-    getCartItemsData();
+    dispatch(getCartItem());
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);

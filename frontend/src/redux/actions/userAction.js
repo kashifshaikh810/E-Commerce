@@ -36,6 +36,9 @@ import {
   SHIPPING_DETAILS_REQUEST,
   SHIPPING_DETAILS_SUCCESS,
   SHIPPING_DETAILS_FAIL,
+  GET_SHIPPING_DETAILS_REQUEST,
+  GET_SHIPPING_DETAILS_SUCCESS,
+  GET_SHIPPING_DETAILS_FAIL,
 } from '../constants/userConstants';
 
 export const userRegister = userData => async dispatch => {
@@ -288,7 +291,7 @@ export const updateUserDetails = (id, userData) => async dispatch => {
   }
 };
 
-export const shippingDetails = shippingData => async dispatch => {
+export const postShippingDetails = shippingData => async dispatch => {
   try {
     dispatch({
       type: SHIPPING_DETAILS_REQUEST,
@@ -307,6 +310,28 @@ export const shippingDetails = shippingData => async dispatch => {
   } catch (error) {
     dispatch({
       type: SHIPPING_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getShippingDetails = () => async dispatch => {
+  try {
+    dispatch({
+      type: GET_SHIPPING_DETAILS_REQUEST,
+    });
+
+    let requestURL = `http://192.168.100.4:5000/api/v1/shippingDetails`;
+
+    const {data} = await axios.get(requestURL);
+
+    dispatch({
+      type: GET_SHIPPING_DETAILS_SUCCESS,
+      payload: data.shippingDetails,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SHIPPING_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -24,19 +24,29 @@ import {
 } from '../../../redux/actions/productAction';
 import {useDispatch, useSelector} from 'react-redux';
 import MyButton from '../../../components/Layouts/Button/Button';
-import {saveShippingInfo} from '../../../redux/actions/cartAction';
-import {shippingDetails} from '../../../redux/actions/userAction';
+import {
+  clearErrors,
+  getShippingDetails,
+  postShippingDetails,
+} from '../../../redux/actions/userAction';
+import {showMessage} from 'react-native-flash-message';
 
 const ShippingDetails = props => {
   const dispatch = useDispatch();
   const {country, state} = useSelector(state => state.getCountries);
-  // const {loading, shippingDetails, error} = useSelector(state => state.shipping);
-  const [countryVal, setCountryVal] = useState(shippingDetails?.country);
-  const [stateVal, setStateVal] = useState(shippingDetails?.state);
-  const [address, setAddress] = useState(shippingDetails?.address);
-  const [city, setCity] = useState(shippingDetails?.city);
-  const [pinCode, setPinCode] = useState(shippingDetails?.pinCode);
-  const [phoneNo, setPhoneNo] = useState(shippingDetails?.phoneNo);
+  const {loading, shippingDetailsData, error} = useSelector(
+    state => state.shipping,
+  );
+  const [countryVal, setCountryVal] = useState(shippingDetailsData?.country);
+  const [stateVal, setStateVal] = useState(shippingDetailsData?.state);
+  const [address, setAddress] = useState(shippingDetailsData?.address);
+  const [city, setCity] = useState(shippingDetailsData?.city);
+  const [pinCode, setPinCode] = useState(
+    JSON.stringify(shippingDetailsData?.pinCode),
+  );
+  const [phoneNo, setPhoneNo] = useState(
+    JSON.stringify(shippingDetailsData?.phoneNo),
+  );
 
   useEffect(() => {
     dispatch(getAllCountries());
@@ -50,9 +60,18 @@ const ShippingDetails = props => {
     return true;
   }
 
-  // useEffect(() => {
+  useEffect(() => {
+    if (error) {
+      showMessage({
+        message: 'Error',
+        description: error,
+        type: 'danger',
+      });
+      dispatch(clearErrors());
+    }
 
-  // }, [dispatch]);
+    dispatch(getShippingDetails());
+  }, [dispatch, error]);
 
   const continuePressHandler = () => {
     const data = {
@@ -65,7 +84,9 @@ const ShippingDetails = props => {
     };
 
     if (data) {
-      dispatch(shippingDetails(data));
+      dispatch(postShippingDetails(data));
+      props.navigation.navigate('ConfirmOrder');
+    } else {
       props.navigation.navigate('ConfirmOrder');
     }
   };
