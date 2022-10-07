@@ -1,6 +1,7 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
+const Shipping = require("../models/shippingModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
@@ -284,5 +285,37 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "User Deleted Successfully",
+  });
+});
+
+exports.userShippingDetails = catchAsyncErrors(async (req, res, next) => {
+  const { address, city, pinCode, phoneNo, country, state } = req.body;
+
+  const shippingDetails = await Shipping.create({
+    user: req.user._id,
+    address,
+    city,
+    pinCode,
+    phoneNo,
+    country,
+    state,
+  });
+
+  res.status(200).json({
+    success: true,
+    shippingDetails,
+  });
+});
+
+exports.getUserShippingDetails = catchAsyncErrors(async (req, res, next) => {
+  const shippingDetails = await Shipping.find({ user: req.user._id });
+
+  if (!shippingDetails) {
+    next(new ErrorHandler("No Shipping Details", 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    shippingDetails: shippingDetails[0],
   });
 });
