@@ -57,7 +57,7 @@ const SignIn = props => {
       });
       dispatch(successClear());
     }
-  }, [error, dispatch, success, props.navigation, user]);
+  }, [error, dispatch, success, user]);
 
   if (user === null)
     return (
