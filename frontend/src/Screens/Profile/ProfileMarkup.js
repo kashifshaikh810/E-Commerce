@@ -84,7 +84,9 @@ const ProfileMarkup = props => {
           <MyButton
             title="My Orders"
             {...props}
-            onPress={() => props.navigation.navigate('Orders')}
+            onPress={() =>
+              props.navigation.navigate('Orders', {backRouteName: 'Profile'})
+            }
             color={{color: '#b3b3b3'}}
             buttonStyle={styles.myButtonStyle}
             size="lg"
