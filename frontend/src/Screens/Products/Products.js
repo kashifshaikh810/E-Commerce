@@ -7,7 +7,7 @@ import {showMessage} from 'react-native-flash-message';
 import {clearErrors, getAllProducts} from '../../redux/actions/productAction';
 
 const Products = props => {
-  const {loading, products, error} = useSelector(state => state.products);
+  const {products, error} = useSelector(state => state.products);
   const dispatch = useDispatch();
   const [ratings, setRatings] = useState(0);
   const [category, setCategory] = useState('');
@@ -35,7 +35,7 @@ const Products = props => {
   // Next line is the position's difference of min slider and max slider
   // To avoid overlap and blocking at the maximum boundary value
   // Keep between 0.10 and 0.40 for best user experience
-  const manualOffsetBetweenSlider = 0.1;
+  const manualOffsetBetweenSlider = 0.3;
 
   // ----------------- Common ----------------------- //
   const [forceRender, setForceRender] = React.useState(0);
@@ -544,7 +544,6 @@ const Products = props => {
       max_getSlider={max_getSlider}
       initSliders={initSliders}
       products={products}
-      loading={loading}
       ratings={ratings}
       setRatings={setRatings}
       category={category}
@@ -560,7 +559,7 @@ export default Products;
 const s = StyleSheet.create({
   line: {
     height: '100%',
-    width: '95%',
+    width: '100%',
     position: 'absolute',
   },
   draggable: {

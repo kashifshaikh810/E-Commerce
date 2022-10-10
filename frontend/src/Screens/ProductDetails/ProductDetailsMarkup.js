@@ -28,8 +28,8 @@ const ProductDetailsMarkup = props => {
           ) : (
             <Image
               source={
-                {uri: props?.image} ||
-                require('../../components/images/cover.jpg')
+                {uri: props?.image}
+                // require('../../components/images/cover.jpg')
               }
               style={styles.image}
             />
@@ -190,61 +190,67 @@ const ProductDetailsMarkup = props => {
           <Card.Divider style={styles.reviewsLine} />
         </View>
 
-        <View style={styles.flatList}>
-          <Carousel
-            ref={props.isCarousel}
-            data={props?.product && props?.product?.reviews}
-            onSnapToItem={index => props.setIndex(index)}
-            renderItem={({item, index}) =>
-              props.detailsLoading ? (
-                <Skeleton animation="wave" style={styles.image} />
-              ) : (
-                <View style={styles.reviewsCard}>
-                  <Image
-                    source={require('../../components/images/Profile.png')}
-                    style={styles.reviewUserImage}
-                  />
-                  <Text style={styles.reviewUserName}>{item.name}</Text>
-                  <Stars
-                    default={item.rating}
-                    count={5}
-                    spacing={4}
-                    half
-                    starSize={60}
-                    disabled
-                    fullStar={
-                      <Icon
-                        size={25}
-                        name={'star'}
-                        style={[styles.myStarStyle]}
-                      />
-                    }
-                    emptyStar={
-                      <Icon
-                        size={25}
-                        name={'star-outline'}
-                        style={[styles.myStarStyle, styles.myEmptyStarStyle]}
-                      />
-                    }
-                    halfStar={
-                      <Icon
-                        size={25}
-                        name={'star-half-full'}
-                        style={[styles.myStarStyle]}
-                      />
-                    }
-                  />
-                  <Text style={styles.reviewUserComment}>{item.comment}</Text>
-                </View>
-              )
-            }
-            sliderWidth={320}
-            itemWidth={320}
-            windowSize={1}
-            useScrollView={true}
-            inactiveSlideShift={0}
-          />
-        </View>
+        {props?.product?.reviews?.length >= 1 ? (
+          <View style={styles.flatList}>
+            <Carousel
+              ref={props.isCarousel}
+              data={props?.product && props?.product?.reviews}
+              onSnapToItem={index => props.setIndex(index)}
+              renderItem={({item, index}) =>
+                props.detailsLoading ? (
+                  <Skeleton animation="wave" style={styles.image} />
+                ) : (
+                  <View style={styles.reviewsCard}>
+                    <Image
+                      source={require('../../components/images/Profile.png')}
+                      style={styles.reviewUserImage}
+                    />
+                    <Text style={styles.reviewUserName}>{item.name}</Text>
+                    <Stars
+                      default={item.rating}
+                      count={5}
+                      spacing={4}
+                      half
+                      starSize={60}
+                      disabled
+                      fullStar={
+                        <Icon
+                          size={25}
+                          name={'star'}
+                          style={[styles.myStarStyle]}
+                        />
+                      }
+                      emptyStar={
+                        <Icon
+                          size={25}
+                          name={'star-outline'}
+                          style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+                        />
+                      }
+                      halfStar={
+                        <Icon
+                          size={25}
+                          name={'star-half-full'}
+                          style={[styles.myStarStyle]}
+                        />
+                      }
+                    />
+                    <Text style={styles.reviewUserComment}>{item.comment}</Text>
+                  </View>
+                )
+              }
+              sliderWidth={320}
+              itemWidth={320}
+              windowSize={1}
+              useScrollView={true}
+              inactiveSlideShift={0}
+            />
+          </View>
+        ) : (
+          <View style={styles.noReview}>
+            <Text>No Reviews Yet </Text>
+          </View>
+        )}
 
         <Pagination
           dotsLength={props?.product && props?.product?.reviews?.length}
