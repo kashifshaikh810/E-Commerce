@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   reviewUserName: tw`capitalize text-base text-black`,
   reviewUserComment: tw`capitalize text-sm text-gray-400`,
   submitReview: tw`w-5/12 h-8 p-1 rounded-full bg-red-400`,
+  noReview: tw`h-20 w-full justify-center items-center`,
 });
 
 export default styles;
