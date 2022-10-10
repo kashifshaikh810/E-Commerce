@@ -9,7 +9,9 @@ const About = props => {
   return (
     <View style={styles.container}>
       <Header {...props} />
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.paddingBottom}>
           <Text style={styles.aboutUS}>About Us</Text>
           <Image
