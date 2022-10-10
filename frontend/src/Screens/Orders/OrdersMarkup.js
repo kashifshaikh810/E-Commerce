@@ -17,6 +17,7 @@ import {Row} from '../../components/materials/TableComponent/components/rows';
 import LaunchIcon from 'react-native-vector-icons/MaterialIcons';
 
 const OrdersMarkup = props => {
+  let param = props?.route?.params;
   const headerRow = ['Order ID', 'Status', 'Items Qty', 'Amount', 'Actions'];
 
   const rows = [];
@@ -44,7 +45,10 @@ const OrdersMarkup = props => {
 
   return (
     <View style={styles.container}>
-      <Header {...props} backRouteName="Home" />
+      <Header
+        {...props}
+        backRouteName={param ? param?.backRouteName : 'Home'}
+      />
 
       <ScrollView
         style={styles.scrollView}
