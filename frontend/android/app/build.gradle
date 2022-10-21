@@ -131,9 +131,9 @@ def reactNativeArchitectures() {
 }
 
 android {
-    ndkVersion '32'
+    ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.gameapp"
