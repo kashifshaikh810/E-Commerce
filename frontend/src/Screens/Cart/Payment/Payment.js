@@ -10,7 +10,11 @@ import KeyIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyButton from '../../../components/Layouts/Button/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearErrors, createNewOrder} from '../../../redux/actions/ordersAction';
+import {
+  clearErrors,
+  createNewOrder,
+  getMyOrders,
+} from '../../../redux/actions/ordersAction';
 import {showMessage} from 'react-native-flash-message';
 import Success from '../Success';
 
@@ -28,10 +32,19 @@ const Payment = props => {
   const {user} = useSelector(state => state.userRegister);
   const dispatch = useDispatch();
 
+  const shippingInfo = {
+    address: shippingDetailsData.address,
+    city: shippingDetailsData.city,
+    state: shippingDetailsData.state,
+    country: shippingDetailsData.country,
+    pinCode: shippingDetailsData.pinCode,
+    phoneNo: shippingDetailsData.phoneNo,
+  };
+
   const orderData = {
-    shippingDetailsData,
+    shippingInfo,
     orderItems: cartItems,
-    itemsPrice: orderInfoData.subtotal,
+    itemsPrice: orderInfoData.subTotal,
     taxPrice: orderInfoData.tax,
     shippingPrice: orderInfoData.shippingCharges,
     totalPrice: orderInfoData.totalPrice,
@@ -60,8 +73,9 @@ const Payment = props => {
     }
 
     if (order) {
-      // props.navigation.navigate('Success');
-      setModalVisible(true);
+      dispatch(getMyOrders());
+      props.navigation.navigate('Orders');
+      // setModalVisible(true);
     }
 
     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
