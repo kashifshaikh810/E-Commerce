@@ -44,6 +44,8 @@ import {
   UPDATE_SHIPPING_DETAILS_FAIL,
 } from '../constants/userConstants';
 
+const URI = 'http://192.168.100.8:5000';
+
 export const userRegister = userData => async dispatch => {
   try {
     dispatch({
@@ -52,7 +54,7 @@ export const userRegister = userData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/register';
+    let requestURL = `${URI}/api/v1/register`;
 
     const {data} = await axios.post(requestURL, userData, {config});
 
@@ -68,7 +70,7 @@ export const userRegister = userData => async dispatch => {
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -81,7 +83,7 @@ export const userLogin = (email, password) => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/login';
+    let requestURL = `${process.env.HOST_URI}/api/v1/login`;
 
     const {data} = await axios.post(requestURL, {email, password}, {config});
 
@@ -95,9 +97,10 @@ export const userLogin = (email, password) => async dispatch => {
       payload: true,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -121,7 +124,7 @@ export const loadUser = () => async dispatch => {
       type: LOAD_USER_REQUEST,
     });
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/me';
+    let requestURL = `${URI}/api/v1/me`;
 
     const {data} = await axios.get(requestURL);
 
@@ -132,7 +135,7 @@ export const loadUser = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: LOAD_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -143,7 +146,7 @@ export const logOut = () => async dispatch => {
       type: LOGOUT_REQUEST,
     });
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/logout';
+    let requestURL = `${URI}/api/v1/logout`;
 
     await axios.get(requestURL);
 
@@ -151,7 +154,7 @@ export const logOut = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -164,7 +167,7 @@ export const updateProfile = profileData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/me/update';
+    let requestURL = `${URI}/api/v1/me/update`;
 
     const {data} = await axios.put(requestURL, profileData, {config});
 
@@ -175,7 +178,7 @@ export const updateProfile = profileData => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_PROFILE_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -188,7 +191,7 @@ export const updatePassword = passwordData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'multipart/form-data'}};
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/password/update';
+    let requestURL = `${URI}/api/v1/password/update`;
 
     const {data} = await axios.put(requestURL, passwordData, {config});
 
@@ -199,7 +202,7 @@ export const updatePassword = passwordData => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -210,7 +213,7 @@ export const getAdminUsers = () => async dispatch => {
       type: ADMIN_USERS_REQUEST,
     });
 
-    let requestURL = 'http://192.168.100.4:5000/api/v1/admin/users';
+    let requestURL = `${URI}/api/v1/admin/users`;
 
     const {data} = await axios.get(requestURL);
 
@@ -221,7 +224,7 @@ export const getAdminUsers = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: ADMIN_USERS_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -232,7 +235,7 @@ export const adminDeleteUser = id => async dispatch => {
       type: DELETE_USER_REQUEST,
     });
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/admin/user/${id}`;
+    let requestURL = `${URI}/api/v1/admin/user/${id}`;
 
     const {data} = await axios.delete(requestURL);
 
@@ -243,7 +246,7 @@ export const adminDeleteUser = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: DELETE_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -254,7 +257,7 @@ export const getUserDetails = id => async dispatch => {
       type: USER_DETAIL_REQUEST,
     });
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/admin/user/${id}`;
+    let requestURL = `${URI}/api/v1/admin/user/${id}`;
 
     const {data} = await axios.get(requestURL);
 
@@ -265,7 +268,7 @@ export const getUserDetails = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: USER_DETAIL_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -278,7 +281,7 @@ export const updateUserDetails = (id, userData) => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/admin/user/${id}`;
+    let requestURL = `${URI}/api/v1/admin/user/${id}`;
 
     const {data} = await axios.put(requestURL, userData, config);
 
@@ -289,7 +292,7 @@ export const updateUserDetails = (id, userData) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -302,7 +305,7 @@ export const postShippingDetails = shippingData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/shippingDetails`;
+    let requestURL = `${URI}/api/v1/shippingDetails`;
 
     const {data} = await axios.post(requestURL, shippingData, config);
 
@@ -313,7 +316,7 @@ export const postShippingDetails = shippingData => async dispatch => {
   } catch (error) {
     dispatch({
       type: SHIPPING_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -324,7 +327,7 @@ export const getShippingDetails = () => async dispatch => {
       type: GET_SHIPPING_DETAILS_REQUEST,
     });
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/shippingDetails`;
+    let requestURL = `${URI}/api/v1/shippingDetails`;
 
     const {data} = await axios.get(requestURL);
 
@@ -335,7 +338,7 @@ export const getShippingDetails = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: GET_SHIPPING_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
@@ -348,7 +351,7 @@ export const updateShippingDetails = (shippingData, id) => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = `http://192.168.100.4:5000/api/v1/shippingDetails/${id}`;
+    let requestURL = `${URI}/api/v1/shippingDetails/${id}`;
 
     const {data} = await axios.put(requestURL, shippingData, config);
 
@@ -359,7 +362,7 @@ export const updateShippingDetails = (shippingData, id) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_SHIPPING_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };

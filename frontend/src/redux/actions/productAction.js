@@ -38,6 +38,8 @@ import {
   DELETE_REVIEW_FAIL,
 } from '../constants/productConstants';
 
+const URI = 'http://192.168.100.8:5000';
+
 export const getAllProducts =
   (keyword = '', currentPage = 1, price = [0, 25000], category, ratings = 0) =>
   async dispatch => {
@@ -46,7 +48,7 @@ export const getAllProducts =
         type: ALL_PRODUCT_REQUEST,
       });
 
-      let link = `http://192.168.100.4:5000/api/v1/products`;
+      let link = `${URI}/api/v1/products`;
 
       if (
         keyword !== '' ||
@@ -54,11 +56,11 @@ export const getAllProducts =
         price > [0, 25000] ||
         ratings >= 1
       ) {
-        link = `http://192.168.100.4:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+        link = `${URI}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
       }
 
       if (category) {
-        link = `http://192.168.100.4:5000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+        link = `${URI}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
 
       const {data} = await axios.get(link);
@@ -86,7 +88,7 @@ export const productDetails = productID => async dispatch => {
   try {
     dispatch({type: PRODUCT_DETAILS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/products/${productID}`;
+    let link = `${URI}/api/v1/products/${productID}`;
 
     const {data} = await axios.get(link);
 
@@ -114,7 +116,7 @@ export const newReview = review => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.4:5000/api/v1/review`;
+    let link = `${URI}/api/v1/review`;
 
     const {data} = await axios.put(link, review, config);
 
@@ -136,7 +138,7 @@ export const getAllCountries = () => async dispatch => {
       type: ALL_COUNTRIES_REQUEST,
     });
 
-    let link = `http://192.168.100.4:5000/api/v1/countries`;
+    let link = `${URI}/api/v1/countries`;
 
     const {data} = await axios.get(link);
 
@@ -164,7 +166,7 @@ export const getAllStates = country => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.4:5000/api/v1/states`;
+    let link = `${URI}/api/v1/states`;
 
     const {data} = await axios.post(link, {country: country}, config);
 
@@ -186,7 +188,7 @@ export const getAdminProducts = () => async dispatch => {
       type: ADMIN_PRODUCTS_REQUEST,
     });
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/products`;
+    let link = `${URI}/api/v1/admin/products`;
 
     const {data} = await axios.get(link);
 
@@ -215,7 +217,7 @@ export const createProduct = newProductData => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/product/new`;
+    let link = `${URI}/api/v1/admin/product/new`;
 
     const {data} = await axios.post(link, newProductData, config);
 
@@ -237,7 +239,7 @@ export const deleteProduct = id => async dispatch => {
       type: DELETE_PRODUCT_REQUEST,
     });
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/products/${id}`;
+    let link = `${URI}/api/v1/admin/products/${id}`;
 
     const {data} = await axios.delete(link);
 
@@ -265,7 +267,7 @@ export const updateProduct = (id, productData) => async dispatch => {
       },
     };
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/products/${id}`;
+    let link = `${URI}/api/v1/admin/products/${id}`;
 
     const {data} = await axios.put(link, productData, config);
 
@@ -285,7 +287,7 @@ export const getAllReviews = id => async dispatch => {
   try {
     dispatch({type: ALL_REVIEWS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/reviews?id=${id}`;
+    let link = `${URI}/api/v1/admin/reviews?id=${id}`;
 
     const {data} = await axios.get(link);
 
@@ -305,7 +307,7 @@ export const deleteUserReview = (id, productId) => async dispatch => {
   try {
     dispatch({type: DELETE_REVIEW_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/reviews?id=${id}&productId=${productId}`;
+    let link = `${URI}/api/v1/admin/reviews?id=${id}&productId=${productId}`;
 
     const {data} = await axios.delete(link);
 

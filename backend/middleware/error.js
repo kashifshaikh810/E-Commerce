@@ -2,7 +2,7 @@ const ErrorHandler = require("../utils/errorHandler");
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.message = err.message || "Internal Server Error";
+  err.message = err?.message || "Internal Server Error";
 
   // wrong mongodb userId error
   if (err.name === "CastError") {
@@ -30,7 +30,7 @@ module.exports = (err, req, res, next) => {
 
   res.status(err.statusCode).json({
     success: false,
-    message: err.message,
+    message: err?.message,
     statusCode: err.statusCode,
   });
 };

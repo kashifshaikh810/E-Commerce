@@ -23,17 +23,17 @@ const Home = props => {
   };
 
   useEffect(() => {
-    if (error) {
-      showMessage({
-        message: 'Error',
-        description: error,
-        type: 'danger',
-      });
-      dispatch(clearErrors());
-    }
+    // if (error) {
+    //   showMessage({
+    //     message: 'Error',
+    //     description: error,
+    //     type: 'danger',
+    //   });
+    //   dispatch(clearErrors());
+    // }
 
     dispatch(getAllProducts());
-  }, [dispatch, error]);
+  }, [dispatch]);
 
   return (
     <HomeMarkup

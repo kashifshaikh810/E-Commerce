@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
   ADD_TO_CART,
   ADD_TO_CART_FAIL,
@@ -14,12 +16,13 @@ import {
   SAVE_SHIPPING_INFO,
 } from '../constants/cartConstants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+
+const URI = 'http://192.168.100.8:5000';
 
 export const addItemsToCart =
   (id, quantity, cartItems) => async (dispatch, getState) => {
     try {
-      let link = `http://192.168.100.4:5000/api/v1/products/${id}`;
+      let link = `${URI}/api/v1/products/${id}`;
 
       const {data} = await axios.get(link);
 
@@ -33,13 +36,13 @@ export const addItemsToCart =
       } else {
         dispatch({type: ADD_TO_CART_REQUEST});
 
-        let link = `http://192.168.100.4:5000/api/v1/products/${id}`;
+        let link = `${URI}/api/v1/products/${id}`;
 
         const {data} = await axios.get(link);
 
         const config = {headers: {'Content-Type': 'application/json'}};
 
-        let url = `http://192.168.100.4:5000/api/v1/new/cartItem`;
+        let url = `${URI}/api/v1/new/cartItem`;
 
         const cartData = {
           product: data.product._id,
@@ -69,7 +72,7 @@ export const getCartItem = () => async (dispatch, getState) => {
   try {
     dispatch({type: GET_TO_CART_REQUEST});
 
-    let url = `http://192.168.100.4:5000/api/v1/me/cartItem`;
+    let url = `${URI}/api/v1/me/cartItem`;
 
     const {data} = await axios.get(url);
 
@@ -86,7 +89,7 @@ export const removeToCart = id => async (dispatch, getState) => {
   try {
     dispatch({type: REMOVE_TO_CART_REQUEST});
 
-    let url = `http://192.168.100.4:5000/api/v1/remove/cartItem/${id}`;
+    let url = `${URI}/api/v1/remove/cartItem/${id}`;
 
     const {data} = await axios.delete(url);
 
@@ -122,7 +125,7 @@ export const updateQuantity =
     try {
       const config = {headers: {'Content-Type': 'application/json'}};
 
-      let url = `http://192.168.100.4:5000/api/v1/update/cartItem/${productId}`;
+      let url = `${URI}/api/v1/update/cartItem/${productId}`;
 
       const {data} = await axios.put(url, {quantity}, config);
 

@@ -21,11 +21,13 @@ import {
   UPDATE_ORDER_STATUS_SUCCESS,
 } from '../constants/ordersConstants';
 
+const URI = 'http://192.168.100.8:5000';
+
 export const getMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch({type: ALL_MY_ORDERS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/orders/me`;
+    let link = `${URI}/api/v1/orders/me`;
 
     const {data} = await axios.get(link);
 
@@ -48,7 +50,7 @@ export const getOrderDetails = id => async (dispatch, getState) => {
   try {
     dispatch({type: ORDER_DETAILS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/order/${id}`;
+    let link = `${URI}/api/v1/order/${id}`;
 
     const {data} = await axios.get(link);
 
@@ -65,7 +67,7 @@ export const createNewOrder = orderData => async (dispatch, getState) => {
   try {
     dispatch({type: CREATE_ORDER_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/order/new`;
+    let link = `${URI}/api/v1/order/new`;
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
@@ -84,7 +86,7 @@ export const getAdminOrders = () => async (dispatch, getState) => {
   try {
     dispatch({type: ADMIN_ORDERS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/orders`;
+    let link = `${URI}/api/v1/admin/orders`;
 
     const {data} = await axios.get(link);
 
@@ -101,7 +103,7 @@ export const updateOrder = (id, status) => async (dispatch, getState) => {
   try {
     dispatch({type: UPDATE_ORDER_STATUS_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/order/${id}`;
+    let link = `${URI}/api/v1/admin/order/${id}`;
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
@@ -120,7 +122,7 @@ export const deleteOrder = id => async (dispatch, getState) => {
   try {
     dispatch({type: DELETE_ORDER_REQUEST});
 
-    let link = `http://192.168.100.4:5000/api/v1/admin/order/${id}`;
+    let link = `${URI}/api/v1/admin/order/${id}`;
 
     const {data} = await axios.delete(link);
 
