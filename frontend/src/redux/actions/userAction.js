@@ -83,7 +83,7 @@ export const userLogin = (email, password) => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    let requestURL = `${process.env.HOST_URI}/api/v1/login`;
+    let requestURL = `${URI}/api/v1/login`;
 
     const {data} = await axios.post(requestURL, {email, password}, {config});
 
